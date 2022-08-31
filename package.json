@@ -1,0 +1,63 @@
+{
+  "name": "sveltekit-imagegen",
+  "version": "0.0.1",
+  "description": "Modern responsive image generation tooling for SvelteKit",
+  "homepage": "https://github.com/brev/sveltekit-imagegen/tree/main#readme",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "author": {
+    "name": "Brev Patterson",
+    "url": "https://github.com/brev"
+  },
+  "bugs": {
+    "url": "https://github.com/brev/sveltekit-imagegen/issues"
+  },
+  "dependencies": {
+    "sharp": "^0.30.7"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.14",
+    "@types/prettier": "^2.7.0",
+    "@types/sharp": "^0.30.5",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "c8": "^7.12.0",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.8.2",
+    "uvu": "^0.5.6"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "keywords": [
+    "sveltekit",
+    "imagegen",
+    "image",
+    "generator",
+    "tooling",
+    "modern",
+    "responsive"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brev/sveltekit-imagegen.git"
+  },
+  "scripts": {
+    "bin:eslint": "eslint --ignore-path .gitignore .",
+    "bin:prettier": "prettier --ignore-path .gitignore .",
+    "bin:uvu": "uvu test .test.js",
+    "build": "tsc",
+    "build:watch": "run-s 'build --watch'",
+    "clean": "rimraf coverage/ dist/",
+    "format": "run-s 'bin:prettier --write'",
+    "lint": "run-s 'bin:prettier --check' bin:eslint",
+    "test": "run-s build bin:uvu",
+    "test:cover": "c8 run-s test"
+  }
+}
