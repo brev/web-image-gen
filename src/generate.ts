@@ -1,6 +1,7 @@
 import type { Config } from '../types/Config'
 import type { Credit } from '../types/Credit'
 import type { ImageSets } from '../types/ImageSet'
+import type { IndividualArguments } from '../types/Arguments'
 
 import { access, mkdir, readdir, readFile, writeFile } from 'fs/promises'
 import { cwd } from 'process'
@@ -11,7 +12,7 @@ import sharp from 'sharp'
 /**
  * Generate
  */
-export default async (config: Config) => {
+export default async (config: Config, options: IndividualArguments) => {
   // utils
   const servePath = (path: string) =>
     path.replace(config.dirs.static, '').concat(`?v=${config.version}`)

@@ -1,0 +1,19 @@
+
+[4m[1mGenerate[22m[24m
+
+  Generate responsive images and importable code manifests. 
+
+  [1mUsage:[22m   `sveltekit-imagegen [1mgenerate[22m [options ...]` 
+
+[4m[1mGenerate Options[22m[24m
+
+  [1m--force[22m                     Always write new files, even if they already      
+                              exist (slow).                                     
+  [1m--only[22m [images|manifests]   Only create one of images or manifests, but not   
+                              both.                                             
+
+[4m[1mGlobal Options[22m[24m
+
+  [1m-h[22m, [1m--help[22m       Show this usage help guide, or help for a specific command. 
+  [1m-v[22m, [1m--verbose[22m    Display debugging output.                                   
+
