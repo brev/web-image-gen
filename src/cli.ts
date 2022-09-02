@@ -17,7 +17,8 @@ const meta = {
   name: 'SvelteKit-ImageGen',
   global: {
     commands: 'Available Commands',
-    config: 'Config file to use instead of the default, in `.js` or `.json` format.',
+    config:
+      'Config file to use instead of the default, in `.js` or `.json` format.',
     description: `Modern responsive image generation tooling for SvelteKit.\n
                   https://github.com/brev/sveltekit-imagegen`,
     help: 'Show this usage help guide, or help for a specific command.',
