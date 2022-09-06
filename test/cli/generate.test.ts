@@ -70,7 +70,8 @@ test('BARE (config json)', async ({ cwd }) => {
   assert.snapshot(stdout.toString(), snapshot.toString())
 
   const tree = await spawn('ls', ['-1R'], { cwd })
-  if (update) await writeFile(snapfile('bare_config_json_tree'), tree.toString())
+  if (update)
+    await writeFile(snapfile('bare_config_json_tree'), tree.toString())
   const snaptree = await readFile(snapfile('bare_config_json_tree'))
   assert.snapshot(tree.toString(), snaptree.toString())
 })

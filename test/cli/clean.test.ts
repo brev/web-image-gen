@@ -42,18 +42,15 @@ test('BARE', async ({ cwd }) => {
 test('--verbose', async ({ cwd }) => {
   await spawn(process.execPath, [script, 'generate'], { cwd })
 
-  const stdout = await spawn(
-    process.execPath,
-    [script, 'clean', '--verbose'],
-    { cwd }
-  )
+  const stdout = await spawn(process.execPath, [script, 'clean', '--verbose'], {
+    cwd,
+  })
   if (update) await writeFile(snapfile('verbose'), stdout.toString())
   const snapshot = await readFile(snapfile('verbose'))
   assert.snapshot(stdout.toString(), snapshot.toString())
 
   const tree = await spawn('ls', ['-1R'], { cwd })
-  if (update)
-    await writeFile(snapfile('verbose_tree'), tree.toString())
+  if (update) await writeFile(snapfile('verbose_tree'), tree.toString())
   const snaptree = await readFile(snapfile('verbose_tree'))
   assert.snapshot(tree.toString(), snaptree.toString())
 })

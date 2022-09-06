@@ -35,15 +35,15 @@ export default async (config: Config, options: Options) => {
       const imageOptPath = resolve(imageDirPath, `_OPT_${imageFile}`)
 
       const sizeBefore = (await stat(imagePath)).size
-      await sharp(imagePath)
-        .jpeg({ mozjpeg: true })
-        .toFile(imageOptPath)
+      await sharp(imagePath).jpeg({ mozjpeg: true }).toFile(imageOptPath)
       const sizeAfter = (await stat(imageOptPath)).size
 
       // only write if at least 5% compression improvement, otherwise skip
-      if ((1 - (sizeAfter / sizeBefore)) > 0.05) {
+      if (1 - sizeAfter / sizeBefore > 0.05) {
         if (verbose)
-          console.log(`Optimizing original source image file: ${shortPath(imagePath)}`)
+          console.log(
+            `Optimizing original source image file: ${shortPath(imagePath)}`
+          )
         await rm(imagePath)
         await rename(imageOptPath, imagePath)
       } else {

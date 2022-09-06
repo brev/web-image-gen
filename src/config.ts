@@ -12,7 +12,7 @@ const getVersion = async () => {
   try {
     pkg = await readFile(resolve(cwd(), 'package.json'), 'utf8')
     if (pkg) return JSON.parse(pkg).version
-  } catch { }
+  } catch {}
   return Date.now()
 }
 
@@ -59,10 +59,12 @@ export const getConfig = async (options: Options) => {
         config = deepmerge(config, configJson)
         if (verbose) console.log(`Config file read ${configFile}...`)
       } catch (error) {
-        throw new Error([
-          `Cannot read or parse ${configFile}:`,
-          (error as Error).message
-        ].join(' '))
+        throw new Error(
+          [
+            `Cannot read or parse ${configFile}:`,
+            (error as Error).message,
+          ].join(' ')
+        )
       }
     } else if (ext === '.js') {
       try {
@@ -83,13 +85,13 @@ export const getConfig = async (options: Options) => {
       const configJson = JSON.parse(configRaw)
       config = deepmerge(config, configJson)
       if (verbose) console.log(`Config file read ${configFile}...`)
-    } catch { }
+    } catch {}
     try {
       const configFile = `${configFilename}.js`
       const { default: configJs } = await import(resolve(cwd(), configFile))
       config = deepmerge(config, configJs)
       if (verbose) console.log(`Config file import ${configFile}...`)
-    } catch { }
+    } catch {}
   }
 
   if (config === defaultConfig && verbose)

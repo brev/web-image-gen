@@ -32,10 +32,11 @@ test.after.each(async (context) => {
 })
 
 test('--optimize', async ({ cwd }) => {
-  const sizeBefore = (await Promise.all(
-    originals.map((original) => stat(resolve(cwd, original)))
-  )).map((meta) => meta.size)
-    .reduce((prev, curr) => (prev + curr), 0)
+  const sizeBefore = (
+    await Promise.all(originals.map((original) => stat(resolve(cwd, original))))
+  )
+    .map((meta) => meta.size)
+    .reduce((prev, curr) => prev + curr, 0)
 
   const stdout = await spawn(
     process.execPath,
@@ -51,26 +52,24 @@ test('--optimize', async ({ cwd }) => {
   const snaptree = await readFile(snapfile('optimize_tree'))
   assert.snapshot(tree.toString(), snaptree.toString())
 
-  const sizeAfter = (await Promise.all(
-    originals.map((original) => stat(resolve(cwd, original)))
-  )).map((meta) => meta.size)
-    .reduce((prev, curr) => (prev + curr), 0)
+  const sizeAfter = (
+    await Promise.all(originals.map((original) => stat(resolve(cwd, original))))
+  )
+    .map((meta) => meta.size)
+    .reduce((prev, curr) => prev + curr, 0)
   assert.ok(
     sizeAfter < sizeBefore,
     'optimized images should be smaller than unoptimized'
   )
 
   // run twice to make sure not getting any smaller after 5% min
-  await spawn(
-    process.execPath,
-    [script, 'originals', '--optimize'],
-    { cwd }
-  )
+  await spawn(process.execPath, [script, 'originals', '--optimize'], { cwd })
 
-  const sizeAgain = (await Promise.all(
-    originals.map((original) => stat(resolve(cwd, original)))
-  )).map((meta) => meta.size)
-    .reduce((prev, curr) => (prev + curr), 0)
+  const sizeAgain = (
+    await Promise.all(originals.map((original) => stat(resolve(cwd, original))))
+  )
+    .map((meta) => meta.size)
+    .reduce((prev, curr) => prev + curr, 0)
   assert.ok(
     sizeAgain === sizeAfter,
     'twice-optimized images should not be smaller than single-optimized'

@@ -15,7 +15,7 @@ export { checkConfig, defaultConfig, generate, getConfig }
 // @TODO more inputs than .jpg (.png, .gif, etc)
 // @TODO 'help' command and tests
 // @TODO 'clean' --only=images|manifests and tests
-// @TODO refactors 
+// @TODO refactors
 // @TODO config: load dirs from sveltekit config
 // @TODO config: checkConfig
 // @TODO README.md
@@ -27,7 +27,8 @@ const commands = {
   generate: async (config: Config, options: Options) => {
     if (command === 'generate') {
       if ('verbose' in options) {
-        const entities = 'only' in options ? options.only : 'images and manifests'
+        const entities =
+          'only' in options ? options.only : 'images and manifests'
         console.log(`Generating ${entities}...`)
       }
       if ('force' in options) {
@@ -40,7 +41,9 @@ const commands = {
   originals: async (config: Config, options: Options) => {
     if ('optimize' in options) {
       if ('verbose' in options)
-        console.log(`Original source images: Minimizing while keeping quality...`)
+        console.log(
+          `Original source images: Minimizing while keeping quality...`
+        )
       await optimize(config, options)
     } else if ('remove' in options) {
       if (!('force' in options)) {
@@ -51,7 +54,8 @@ const commands = {
         readline.close()
         if (!answer.toLowerCase().match(/^y(es)?$/)) process.exit()
       }
-      if ('verbose' in options) console.log(`Original source images: Removing...`)
+      if ('verbose' in options)
+        console.log(`Original source images: Removing...`)
       await remove(config, options)
     }
   },
@@ -82,4 +86,3 @@ switch (command) {
     await commands.clean(config, options)
     break
 }
-

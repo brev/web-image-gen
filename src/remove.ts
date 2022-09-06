@@ -33,7 +33,9 @@ export default async (config: Config, options: Options) => {
     for (const imageFile of imageFiles) {
       const imagePath = resolve(imageDirPath, imageFile)
       if (verbose)
-        console.log(`Removing original source image file: ${shortPath(imagePath)}`)
+        console.log(
+          `Removing original source image file: ${shortPath(imagePath)}`
+        )
       await rm(imagePath)
     }
   }

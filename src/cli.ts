@@ -59,7 +59,7 @@ const meta = {
   },
   clean: {
     description: 'Remove all generated images and manifests.',
-  }
+  },
 }
 const metaUsage = (command = '<command>') => ({
   one: `{bold Usage:}`,
@@ -128,8 +128,7 @@ const originalsConfig: ArgumentConfig<OriginalsArguments> = {
   },
 }
 
-const cleanConfig: ArgumentConfig<CleanArguments> = {
-}
+const cleanConfig: ArgumentConfig<CleanArguments> = {}
 
 const optionsConfig = { ...globalConfig } as ArgumentConfig<Options>
 
@@ -267,7 +266,7 @@ export default () => {
     )
       options.help = true
   }
-  if (command === 'clean') { }
+  // if (command === 'clean') {}
 
   // help
   if (!command || command === 'help' || options.help) {

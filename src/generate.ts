@@ -148,7 +148,7 @@ export default async (config: Config, options: Options) => {
         // default image for set
         manifest[imageSlug].default =
           manifest[imageSlug].formats[config.default.format][
-          config.default.size
+            config.default.size
           ]
       }
     }
