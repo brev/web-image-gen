@@ -1,0 +1,7 @@
+Using default config...
+Generating manifests...
+Overwriting already existing files!
+Processing original source images dir: static/images/countries
+Creating generated manifest file: src/lib/assets/images/_gen/countries.json
+Processing original source images dir: static/images/fruits
+Creating generated manifest file: src/lib/assets/images/_gen/fruits.json

@@ -6,13 +6,13 @@ export type Config = {
     size: number
   }
   dirs: {
-    static: string
-    image: string
     generated: string
-    code: string
+    static: string
+    images: string
+    manifests: string
   }
-  exts: {
-    image: string
+  originals: {
+    format: string
   }
   version: string
 }

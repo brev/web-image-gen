@@ -1,10 +1,11 @@
 import type { ArgumentConfig } from 'ts-command-line-args'
 import type {
   CommandArguments,
-  GenerateArguments,
   GlobalArguments,
-  IndividualArguments,
+  GenerateArguments,
   OriginalsArguments,
+  CleanArguments,
+  Options,
 } from '../types/Arguments'
 import type { Section } from 'command-line-usage'
 
@@ -19,14 +20,30 @@ const meta = {
     commands: 'Available Commands',
     config:
       'Config file to use instead of the default, in `.js` or `.json` format.',
-    description: `Modern responsive image generation tooling for SvelteKit.\n
-                  https://github.com/brev/sveltekit-imagegen`,
+    description: [
+      'Modern responsive image generation tooling for SvelteKit.',
+      '',
+      'Default config file is expected to be `.sveltekit-imagegen.js` or `.sveltekit-imagegen.json` in the root of your SvelteKit project.',
+    ].join('\n'),
     help: 'Show this usage help guide, or help for a specific command.',
     options: 'Global Options',
+    url: 'https://github.com/brev/sveltekit-imagegen',
     verbose: 'Display debugging output.',
   },
   generate: {
     description: 'Generate responsive images and importable code manifests.',
+    details: [
+      '',
+      [
+        'Images will be generated to requested sizes and formats in the `static` folder.',
+        'Already existing images will be skipped, by default.',
+      ].join(' '),
+      '',
+      [
+        'Manifests will be generated as importable code in the `src/lib` folder.',
+        'Manifests are created if any new images are generated, by default.',
+      ].join(' '),
+    ].join('\n'),
     force: 'Always write new files, even if they already exist.',
     only: 'Only create one of `images` or `manifests`, but not both.',
     options: 'Generate Options',
@@ -40,6 +57,9 @@ const meta = {
     remove:
       'Remove original source images (shrink size of production release package).',
   },
+  clean: {
+    description: 'Remove all generated images and manifests.',
+  }
 }
 const metaUsage = (command = '<command>') => ({
   one: `{bold Usage:}`,
@@ -108,7 +128,10 @@ const originalsConfig: ArgumentConfig<OriginalsArguments> = {
   },
 }
 
-const optionsConfig = { ...globalConfig } as ArgumentConfig<IndividualArguments>
+const cleanConfig: ArgumentConfig<CleanArguments> = {
+}
+
+const optionsConfig = { ...globalConfig } as ArgumentConfig<Options>
 
 // help
 
@@ -116,7 +139,7 @@ const guides: Record<string, Record<string, Section>> = {
   global: {
     header: {
       header: meta.name,
-      content: meta.global.description,
+      content: [meta.global.description, '', meta.global.url],
     },
     usage: {
       content: [metaUsage()],
@@ -131,6 +154,10 @@ const guides: Record<string, Record<string, Section>> = {
         {
           one: `{bold originals}`,
           two: meta.originals.description,
+        },
+        {
+          one: `{bold clean}`,
+          two: meta.clean.description,
         },
         {
           one: `{bold help}`,
@@ -150,7 +177,7 @@ const guides: Record<string, Record<string, Section>> = {
   generate: {
     header: {
       header: 'Generate',
-      content: meta.generate.description,
+      content: [meta.generate.description, meta.generate.details],
     },
     usage: {
       content: [metaUsage('generate')],
@@ -181,9 +208,18 @@ const guides: Record<string, Record<string, Section>> = {
       })),
     },
   },
+  clean: {
+    header: {
+      header: 'Clean',
+      content: meta.clean.description,
+    },
+    usage: {
+      content: [metaUsage('clean')],
+    },
+  },
 }
 
-// cli
+// CLI
 
 export default () => {
   let help: Array<Section> = []
@@ -195,17 +231,23 @@ export default () => {
   const { command } = commands
 
   // prepare
-  if (command === 'generate') {
-    Object.assign(optionsConfig, generateConfig)
-    help = Object.values(guides.generate)
-  }
-  if (command === 'originals') {
-    Object.assign(optionsConfig, originalsConfig)
-    help = Object.values(guides.originals)
+  switch (command) {
+    case 'generate':
+      Object.assign(optionsConfig, generateConfig)
+      help = Object.values(guides.generate)
+      break
+    case 'originals':
+      Object.assign(optionsConfig, originalsConfig)
+      help = Object.values(guides.originals)
+      break
+    case 'clean':
+      Object.assign(optionsConfig, cleanConfig)
+      help = Object.values(guides.clean)
+      break
   }
 
   // options
-  const options = parse<IndividualArguments>(optionsConfig, {
+  const options = parse<Options>(optionsConfig, {
     // @ts-ignore
     argv: commands._unknown || [],
   })
@@ -225,6 +267,7 @@ export default () => {
     )
       options.help = true
   }
+  if (command === 'clean') { }
 
   // help
   if (!command || command === 'help' || options.help) {

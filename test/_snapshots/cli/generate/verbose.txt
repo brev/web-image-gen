@@ -1,0 +1,19 @@
+Using default config...
+Generating images and manifests...
+Processing original source images dir: static/images/countries
+Creating generated images dir: static/images/countries/_gen
+Creating generated image file: static/images/countries/_gen/france-400.avif
+Creating generated image file: static/images/countries/_gen/france-400.webp
+Creating generated image file: static/images/countries/_gen/france-400.jpg
+Creating generated image file: static/images/countries/_gen/france-800.avif
+Creating generated image file: static/images/countries/_gen/france-800.webp
+Creating generated image file: static/images/countries/_gen/france-800.jpg
+Creating generated image file: static/images/countries/_gen/italy-400.avif
+Creating generated image file: static/images/countries/_gen/italy-400.webp
+Creating generated image file: static/images/countries/_gen/italy-400.jpg
+Creating generated image file: static/images/countries/_gen/italy-800.avif
+Creating generated image file: static/images/countries/_gen/italy-800.webp
+Creating generated image file: static/images/countries/_gen/italy-800.jpg
+Creating generated manifest file: src/lib/assets/images/_gen/countries.json
+Processing original source images dir: static/images/fruits
+Creating generated manifest file: src/lib/assets/images/_gen/fruits.json

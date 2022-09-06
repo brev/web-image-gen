@@ -1,0 +1,27 @@
+
+[4m[1mSvelteKit-ImageGen[22m[24m
+
+  Modern responsive image generation tooling for SvelteKit.                     
+                                                                                
+  Default config file is expected to be `.sveltekit-imagegen.js` or             
+  `.sveltekit-imagegen.json` in the root of your SvelteKit project.             
+                                                                                
+  https://github.com/brev/sveltekit-imagegen                                    
+
+  [1mUsage:[22m   `sveltekit-imagegen [1m<command>[22m [options ...]` 
+
+[4m[1mAvailable Commands[22m[24m
+
+  [1mgenerate[22m    Generate responsive images and importable code manifests.   
+  [1moriginals[22m   Perform helpful operations on original source images.       
+  [1mclean[22m       Remove all generated images and manifests                   
+  [1mhelp[22m        Show this usage help guide, or help for a specific command. 
+
+[4m[1mGlobal Options[22m[24m
+
+  [1m-c[22m, [1m--config[22m [4mstring[24m   Config file to use instead of the default, in `.js` or  
+                        `.json` format.                                         
+  [1m-h[22m, [1m--help[22m            Show this usage help guide, or help for a specific      
+                        command.                                                
+  [1m-v[22m, [1m--verbose[22m         Display debugging output.                               
+

@@ -10,7 +10,7 @@ const update = process.env['SNAPSHOT_UPDATE']
 // @ts-ignore
 const dir = dirname(fileURLToPath(import.meta.url))
 const script = resolve(dir, '../../dist/index.js')
-const snapdir = resolve(dir, './snapshots/usage')
+const snapdir = resolve(dir, '../_snapshots/cli/usage')
 const snapfile = (name: string) => resolve(snapdir, `${name}.txt`)
 
 const test = suite('usage')
@@ -74,6 +74,17 @@ test('originals', async () => {
     '--remove',
   ])
   assert.snapshot(__optimize__remove.toString(), snapshot.toString())
+})
+
+test('clean', async () => {
+  // help
+  // const help = await spawn(process.execPath, [script, 'help', 'clean'])
+
+  // --help
+  const __help = await spawn(process.execPath, [script, 'clean', '--help'])
+  if (update) await writeFile(snapfile('clean'), __help.toString())
+  const snapshot = await readFile(snapfile('clean'))
+  assert.snapshot(__help.toString(), snapshot.toString())
 })
 
 test.run()

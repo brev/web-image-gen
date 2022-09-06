@@ -1,0 +1,8 @@
+Using default config...
+Original source images: Removing...
+Processing original source images dir: static/images/countries
+Removing original source image file: static/images/countries/france.jpg
+Removing original source image file: static/images/countries/italy.jpg
+Processing original source images dir: static/images/fruits
+Removing original source image file: static/images/fruits/apple.jpg
+Removing original source image file: static/images/fruits/pear.jpg

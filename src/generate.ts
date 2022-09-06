@@ -1,46 +1,52 @@
 import type { Config } from '../types/Config'
 import type { Credit } from '../types/Credit'
 import type { ImageSets } from '../types/ImageSet'
-import type { IndividualArguments } from '../types/Arguments'
+import type { Options } from '../types/Arguments'
 
 import { access, mkdir, readdir, readFile, writeFile } from 'fs/promises'
 import { cwd } from 'process'
+import { extname, resolve } from 'path'
 import prettier from 'prettier'
-import { resolve } from 'path'
 import sharp from 'sharp'
 
 /**
  * Generate
  */
-export default async (config: Config, options: IndividualArguments) => {
-  // utils
+export default async (config: Config, options: Options) => {
+  const imageExts = `.${config.originals.format}`
+  const force = 'force' in options
+  const only = 'only' in options && options.only
   const servePath = (path: string) =>
     path.replace(config.dirs.static, '').concat(`?v=${config.version}`)
   const shortPath = (path: string) => path.replace(`${cwd()}/`, '')
+  const verbose = 'verbose' in options
 
   // main
-  const imageRoot = resolve(config.dirs.static, config.dirs.image)
+  const imageRoot = resolve(config.dirs.static, config.dirs.images)
   const imageDirs = (await readdir(imageRoot, { withFileTypes: true }))
     .filter((dir) => dir.isDirectory())
     .map((dir) => dir.name)
 
   for (const imageDir of imageDirs) {
     const imageDirPath = resolve(imageRoot, imageDir)
-    const code: ImageSets = {}
-    let codeWrite = false
+    const manifest: ImageSets = {}
+    let manifestWrite = only != 'images' ? true : false
 
-    console.log(`Processing dir: ${shortPath(imageDirPath)}`)
+    if (verbose)
+      console.log(
+        `Processing original source images dir: ${shortPath(imageDirPath)}`
+      )
     const imageFiles = (await readdir(imageDirPath, { withFileTypes: true }))
-      .filter((file) => file.isFile() && file.name.endsWith(config.exts.image))
+      .filter((file) => file.isFile() && extname(file.name) === imageExts)
       .map((file) => file.name)
 
     for (const imageFile of imageFiles) {
-      const imageSlug = imageFile.replace(config.exts.image, '')
+      const imageSlug = imageFile.replace(imageExts, '')
       const imagePath = resolve(imageDirPath, imageFile)
-      const creditPath = imagePath.replace(config.exts.image, '.json')
+      const creditPath = imagePath.replace(imageExts, '.json')
       const genDirPath = resolve(imageDirPath, config.dirs.generated)
       let creditExists = true
-      code[imageSlug] = {
+      manifest[imageSlug] = {
         credit: null,
         default: '',
         formats: {},
@@ -58,7 +64,7 @@ export default async (config: Config, options: IndividualArguments) => {
         const credit: Credit = JSON.parse(
           (await readFile(creditPath)).toString()
         )
-        code[imageSlug].credit = credit
+        manifest[imageSlug].credit = credit
       }
 
       // low quality image placeholder (lqip) webp
@@ -71,19 +77,24 @@ export default async (config: Config, options: IndividualArguments) => {
         })
         .toBuffer()
       const dataURI = `data:image/webp;base64,${lqip.toString('base64')}`
-      code[imageSlug].placeholder = dataURI
+      manifest[imageSlug].placeholder = dataURI
 
-      // check if 'generated' dir exists and create if missing
-      try {
-        await access(genDirPath)
-      } catch {
-        console.log(`Creating generated dir: ${shortPath(genDirPath)}`)
-        await mkdir(genDirPath)
+      // check if image 'generated' dir exists and create if missing
+      if (only != 'manifests') {
+        try {
+          await access(genDirPath)
+        } catch {
+          if (verbose)
+            console.log(
+              `Creating generated images dir: ${shortPath(genDirPath)}`
+            )
+          await mkdir(genDirPath, { recursive: true })
+        }
       }
 
       // generate sizes
       for (const size of config.sizes) {
-        code[imageSlug].sizes[size] = {}
+        manifest[imageSlug].sizes[size] = {}
 
         // generate sized formats
         for (const format of config.formats) {
@@ -91,22 +102,27 @@ export default async (config: Config, options: IndividualArguments) => {
           const genPath = resolve(genDirPath, genFile)
           let imageExists = true
 
-          if (!code[imageSlug].formats[format])
-            code[imageSlug].formats[format] = {}
-          code[imageSlug].formats[format][size] = servePath(genPath)
-          code[imageSlug].sizes[size][format] = servePath(genPath)
+          if (!manifest[imageSlug].formats[format])
+            manifest[imageSlug].formats[format] = {}
+          manifest[imageSlug].formats[format][size] = servePath(genPath)
+          manifest[imageSlug].sizes[size][format] = servePath(genPath)
+
+          if (only === 'manifests') continue
 
           // check if image already exists
-          try {
-            await access(genPath)
-          } catch {
-            imageExists = false
+          if (!force && only != 'manifests') {
+            try {
+              await access(genPath)
+            } catch {
+              imageExists = false
+            }
+            if (imageExists) continue
           }
-          if (imageExists) continue
 
-          // generate image
-          console.log(`Creating image file: ${shortPath(genPath)}`)
-          codeWrite = true
+          // generate images
+          if (verbose)
+            console.log(`Creating generated image file: ${shortPath(genPath)}`)
+          manifestWrite = only != 'images'
           switch (format) {
             case 'avif':
               await sharp(imagePath)
@@ -130,22 +146,39 @@ export default async (config: Config, options: IndividualArguments) => {
         }
 
         // default image for set
-        code[imageSlug].default =
-          code[imageSlug].formats[config.default.format][config.default.size]
+        manifest[imageSlug].default =
+          manifest[imageSlug].formats[config.default.format][
+          config.default.size
+          ]
       }
     }
 
-    // code
-    if (codeWrite) {
-      const codePath = resolve(config.dirs.code, imageDir)
-      const codeFile = `${codePath}.json`
+    // manifest
+    if (manifestWrite) {
+      const manifestPath = resolve(config.dirs.manifests, config.dirs.generated)
+      const manifestFile = resolve(manifestPath, `${imageDir}.json`)
 
-      // generate code
-      console.log(`Creating code file: ${shortPath(codeFile)}`)
-      const codeSrc = prettier.format(JSON.stringify(code, null, '  '), {
-        parser: 'json',
-      })
-      await writeFile(codeFile, codeSrc)
-    } else console.log(`  ...nothing to do in ${shortPath(imageDirPath)}`)
+      // check if manifest 'generated' dir exists and create if missing
+      try {
+        await access(manifestPath)
+      } catch {
+        if (verbose)
+          console.log(
+            `Creating generated manifests dir: ${shortPath(manifestPath)}`
+          )
+        await mkdir(manifestPath, { recursive: true })
+      }
+
+      // generate manifest
+      if (verbose)
+        console.log(
+          `Creating generated manifest file: ${shortPath(manifestFile)}`
+        )
+      const manifestSrc = prettier.format(
+        JSON.stringify(manifest, null, '  '),
+        { parser: 'json' }
+      )
+      await writeFile(manifestFile, manifestSrc)
+    }
   }
 }

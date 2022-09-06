@@ -19,5 +19,8 @@ export type OriginalsArguments = {
   remove?: boolean
 }
 
-export type IndividualArguments = GlobalArguments &
-  (GenerateArguments | OriginalsArguments)
+export type CleanArguments = {
+}
+
+export type Options = GlobalArguments &
+  (GenerateArguments | OriginalsArguments | CleanArguments)

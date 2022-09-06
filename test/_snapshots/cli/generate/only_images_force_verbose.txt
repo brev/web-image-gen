@@ -1,0 +1,30 @@
+Using default config...
+Generating images...
+Overwriting already existing files!
+Processing original source images dir: static/images/countries
+Creating generated images dir: static/images/countries/_gen
+Creating generated image file: static/images/countries/_gen/france-400.avif
+Creating generated image file: static/images/countries/_gen/france-400.webp
+Creating generated image file: static/images/countries/_gen/france-400.jpg
+Creating generated image file: static/images/countries/_gen/france-800.avif
+Creating generated image file: static/images/countries/_gen/france-800.webp
+Creating generated image file: static/images/countries/_gen/france-800.jpg
+Creating generated image file: static/images/countries/_gen/italy-400.avif
+Creating generated image file: static/images/countries/_gen/italy-400.webp
+Creating generated image file: static/images/countries/_gen/italy-400.jpg
+Creating generated image file: static/images/countries/_gen/italy-800.avif
+Creating generated image file: static/images/countries/_gen/italy-800.webp
+Creating generated image file: static/images/countries/_gen/italy-800.jpg
+Processing original source images dir: static/images/fruits
+Creating generated image file: static/images/fruits/_gen/apple-400.avif
+Creating generated image file: static/images/fruits/_gen/apple-400.webp
+Creating generated image file: static/images/fruits/_gen/apple-400.jpg
+Creating generated image file: static/images/fruits/_gen/apple-800.avif
+Creating generated image file: static/images/fruits/_gen/apple-800.webp
+Creating generated image file: static/images/fruits/_gen/apple-800.jpg
+Creating generated image file: static/images/fruits/_gen/pear-400.avif
+Creating generated image file: static/images/fruits/_gen/pear-400.webp
+Creating generated image file: static/images/fruits/_gen/pear-400.jpg
+Creating generated image file: static/images/fruits/_gen/pear-800.avif
+Creating generated image file: static/images/fruits/_gen/pear-800.webp
+Creating generated image file: static/images/fruits/_gen/pear-800.jpg

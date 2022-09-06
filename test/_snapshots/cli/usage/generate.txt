@@ -1,0 +1,26 @@
+
+[4m[1mGenerate[22m[24m
+
+  Generate responsive images and importable code manifests.                     
+                                                                                
+  Images will be generated to requested sizes and formats in the `static`       
+  folder. Already existing images will be skipped, by default.                  
+                                                                                
+  Manifests will be generated as importable code in the `src/lib` folder.       
+  Manifests are created if any new images are generated, by default.            
+
+  [1mUsage:[22m   `sveltekit-imagegen [1mgenerate[22m [options ...]` 
+
+[4m[1mGenerate Options[22m[24m
+
+  [1m--force[22m         Always write new files, even if they already exist.       
+  [1m--only[22m [4mstring[24m   Only create one of `images` or `manifests`, but not both. 
+
+[4m[1mGlobal Options[22m[24m
+
+  [1m-c[22m, [1m--config[22m [4mstring[24m   Config file to use instead of the default, in `.js` or  
+                        `.json` format.                                         
+  [1m-h[22m, [1m--help[22m            Show this usage help guide, or help for a specific      
+                        command.                                                
+  [1m-v[22m, [1m--verbose[22m         Display debugging output.                               
+

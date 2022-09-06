@@ -1,0 +1,23 @@
+
+[4m[1mOriginals[22m[24m
+
+  Perform helpful operations on original source images. 
+
+  [1mUsage:[22m   `sveltekit-imagegen [1moriginals[22m [options ...]` 
+
+[4m[1mOriginals Options[22m[24m
+
+  [1m--force[22m       Bypass confirmation prompt when using `--remove` option.        
+  [1m--optimize[22m    Minimize size of original source images without reducing        
+                quality.                                                        
+  [1m--remove[22m      Remove original source images (shrink size of production        
+                release package).                                               
+
+[4m[1mGlobal Options[22m[24m
+
+  [1m-c[22m, [1m--config[22m [4mstring[24m   Config file to use instead of the default, in `.js` or  
+                        `.json` format.                                         
+  [1m-h[22m, [1m--help[22m            Show this usage help guide, or help for a specific      
+                        command.                                                
+  [1m-v[22m, [1m--verbose[22m         Display debugging output.                               
+

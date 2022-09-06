@@ -1,0 +1,15 @@
+
+[4m[1mClean[22m[24m
+
+  Remove all generated images and manifests 
+
+  [1mUsage:[22m   `sveltekit-imagegen [1mclean[22m [options ...]` 
+
+[4m[1mGlobal Options[22m[24m
+
+  [1m-c[22m, [1m--config[22m [4mstring[24m   Config file to use instead of the default, in `.js` or  
+                        `.json` format.                                         
+  [1m-h[22m, [1m--help[22m            Show this usage help guide, or help for a specific      
+                        command.                                                
+  [1m-v[22m, [1m--verbose[22m         Display debugging output.                               
+

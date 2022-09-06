@@ -1,0 +1,6 @@
+Using default config...
+Original source images: Minimizing while keeping quality...
+Processing original source images dir: static/images/countries
+Optimizing original source image file: static/images/countries/france.jpg
+Optimizing original source image file: static/images/countries/italy.jpg
+Processing original source images dir: static/images/fruits

@@ -1,0 +1,1 @@
+Remove original source images? Are you sure? [y/N]: 
