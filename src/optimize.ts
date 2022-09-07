@@ -1,8 +1,8 @@
 import type { Config } from '../types/Config'
 import type { Options } from '../types/Arguments'
 
-import { cwd } from 'node:process'
 import { extname, resolve } from 'node:path'
+import { getFlags, shortPath } from './utils.js'
 import { readdir, rename, rm, stat } from 'node:fs/promises'
 import sharp from 'sharp'
 
@@ -10,9 +10,8 @@ import sharp from 'sharp'
  * Optimize
  */
 export default async (config: Config, options: Options) => {
+  const { verbose } = getFlags(options)
   const imageExts = `.${config.originals.format}`
-  const shortPath = (path: string) => path.replace(`${cwd()}/`, '')
-  const verbose = 'verbose' in options
 
   const imageRoot = resolve(config.dirs.static, config.dirs.images)
   const imageDirs = (await readdir(imageRoot, { withFileTypes: true }))
@@ -44,9 +43,11 @@ export default async (config: Config, options: Options) => {
           console.log(
             `Optimizing original source image file: ${shortPath(imagePath)}`
           )
+        // save new image
         await rm(imagePath)
         await rename(imageOptPath, imagePath)
       } else {
+        // keep old image
         await rm(imageOptPath)
       }
     }

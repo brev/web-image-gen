@@ -1,7 +1,7 @@
 import type { Config } from '../types/Config'
 import type { Options } from '../types/Arguments'
 
-import { cwd } from 'process'
+import { getFlags, shortPath } from './utils.js'
 import { readdir, rm } from 'fs/promises'
 import { resolve } from 'path'
 
@@ -9,8 +9,7 @@ import { resolve } from 'path'
  * Clean
  */
 export default async (config: Config, options: Options) => {
-  const shortPath = (path: string) => path.replace(`${cwd()}/`, '')
-  const verbose = 'verbose' in options
+  const { only, verbose } = getFlags(options)
 
   const imageRoot = resolve(config.dirs.static, config.dirs.images)
   const imageDirs = (await readdir(imageRoot, { withFileTypes: true }))
@@ -21,10 +20,14 @@ export default async (config: Config, options: Options) => {
     const imageDirPath = resolve(imageRoot, imageDir)
     const genPath = resolve(imageDirPath, config.dirs.generated)
 
+    if (only === 'manifests') continue
+
     if (verbose)
       console.log(`Removing generated images dir: ${shortPath(genPath)}`)
     await rm(genPath, { recursive: true })
   }
+
+  if (only === 'images') return
 
   const manifestPath = resolve(config.dirs.manifests, config.dirs.generated)
   if (verbose)

@@ -19,7 +19,9 @@ export type OriginalsArguments = {
   remove?: boolean
 }
 
-export type CleanArguments = Record<string, never>
+export type CleanArguments = {
+  only?: string
+}
 
 export type Options = GlobalArguments &
   (GenerateArguments | OriginalsArguments | CleanArguments)

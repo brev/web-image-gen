@@ -1,9 +1,13 @@
 
 [4m[1mClean[22m[24m
 
-  Remove all generated images and manifests 
+  Remove all generated images and manifests. 
 
   [1mUsage:[22m   `sveltekit-imagegen [1mclean[22m [options ...]` 
+
+[4m[1mClean Options[22m[24m
+
+  [1m-o[22m, [1m--only[22m [4mstring[24m   Only remove one of `images` or `manifests`, but not both. 
 
 [4m[1mGlobal Options[22m[24m
 

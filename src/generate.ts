@@ -4,8 +4,8 @@ import type { ImageSets } from '../types/ImageSet'
 import type { Options } from '../types/Arguments'
 
 import { access, mkdir, readdir, readFile, writeFile } from 'fs/promises'
-import { cwd } from 'process'
 import { extname, resolve } from 'path'
+import { getFlags, getServePath, shortPath } from './utils.js'
 import prettier from 'prettier'
 import sharp from 'sharp'
 
@@ -13,13 +13,9 @@ import sharp from 'sharp'
  * Generate
  */
 export default async (config: Config, options: Options) => {
+  const { force, only, verbose } = getFlags(options)
+  const servePath = getServePath(config)
   const imageExts = `.${config.originals.format}`
-  const force = 'force' in options
-  const only = 'only' in options && options.only
-  const servePath = (path: string) =>
-    path.replace(config.dirs.static, '').concat(`?v=${config.version}`)
-  const shortPath = (path: string) => path.replace(`${cwd()}/`, '')
-  const verbose = 'verbose' in options
 
   // main
   const imageRoot = resolve(config.dirs.static, config.dirs.images)
@@ -123,26 +119,21 @@ export default async (config: Config, options: Options) => {
           if (verbose)
             console.log(`Creating generated image file: ${shortPath(genPath)}`)
           manifestWrite = only != 'images'
-          switch (format) {
-            case 'avif':
-              await sharp(imagePath)
-                .resize({ width: size })
-                .avif()
-                .toFile(genPath)
-              break
-            case 'jpg':
-              await sharp(imagePath)
-                .resize({ width: size })
-                .jpeg({ mozjpeg: true })
-                .toFile(genPath)
-              break
-            case 'webp':
-              await sharp(imagePath)
-                .resize({ width: size })
-                .webp()
-                .toFile(genPath)
-              break
-          }
+          if (format === 'avif')
+            await sharp(imagePath)
+              .resize({ width: size })
+              .avif()
+              .toFile(genPath)
+          if (format === 'jpg')
+            await sharp(imagePath)
+              .resize({ width: size })
+              .jpeg({ mozjpeg: true })
+              .toFile(genPath)
+          if (format === 'webp')
+            await sharp(imagePath)
+              .resize({ width: size })
+              .webp()
+              .toFile(genPath)
         }
 
         // default image for set
@@ -156,7 +147,10 @@ export default async (config: Config, options: Options) => {
     // manifest
     if (manifestWrite) {
       const manifestPath = resolve(config.dirs.manifests, config.dirs.generated)
-      const manifestFile = resolve(manifestPath, `${imageDir}.json`)
+      const manifestFile = resolve(
+        manifestPath,
+        `${imageDir}.${config.manifests}`
+      )
 
       // check if manifest 'generated' dir exists and create if missing
       try {

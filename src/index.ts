@@ -1,7 +1,12 @@
 import type { Config } from '../types/Config'
 import type { Options } from '../types/Arguments'
 
-import { checkConfig, defaultConfig, getConfig } from './config.js'
+import {
+  checkConfig,
+  contentTypes,
+  defaultConfig,
+  getConfig,
+} from './config.js'
 import clean from './clean.js'
 import { createInterface } from 'node:readline/promises'
 import generate from './generate.js'
@@ -10,16 +15,13 @@ import optimize from './optimize.js'
 import remove from './remove.js'
 import { stdin, stdout } from 'node:process'
 
-export { checkConfig, defaultConfig, generate, getConfig }
+export { checkConfig, contentTypes, defaultConfig, generate, getConfig }
 
+// @TODO outputs as .js and .ts
 // @TODO more inputs than .jpg (.png, .gif, etc)
-// @TODO 'help' command and tests
-// @TODO 'clean' --only=images|manifests and tests
-// @TODO refactors
-// @TODO config: load dirs from sveltekit config
-// @TODO config: checkConfig
-// @TODO README.md
 // @TODO generate: parallelize?
+// @TODO how much SvelteKit or Vite is this really?
+// @TODO README.md
 
 // commands
 
@@ -30,9 +32,8 @@ const commands = {
         const entities =
           'only' in options ? options.only : 'images and manifests'
         console.log(`Generating ${entities}...`)
-      }
-      if ('force' in options) {
-        console.log('Overwriting already existing files!')
+        if ('force' in options)
+          console.log('Overwriting already existing files!')
       }
       await generate(config, options)
     }
@@ -42,7 +43,7 @@ const commands = {
     if ('optimize' in options) {
       if ('verbose' in options)
         console.log(
-          `Original source images: Minimizing while keeping quality...`
+          `Original source images: Minimizing size while trying to maintain quality...`
         )
       await optimize(config, options)
     } else if ('remove' in options) {
@@ -61,28 +62,22 @@ const commands = {
   },
 
   clean: async (config: Config, options: Options) => {
-    if ('verbose' in options)
-      console.log(`Cleaning up and removing all generated files...`)
+    if ('verbose' in options) {
+      const entities = 'only' in options ? options.only : 'images and manifests'
+      console.log(`Cleaning and removing generated ${entities} files...`)
+    }
     await clean(config, options)
   },
 }
 
 // main
 
-await new Promise((resolve) => setTimeout(resolve, 1)) // after any warnings
+await new Promise((resolve) => setTimeout(resolve, 1)) // log after node warns
 
 const { command, options } = getCLI()
 
 const config = await getConfig(options)
 
-switch (command) {
-  case 'generate':
-    await commands.generate(config, options)
-    break
-  case 'originals':
-    await commands.originals(config, options)
-    break
-  case 'clean':
-    await commands.clean(config, options)
-    break
-}
+if (command === 'generate') await commands.generate(config, options)
+if (command === 'originals') await commands.originals(config, options)
+if (command === 'clean') await commands.clean(config, options)

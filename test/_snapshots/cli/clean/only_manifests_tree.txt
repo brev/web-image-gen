@@ -1,4 +1,3 @@
-src/lib/assets/images/_gen/fruits.json
 static/images/countries/_gen/france-400.avif
 static/images/countries/_gen/france-400.jpg
 static/images/countries/_gen/france-400.webp

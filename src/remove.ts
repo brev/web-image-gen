@@ -1,17 +1,16 @@
 import type { Config } from '../types/Config'
 import type { Options } from '../types/Arguments'
 
-import { cwd } from 'process'
 import { extname, resolve } from 'path'
+import { getFlags, shortPath } from './utils.js'
 import { readdir, rm } from 'fs/promises'
 
 /**
  * Remove
  */
 export default async (config: Config, options: Options) => {
+  const { verbose } = getFlags(options)
   const imageExts = `.${config.originals.format}`
-  const shortPath = (path: string) => path.replace(`${cwd()}/`, '')
-  const verbose = 'verbose' in options
 
   // main
   const imageRoot = resolve(config.dirs.static, config.dirs.images)

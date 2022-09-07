@@ -1,52 +1,49 @@
 import * as assert from 'uvu/assert'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { execPath } from 'node:process'
+import { getPaths, isUpdate } from './utils.js'
 import { readFile, writeFile } from 'node:fs/promises'
 import spawn from 'await-spawn'
 import { suite } from 'uvu'
 
-const update = process.env['SNAPSHOT_UPDATE']
-
 // @ts-ignore
-const dir = dirname(fileURLToPath(import.meta.url))
-const script = resolve(dir, '../../dist/index.js')
-const snapdir = resolve(dir, '../_snapshots/cli/usage')
-const snapfile = (name: string) => resolve(snapdir, `${name}.txt`)
+const { getSnapshotFile, scriptFile } = getPaths(import.meta.url)
+const snapshotFile = getSnapshotFile('usage')
 
 const test = suite('usage')
 
 test('BARE', async () => {
-  const stdout = await spawn(process.execPath, [script])
-  if (update) await writeFile(snapfile('bare'), stdout.toString())
-  const snapshot = await readFile(snapfile('bare'))
+  const stdout = await spawn(execPath, [scriptFile])
+  if (isUpdate) await writeFile(snapshotFile('bare'), stdout.toString())
+  const snapshot = await readFile(snapshotFile('bare'))
   assert.snapshot(stdout.toString(), snapshot.toString())
 
   // help
-  const help = await spawn(process.execPath, [script, 'help'])
+  const help = await spawn(execPath, [scriptFile, 'help'])
   assert.snapshot(help.toString(), snapshot.toString())
 
   // --help
-  const __help = await spawn(process.execPath, [script, '--help'])
+  const __help = await spawn(execPath, [scriptFile, '--help'])
   assert.snapshot(__help.toString(), snapshot.toString())
 })
 
 test('generate', async () => {
   // help
-  // const help = await spawn(process.execPath, [script, 'help', 'generate'])
+  const help = await spawn(execPath, [scriptFile, 'help', 'generate'])
+  if (isUpdate) await writeFile(snapshotFile('generate'), help.toString())
+  const snapshot = await readFile(snapshotFile('generate'))
+  assert.snapshot(help.toString(), snapshot.toString())
 
   // --help
-  const __help = await spawn(process.execPath, [script, 'generate', '--help'])
-  if (update) await writeFile(snapfile('generate'), __help.toString())
-  const snapshot = await readFile(snapfile('generate'))
+  const __help = await spawn(execPath, [scriptFile, 'generate', '--help'])
   assert.snapshot(__help.toString(), snapshot.toString())
 
   // --only
-  const __only = await spawn(process.execPath, [script, 'generate', '--only'])
+  const __only = await spawn(execPath, [scriptFile, 'generate', '--only'])
   assert.snapshot(__only.toString(), snapshot.toString())
 
   // --only invalid
-  const __onlyInvalid = await spawn(process.execPath, [
-    script,
+  const __onlyInvalid = await spawn(execPath, [
+    scriptFile,
     'generate',
     '--only invalid',
   ])
@@ -54,21 +51,22 @@ test('generate', async () => {
 })
 
 test('originals', async () => {
-  const bare = await spawn(process.execPath, [script, 'originals'])
-  if (update) await writeFile(snapfile('originals'), bare.toString())
-  const snapshot = await readFile(snapfile('originals'))
+  const bare = await spawn(execPath, [scriptFile, 'originals'])
+  if (isUpdate) await writeFile(snapshotFile('originals'), bare.toString())
+  const snapshot = await readFile(snapshotFile('originals'))
   assert.snapshot(bare.toString(), snapshot.toString())
 
   // help
-  // const help = await spawn(process.execPath, [script, 'help', 'originals'])
+  const help = await spawn(execPath, [scriptFile, 'help', 'originals'])
+  assert.snapshot(help.toString(), snapshot.toString())
 
   // --help
-  const __help = await spawn(process.execPath, [script, 'originals', '--help'])
+  const __help = await spawn(execPath, [scriptFile, 'originals', '--help'])
   assert.snapshot(__help.toString(), snapshot.toString())
 
   // --optimize --remove
-  const __optimize__remove = await spawn(process.execPath, [
-    script,
+  const __optimize__remove = await spawn(execPath, [
+    scriptFile,
     'originals',
     '--optimize',
     '--remove',
@@ -78,13 +76,26 @@ test('originals', async () => {
 
 test('clean', async () => {
   // help
-  // const help = await spawn(process.execPath, [script, 'help', 'clean'])
+  const help = await spawn(execPath, [scriptFile, 'help', 'clean'])
+  if (isUpdate) await writeFile(snapshotFile('clean'), help.toString())
+  const snapshot = await readFile(snapshotFile('clean'))
+  assert.snapshot(help.toString(), snapshot.toString())
 
   // --help
-  const __help = await spawn(process.execPath, [script, 'clean', '--help'])
-  if (update) await writeFile(snapfile('clean'), __help.toString())
-  const snapshot = await readFile(snapfile('clean'))
+  const __help = await spawn(execPath, [scriptFile, 'clean', '--help'])
   assert.snapshot(__help.toString(), snapshot.toString())
+
+  // --only
+  const __only = await spawn(execPath, [scriptFile, 'clean', '--only'])
+  assert.snapshot(__only.toString(), snapshot.toString())
+
+  // --only invalid
+  const __onlyInvalid = await spawn(execPath, [
+    scriptFile,
+    'clean',
+    '--only invalid',
+  ])
+  assert.snapshot(__onlyInvalid.toString(), snapshot.toString())
 })
 
 test.run()

@@ -13,8 +13,8 @@
 
 [4m[1mGenerate Options[22m[24m
 
-  [1m--force[22m         Always write new files, even if they already exist.       
-  [1m--only[22m [4mstring[24m   Only create one of `images` or `manifests`, but not both. 
+  [1m-f[22m, [1m--force[22m         Always write new files, even if they already exist.       
+  [1m-o[22m, [1m--only[22m [4mstring[24m   Only create one of `images` or `manifests`, but not both. 
 
 [4m[1mGlobal Options[22m[24m
 

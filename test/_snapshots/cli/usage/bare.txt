@@ -14,7 +14,7 @@
 
   [1mgenerate[22m    Generate responsive images and importable code manifests.   
   [1moriginals[22m   Perform helpful operations on original source images.       
-  [1mclean[22m       Remove all generated images and manifests                   
+  [1mclean[22m       Remove all generated images and manifests.                  
   [1mhelp[22m        Show this usage help guide, or help for a specific command. 
 
 [4m[1mGlobal Options[22m[24m

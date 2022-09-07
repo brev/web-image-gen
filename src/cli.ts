@@ -52,13 +52,15 @@ const meta = {
     description: 'Perform helpful operations on original source images.',
     force: 'Bypass confirmation prompt when using `--remove` option.',
     optimize:
-      'Minimize size of original source images without reducing quality.',
+      'Minimize size of original source images while trying to maintain quality.',
     options: 'Originals Options',
     remove:
       'Remove original source images (shrink size of production release package).',
   },
   clean: {
     description: 'Remove all generated images and manifests.',
+    only: 'Only remove one of `images` or `manifests`, but not both.',
+    options: 'Clean Options',
   },
 }
 const metaUsage = (command = '<command>') => ({
@@ -66,7 +68,7 @@ const metaUsage = (command = '<command>') => ({
   two: `\`${meta.name.toLowerCase()} {bold ${command}} [options ...]\``,
 })
 
-// config
+// config - aliases=cfhoprv
 
 const commandConfig: ArgumentConfig<CommandArguments> = {
   command: {
@@ -99,11 +101,13 @@ const globalConfig: ArgumentConfig<GlobalArguments> = {
 
 const generateConfig: ArgumentConfig<GenerateArguments> = {
   force: {
+    alias: 'f',
     description: meta.generate.force,
     optional: true,
     type: Boolean,
   },
   only: {
+    alias: 'o',
     description: meta.generate.only,
     optional: true,
     type: String,
@@ -112,23 +116,33 @@ const generateConfig: ArgumentConfig<GenerateArguments> = {
 
 const originalsConfig: ArgumentConfig<OriginalsArguments> = {
   force: {
+    alias: 'f',
     description: meta.originals.force,
     optional: true,
     type: Boolean,
   },
   optimize: {
+    alias: 'p',
     description: meta.originals.optimize,
     optional: true,
     type: Boolean,
   },
   remove: {
+    alias: 'r',
     description: meta.originals.remove,
     optional: true,
     type: Boolean,
   },
 }
 
-const cleanConfig: ArgumentConfig<CleanArguments> = {}
+const cleanConfig: ArgumentConfig<CleanArguments> = {
+  only: {
+    alias: 'o',
+    description: meta.clean.only,
+    optional: true,
+    type: String,
+  },
+}
 
 const optionsConfig = { ...globalConfig } as ArgumentConfig<Options>
 
@@ -215,6 +229,14 @@ const guides: Record<string, Record<string, Section>> = {
     usage: {
       content: [metaUsage('clean')],
     },
+    options: {
+      header: meta.clean.options,
+      optionList: Object.keys(cleanConfig).map((name) => ({
+        name,
+        // @ts-ignore
+        ...cleanConfig[name],
+      })),
+    },
   },
 }
 
@@ -224,25 +246,35 @@ export default () => {
   let help: Array<Section> = []
 
   // commands
-  const commands = parse<CommandArguments>(commandConfig, {
-    stopAtFirstUnknown: true,
-  })
-  const { command } = commands
+  const getCommands = (commands?: CommandArguments) =>
+    parse<CommandArguments>(commandConfig, {
+      // @ts-ignore
+      argv: commands && commands._unknown,
+      stopAtFirstUnknown: true,
+    })
+  let commands = getCommands()
+  let command = commands.command
 
   // prepare
-  switch (command) {
-    case 'generate':
-      Object.assign(optionsConfig, generateConfig)
-      help = Object.values(guides.generate)
-      break
-    case 'originals':
-      Object.assign(optionsConfig, originalsConfig)
-      help = Object.values(guides.originals)
-      break
-    case 'clean':
-      Object.assign(optionsConfig, cleanConfig)
-      help = Object.values(guides.clean)
-      break
+  if (command === 'help') {
+    commands = getCommands(commands)
+    command = commands.command
+    // @ts-ignore
+    if (!commands._unknown) commands._unknown = []
+    // @ts-ignore
+    commands._unknown.push('--help')
+  }
+  if (command === 'generate') {
+    Object.assign(optionsConfig, generateConfig)
+    help = Object.values(guides.generate)
+  }
+  if (command === 'originals') {
+    Object.assign(optionsConfig, originalsConfig)
+    help = Object.values(guides.originals)
+  }
+  if (command === 'clean') {
+    Object.assign(optionsConfig, cleanConfig)
+    help = Object.values(guides.clean)
   }
 
   // options
@@ -266,10 +298,16 @@ export default () => {
     )
       options.help = true
   }
-  // if (command === 'clean') {}
+  if (command === 'clean') {
+    if (
+      'only' in options &&
+      !['images', 'manifests'].includes(options.only as string)
+    )
+      options.help = true
+  }
 
   // help
-  if (!command || command === 'help' || options.help) {
+  if (!command || options.help) {
     if (help.length) help.push(guides.global.options)
     else help = Object.values(guides.global)
 

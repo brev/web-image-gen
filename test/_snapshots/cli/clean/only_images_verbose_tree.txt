@@ -1,3 +1,5 @@
+src/lib/assets/images/_gen/countries.json
+src/lib/assets/images/_gen/fruits.json
 static/images/countries/france.jpg
 static/images/countries/france.json
 static/images/countries/italy.jpg
