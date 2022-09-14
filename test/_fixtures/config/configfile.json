@@ -1,11 +1,15 @@
 {
-  "formats": ["webp", "png"],
-  "sizes": [480, 640, 720],
-  "default": {
-    "format": "png",
-    "size": 640
+  "images": {
+    "formats": ["webp", "png"],
+    "sizes": [480, 640, 720],
+    "default": {
+      "format": "png",
+      "size": 640
+    },
+    "slug": "GEN"
   },
-  "dirs": {
-    "generated": "GEN"
+  "manifests": {
+    "format": "js",
+    "slug": "NEG"
   }
 }

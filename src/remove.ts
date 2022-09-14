@@ -2,7 +2,7 @@ import type { Config } from '../types/Config'
 import type { Options } from '../types/Arguments'
 
 import { extname, resolve } from 'path'
-import { getFlags, shortPath } from './utils.js'
+import { getFlags, imageInputFormats, shortPath } from './common.js'
 import { readdir, rm } from 'fs/promises'
 
 /**
@@ -10,10 +10,9 @@ import { readdir, rm } from 'fs/promises'
  */
 export default async (config: Config, options: Options) => {
   const { verbose } = getFlags(options)
-  const imageExts = `.${config.originals.format}`
 
   // main
-  const imageRoot = resolve(config.dirs.static, config.dirs.images)
+  const imageRoot = resolve(config.images.static, config.images.images)
   const imageDirs = (await readdir(imageRoot, { withFileTypes: true }))
     .filter((dir) => dir.isDirectory())
     .map((dir) => dir.name)
@@ -26,7 +25,11 @@ export default async (config: Config, options: Options) => {
         `Processing original source images dir: ${shortPath(imageDirPath)}`
       )
     const imageFiles = (await readdir(imageDirPath, { withFileTypes: true }))
-      .filter((file) => file.isFile() && extname(file.name) === imageExts)
+      .filter(
+        (file) =>
+          file.isFile() &&
+          imageInputFormats.includes(extname(file.name).replace('.', ''))
+      )
       .map((file) => file.name)
 
     for (const imageFile of imageFiles) {

@@ -1,19 +1,19 @@
 export type Config = {
-  formats: Array<string>
-  sizes: Array<number>
-  default: {
-    format: string
-    size: number
-  }
-  manifests: string
-  dirs: {
-    generated: string
-    static: string
+  images: {
+    default: {
+      format: string
+      size: number
+    }
+    formats: Array<string>
     images: string
-    manifests: string
+    sizes: Array<number>
+    slug: string
+    static: string
+  }
+  manifests: {
+    format: string
+    src: string
+    slug: string
   }
   version: string
-  originals: {
-    format: string
-  }
 }

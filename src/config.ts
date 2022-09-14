@@ -2,69 +2,60 @@ import type { Config } from '../types/Config'
 import type { Options } from '../types/Arguments'
 
 import { cwd } from 'node:process'
-import { deepMerge, getVersion } from './utils.js'
+import { deepMerge, getVersion } from './common.js'
 import { extname, resolve } from 'node:path'
+import { imageOutputFormats, manifestOutputFormats } from './common.js'
 import { readFile } from 'node:fs/promises'
 
+// default config
+
 export const defaultConfig: Config = {
-  formats: ['avif', 'webp', 'jpg'], // output. ordered!!  warn if not supported type
-  sizes: [400, 800], // output
-  default: {
-    // output manifest, ref format and size above
-    format: 'jpg',
-    size: 800,
-  },
-  manifests: 'json', // ts js json @TODO
-  dirs: {
+  images: {
+    formats: ['avif', 'webp', 'jpg'], // output. ordered!!  warn if not supported type
+    sizes: [400, 800], // output
+    default: {
+      // default generated image to fallback on or use outside imageset
+      // output manifest, ref format and size above
+      format: 'jpg',
+      size: 800,
+    },
     static: resolve('static'), // sveltekit static folder
-    images: 'images', // web serving root, relative to static dir above
-    manifests: resolve('src/lib/assets/images'), // sveltekit src/lib subpath
-    generated: '_gen', // subdir to put generated files in (both)
+    images: 'images', // image web request root, relative to static dir above
+    slug: '_gen', // subdir to put generated images in (under src)
+  },
+  manifests: {
+    format: 'json', // ts js json @TODO
+    src: resolve('src/lib/assets/images'), // sveltekit src/lib path
+    slug: '_gen', // subdir to put generated manifests in (under src)
   },
   version: await getVersion(), // package.json version, or unix epoch timestamp
-  originals: {
-    format: 'jpg', // original image source format
-  },
 }
 
-export const contentTypes = {
-  apng: 'image/apng',
-  avif: 'image/avif',
-  gif: 'image/gif',
-  jpg: 'image/jpeg',
-  jpeg: 'image/jpeg',
-  jfif: 'image/jpeg',
-  pjpeg: 'image/jpeg',
-  pjp: 'image/jpeg',
-  png: 'image/png',
-  svg: 'image/svg+xml',
-  webp: 'image/webp',
-}
+// functions
 
 export const checkConfig = (config: Config) => {
-  const imageExts = Object.keys(contentTypes)
-  // formats
-  config.formats.forEach((format) => {
-    if (!imageExts.includes(format))
-      throw new Error(`Unsupported image format ${format} in 'formats'!`)
+  // images.formats
+  config.images.formats.forEach((format) => {
+    if (!imageOutputFormats.includes(format))
+      throw new Error(`Unsupported image format ${format} in 'images.formats'!`)
   })
-  // default
-  if (!imageExts.includes(config.default.format))
+  // images.default
+  if (!imageOutputFormats.includes(config.images.default.format))
     throw new Error(
-      `Unsupported image format in 'default': ${config.default.format}!`
+      `Unsupported image format in 'images.default': ${config.images.default.format}!`
     )
-  if (!config.formats.includes(config.default.format))
+  if (!config.images.formats.includes(config.images.default.format))
     throw new Error(
-      `Image format in 'default' ${config.default.format} not found in 'formats'!`
+      `Image format in 'images.default' ${config.images.default.format} not found in 'formats'!`
     )
-  if (!config.sizes.includes(config.default.size))
+  if (!config.images.sizes.includes(config.images.default.size))
     throw new Error(
-      `Image size in 'default' ${config.default.size} not found in 'sizes'!`
+      `Image size in 'images.default' ${config.images.default.size} not found in 'sizes'!`
     )
-  // originals
-  if (!imageExts.includes(config.originals.format))
+  // manifests.format
+  if (!manifestOutputFormats.includes(config.manifests.format))
     throw new Error(
-      `Unsupported image format in 'originals': ${config.originals.format}!`
+      `Unsupported manifest format in 'manifests.format': ${config.manifests.format}!`
     )
   // version
   if (!config.version) throw new Error(`Config is missing 'version'!`)

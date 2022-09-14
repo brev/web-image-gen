@@ -1,27 +1,40 @@
 import type { Config } from '../types/Config'
 import type { Options } from '../types/Arguments'
 
-import {
-  checkConfig,
-  contentTypes,
-  defaultConfig,
-  getConfig,
-} from './config.js'
+import { checkConfig, defaultConfig, getConfig } from './config.js'
 import clean from './clean.js'
 import { createInterface } from 'node:readline/promises'
 import generate from './generate.js'
 import getCLI from './cli.js'
+import {
+  imageContentTypes,
+  imageInputFormats,
+  imageOutputFormats,
+  manifestOutputFormats,
+} from './common.js'
 import optimize from './optimize.js'
 import remove from './remove.js'
 import { stdin, stdout } from 'node:process'
 
-export { checkConfig, contentTypes, defaultConfig, generate, getConfig }
-
-// @TODO outputs as .js and .ts
-// @TODO more inputs than .jpg (.png, .gif, etc)
 // @TODO generate: parallelize?
 // @TODO how much SvelteKit or Vite is this really?
+// code coverage tweaks
 // @TODO README.md
+
+export {
+  checkConfig,
+  clean,
+  defaultConfig,
+  generate,
+  getCLI,
+  getConfig,
+  imageContentTypes,
+  imageInputFormats,
+  imageOutputFormats,
+  manifestOutputFormats,
+  optimize,
+  remove,
+}
 
 // commands
 
@@ -72,7 +85,7 @@ const commands = {
 
 // main
 
-await new Promise((resolve) => setTimeout(resolve, 1)) // log after node warns
+// await new Promise((resolve) => setTimeout(resolve, 1)) // log after node warns
 
 const { command, options } = getCLI()
 

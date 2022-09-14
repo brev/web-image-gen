@@ -1,4 +1,4 @@
-import { Context } from './utils.js'
+import { Context } from './common.js'
 
 import * as assert from 'uvu/assert'
 import { cp, readFile, rm, writeFile } from 'node:fs/promises'
@@ -9,7 +9,7 @@ import {
   getDirTree,
   getPaths,
   isUpdate,
-} from './utils.js'
+} from './common.js'
 import { resolve } from 'node:path'
 import spawn from 'await-spawn'
 import { suite } from 'uvu'
@@ -35,6 +35,42 @@ test('BARE', async ({ cwd }) => {
   if (isUpdate) await writeFile(snapshotFile('bare_tree'), tree.toString())
   const snaptree = await readFile(snapshotFile('bare_tree'))
   assert.snapshot(tree.toString(), snaptree.toString())
+
+  const manifest = JSON.parse(
+    await readFile(
+      resolve(cwd, 'src/lib/assets/images/_gen/countries.json'),
+      'utf8'
+    )
+  )
+  assert.ok(manifest.france)
+  assert.ok(manifest.france.credit)
+  assert.ok(manifest.france.credit.author)
+  assert.ok(manifest.france.credit.authorLink)
+  assert.ok(manifest.france.credit.license)
+  assert.ok(manifest.france.credit.licenseLink)
+  assert.ok(manifest.france.credit.link)
+  assert.ok(manifest.france.credit.title)
+  assert.ok(manifest.france.default)
+  assert.ok(manifest.france.formats)
+  assert.ok(manifest.france.formats.avif)
+  assert.ok(manifest.france.formats.avif['400'])
+  assert.ok(manifest.france.formats.avif['800'])
+  assert.ok(manifest.france.formats.webp)
+  assert.ok(manifest.france.formats.webp['400'])
+  assert.ok(manifest.france.formats.webp['800'])
+  assert.ok(manifest.france.formats.jpg)
+  assert.ok(manifest.france.formats.jpg['400'])
+  assert.ok(manifest.france.formats.jpg['800'])
+  assert.ok(manifest.france.placeholder)
+  assert.ok(manifest.france.sizes)
+  assert.ok(manifest.france.sizes['400'])
+  assert.ok(manifest.france.sizes['400'].avif)
+  assert.ok(manifest.france.sizes['400'].webp)
+  assert.ok(manifest.france.sizes['400'].jpg)
+  assert.ok(manifest.france.sizes['800'])
+  assert.ok(manifest.france.sizes['800'].avif)
+  assert.ok(manifest.france.sizes['800'].webp)
+  assert.ok(manifest.france.sizes['800'].jpg)
 })
 
 test('BARE (config js)', async ({ cwd }) => {
@@ -56,6 +92,39 @@ test('BARE (config js)', async ({ cwd }) => {
     await writeFile(snapshotFile('bare_config_js_tree'), tree.toString())
   const snaptree = await readFile(snapshotFile('bare_config_js_tree'))
   assert.snapshot(tree.toString(), snaptree.toString())
+
+  const manifest = (
+    await import(resolve(cwd, 'src/lib/assets/images/NEG/countries.ts'))
+  ).default
+  assert.ok(manifest.france)
+  assert.ok(manifest.france.credit)
+  assert.ok(manifest.france.credit.author)
+  assert.ok(manifest.france.credit.authorLink)
+  assert.ok(manifest.france.credit.license)
+  assert.ok(manifest.france.credit.licenseLink)
+  assert.ok(manifest.france.credit.link)
+  assert.ok(manifest.france.credit.title)
+  assert.ok(manifest.france.default)
+  assert.ok(manifest.france.formats)
+  assert.ok(manifest.france.formats.webp)
+  assert.ok(manifest.france.formats.webp['480'])
+  assert.ok(manifest.france.formats.webp['640'])
+  assert.ok(manifest.france.formats.webp['720'])
+  assert.ok(manifest.france.formats.png)
+  assert.ok(manifest.france.formats.png['480'])
+  assert.ok(manifest.france.formats.png['640'])
+  assert.ok(manifest.france.formats.png['720'])
+  assert.ok(manifest.france.placeholder)
+  assert.ok(manifest.france.sizes)
+  assert.ok(manifest.france.sizes['480'])
+  assert.ok(manifest.france.sizes['480'].webp)
+  assert.ok(manifest.france.sizes['480'].png)
+  assert.ok(manifest.france.sizes['640'])
+  assert.ok(manifest.france.sizes['640'].webp)
+  assert.ok(manifest.france.sizes['640'].png)
+  assert.ok(manifest.france.sizes['720'])
+  assert.ok(manifest.france.sizes['720'].webp)
+  assert.ok(manifest.france.sizes['720'].png)
 })
 
 test('BARE (config json)', async ({ cwd }) => {
@@ -152,15 +221,6 @@ test('--verbose', async ({ cwd }) => {
   if (isUpdate) await writeFile(snapshotFile('verbose_tree'), tree.toString())
   const snaptree = await readFile(snapshotFile('verbose_tree'))
   assert.snapshot(tree.toString(), snaptree.toString())
-})
-
-test('--verbose (configfile)', async ({ cwd }) => {
-  await cp(
-    resolve(filesystemDir, '../config/configfile.js'),
-    resolve(cwd, 'configfile.js')
-  )
-  await rm(resolve(cwd, 'src/'), { recursive: true })
-  await rm(resolve(cwd, 'static/images/fruits/_gen'), { recursive: true })
 })
 
 test('--force --verbose', async ({ cwd }) => {

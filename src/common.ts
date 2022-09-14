@@ -6,6 +6,27 @@ import { deepmergeCustom } from 'deepmerge-ts'
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 
+// settings
+
+export const imageContentTypes = {
+  avif: 'image/avif',
+  gif: 'image/gif',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  png: 'image/png',
+  svg: 'image/svg+xml',
+  tif: 'image/tiff',
+  tiff: 'image/tiff',
+  webp: 'image/webp',
+}
+export const imageInputFormats = Object.keys(imageContentTypes)
+export const imageOutputFormats = imageInputFormats.filter(
+  (format) => !['svg', 'tif', 'tiff'].includes(format)
+)
+export const manifestOutputFormats = ['json', 'js', 'ts']
+
+// functions
+
 export const deepMerge = deepmergeCustom({ mergeArrays: false })
 
 export const getFlags = (options: Options) => ({
@@ -15,7 +36,7 @@ export const getFlags = (options: Options) => ({
 })
 
 export const getServePath = (config: Config) => (path: string) =>
-  path.replace(config.dirs.static, '').concat(`?v=${config.version}`)
+  path.replace(config.images.static, '').concat(`?v=${config.version}`)
 
 export const getVersion = async () => {
   let pkg: string

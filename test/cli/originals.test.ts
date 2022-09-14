@@ -1,4 +1,4 @@
-import { Context } from './utils.js'
+import { Context } from './common.js'
 
 import * as assert from 'uvu/assert'
 import { execPath } from 'node:process'
@@ -8,7 +8,7 @@ import {
   getDirTree,
   getPaths,
   isUpdate,
-} from './utils.js'
+} from './common.js'
 import { readFile, stat, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import spawn from 'await-spawn'

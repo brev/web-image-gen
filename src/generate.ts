@@ -5,7 +5,12 @@ import type { Options } from '../types/Arguments'
 
 import { access, mkdir, readdir, readFile, writeFile } from 'fs/promises'
 import { extname, resolve } from 'path'
-import { getFlags, getServePath, shortPath } from './utils.js'
+import {
+  getFlags,
+  getServePath,
+  imageOutputFormats,
+  shortPath,
+} from './common.js'
 import prettier from 'prettier'
 import sharp from 'sharp'
 
@@ -15,10 +20,10 @@ import sharp from 'sharp'
 export default async (config: Config, options: Options) => {
   const { force, only, verbose } = getFlags(options)
   const servePath = getServePath(config)
-  const imageExts = `.${config.originals.format}`
+  const imageOutputRegExp = new RegExp(`\\.(${imageOutputFormats.join('|')})`)
 
   // main
-  const imageRoot = resolve(config.dirs.static, config.dirs.images)
+  const imageRoot = resolve(config.images.static, config.images.images)
   const imageDirs = (await readdir(imageRoot, { withFileTypes: true }))
     .filter((dir) => dir.isDirectory())
     .map((dir) => dir.name)
@@ -33,14 +38,18 @@ export default async (config: Config, options: Options) => {
         `Processing original source images dir: ${shortPath(imageDirPath)}`
       )
     const imageFiles = (await readdir(imageDirPath, { withFileTypes: true }))
-      .filter((file) => file.isFile() && extname(file.name) === imageExts)
+      .filter(
+        (file) =>
+          file.isFile() &&
+          imageOutputFormats.includes(extname(file.name).replace('.', ''))
+      )
       .map((file) => file.name)
 
     for (const imageFile of imageFiles) {
-      const imageSlug = imageFile.replace(imageExts, '')
+      const imageSlug = imageFile.replace(imageOutputRegExp, '')
       const imagePath = resolve(imageDirPath, imageFile)
-      const creditPath = imagePath.replace(imageExts, '.json')
-      const genDirPath = resolve(imageDirPath, config.dirs.generated)
+      const creditPath = imagePath.replace(imageOutputRegExp, '.json')
+      const genDirPath = resolve(imageDirPath, config.images.slug)
       let creditExists = true
       manifest[imageSlug] = {
         credit: null,
@@ -89,13 +98,15 @@ export default async (config: Config, options: Options) => {
       }
 
       // generate sizes
-      for (const size of config.sizes) {
+      for (const size of config.images.sizes) {
         manifest[imageSlug].sizes[size] = {}
 
         // generate sized formats
-        for (const format of config.formats) {
+        for (const format of config.images.formats) {
           const genFile = `${imageSlug}-${size}.${format}`
           const genPath = resolve(genDirPath, genFile)
+          let sharpPromise = sharp(imagePath)
+
           let imageExists = true
 
           if (!manifest[imageSlug].formats[format])
@@ -119,37 +130,31 @@ export default async (config: Config, options: Options) => {
           if (verbose)
             console.log(`Creating generated image file: ${shortPath(genPath)}`)
           manifestWrite = only != 'images'
-          if (format === 'avif')
-            await sharp(imagePath)
-              .resize({ width: size })
-              .avif()
-              .toFile(genPath)
-          if (format === 'jpg')
-            await sharp(imagePath)
-              .resize({ width: size })
-              .jpeg({ mozjpeg: true })
-              .toFile(genPath)
-          if (format === 'webp')
-            await sharp(imagePath)
-              .resize({ width: size })
-              .webp()
-              .toFile(genPath)
+
+          if (format === 'avif') sharpPromise = sharpPromise.avif()
+          if (format === 'gif') sharpPromise = sharpPromise.gif()
+          if (format === 'jpg' || format === 'jpeg')
+            sharpPromise = sharpPromise.jpeg({ mozjpeg: true })
+          if (format === 'png') sharpPromise = sharpPromise.png()
+          if (format === 'webp') sharpPromise = sharpPromise.webp()
+
+          await sharpPromise.resize({ width: size }).toFile(genPath)
         }
 
         // default image for set
         manifest[imageSlug].default =
-          manifest[imageSlug].formats[config.default.format][
-            config.default.size
+          manifest[imageSlug].formats[config.images.default.format][
+            config.images.default.size
           ]
       }
     }
 
     // manifest
     if (manifestWrite) {
-      const manifestPath = resolve(config.dirs.manifests, config.dirs.generated)
+      const manifestPath = resolve(config.manifests.src, config.manifests.slug)
       const manifestFile = resolve(
         manifestPath,
-        `${imageDir}.${config.manifests}`
+        `${imageDir}.${config.manifests.format}`
       )
 
       // check if manifest 'generated' dir exists and create if missing
@@ -168,11 +173,14 @@ export default async (config: Config, options: Options) => {
         console.log(
           `Creating generated manifest file: ${shortPath(manifestFile)}`
         )
-      const manifestSrc = prettier.format(
-        JSON.stringify(manifest, null, '  '),
-        { parser: 'json' }
+      let manifestSrc = JSON.stringify(manifest, null, '  ')
+      if (config.manifests.format === 'js' || config.manifests.format === 'ts')
+        manifestSrc = `export default ${manifestSrc}`
+
+      await writeFile(
+        manifestFile,
+        prettier.format(manifestSrc, { filepath: manifestFile })
       )
-      await writeFile(manifestFile, manifestSrc)
     }
   }
 }
