@@ -1,0 +1,33 @@
+Config file read .sveltekit-imagegen.json...
+Generating images and manifests...
+Processing original source images dir: static/images/countries
+Creating generated images dir: static/images/countries/GEN
+Creating generated image file: static/images/countries/GEN/france-480.webp
+Creating generated image file: static/images/countries/GEN/france-480.png
+Creating generated image file: static/images/countries/GEN/france-640.webp
+Creating generated image file: static/images/countries/GEN/france-640.png
+Creating generated image file: static/images/countries/GEN/france-720.webp
+Creating generated image file: static/images/countries/GEN/france-720.png
+Creating generated image file: static/images/countries/GEN/italy-480.webp
+Creating generated image file: static/images/countries/GEN/italy-480.png
+Creating generated image file: static/images/countries/GEN/italy-640.webp
+Creating generated image file: static/images/countries/GEN/italy-640.png
+Creating generated image file: static/images/countries/GEN/italy-720.webp
+Creating generated image file: static/images/countries/GEN/italy-720.png
+Creating generated manifests dir: src/lib/assets/images/NEG
+Creating generated manifest file: src/lib/assets/images/NEG/countries.js
+Processing original source images dir: static/images/fruits
+Creating generated images dir: static/images/fruits/GEN
+Creating generated image file: static/images/fruits/GEN/apple-480.webp
+Creating generated image file: static/images/fruits/GEN/apple-480.png
+Creating generated image file: static/images/fruits/GEN/apple-640.webp
+Creating generated image file: static/images/fruits/GEN/apple-640.png
+Creating generated image file: static/images/fruits/GEN/apple-720.webp
+Creating generated image file: static/images/fruits/GEN/apple-720.png
+Creating generated image file: static/images/fruits/GEN/pear-480.webp
+Creating generated image file: static/images/fruits/GEN/pear-480.png
+Creating generated image file: static/images/fruits/GEN/pear-640.webp
+Creating generated image file: static/images/fruits/GEN/pear-640.png
+Creating generated image file: static/images/fruits/GEN/pear-720.webp
+Creating generated image file: static/images/fruits/GEN/pear-720.png
+Creating generated manifest file: src/lib/assets/images/NEG/fruits.js

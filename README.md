@@ -1,3 +1,5 @@
+@TODO how much SvelteKit or Vite is this really?
+
 Add a new original JPG image (1600px), and an image credit JSON:
 
 ```bash

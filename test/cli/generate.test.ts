@@ -73,7 +73,47 @@ test('BARE', async ({ cwd }) => {
   assert.ok(manifest.france.sizes['800'].jpg)
 })
 
-test('BARE (config js)', async ({ cwd }) => {
+test('--force', async ({ cwd }) => {
+  const stdout = await spawn(execPath, [scriptFile, 'generate', '--force'], {
+    cwd,
+  })
+  if (isUpdate) await writeFile(snapshotFile('force'), stdout.toString())
+  const snapshot = await readFile(snapshotFile('force'))
+  assert.snapshot(stdout.toString(), snapshot.toString())
+
+  const tree = await getDirTree(cwd)
+  if (isUpdate) await writeFile(snapshotFile('force_tree'), tree.toString())
+  const snaptree = await readFile(snapshotFile('force_tree'))
+  assert.snapshot(tree.toString(), snaptree.toString())
+})
+
+test('--force --verbose', async ({ cwd }) => {
+  const stdout = await spawn(
+    execPath,
+    [scriptFile, 'generate', '--force', '--verbose'],
+    { cwd }
+  )
+  if (isUpdate)
+    await writeFile(snapshotFile('force_verbose'), stdout.toString())
+  const snapshot = await readFile(snapshotFile('force_verbose'))
+  assert.snapshot(stdout.toString(), snapshot.toString())
+})
+
+test('--verbose', async ({ cwd }) => {
+  const stdout = await spawn(execPath, [scriptFile, 'generate', '--verbose'], {
+    cwd,
+  })
+  if (isUpdate) await writeFile(snapshotFile('verbose'), stdout.toString())
+  const snapshot = await readFile(snapshotFile('verbose'))
+  assert.snapshot(stdout.toString(), snapshot.toString())
+
+  const tree = await getDirTree(cwd)
+  if (isUpdate) await writeFile(snapshotFile('verbose_tree'), tree.toString())
+  const snaptree = await readFile(snapshotFile('verbose_tree'))
+  assert.snapshot(tree.toString(), snaptree.toString())
+})
+
+test('--verbose (config js)', async ({ cwd }) => {
   await cp(
     resolve(filesystemDir, '../config/configfile.js'),
     resolve(cwd, '.sveltekit-imagegen.js')
@@ -81,16 +121,17 @@ test('BARE (config js)', async ({ cwd }) => {
   await rm(resolve(cwd, 'src/'), { recursive: true })
   await rm(resolve(cwd, 'static/images/fruits/_gen'), { recursive: true })
 
-  const stdout = await spawn(execPath, [scriptFile, 'generate'], { cwd })
-  if (isUpdate)
-    await writeFile(snapshotFile('bare_config_js'), stdout.toString())
-  const snapshot = await readFile(snapshotFile('bare_config_js'))
+  const stdout = await spawn(execPath, [scriptFile, 'generate', '--verbose'], {
+    cwd,
+  })
+  if (isUpdate) await writeFile(snapshotFile('verbose_js'), stdout.toString())
+  const snapshot = await readFile(snapshotFile('verbose_js'))
   assert.snapshot(stdout.toString(), snapshot.toString())
 
   const tree = await getDirTree(cwd)
   if (isUpdate)
-    await writeFile(snapshotFile('bare_config_js_tree'), tree.toString())
-  const snaptree = await readFile(snapshotFile('bare_config_js_tree'))
+    await writeFile(snapshotFile('verbose_js_tree'), tree.toString())
+  const snaptree = await readFile(snapshotFile('verbose_js_tree'))
   assert.snapshot(tree.toString(), snaptree.toString())
 
   const manifest = (
@@ -127,7 +168,7 @@ test('BARE (config js)', async ({ cwd }) => {
   assert.ok(manifest.france.sizes['720'].png)
 })
 
-test('BARE (config json)', async ({ cwd }) => {
+test('--verbose (config json)', async ({ cwd }) => {
   await cp(
     resolve(filesystemDir, '../config/configfile.json'),
     resolve(cwd, '.sveltekit-imagegen.json')
@@ -135,20 +176,21 @@ test('BARE (config json)', async ({ cwd }) => {
   await rm(resolve(cwd, 'src/'), { recursive: true })
   await rm(resolve(cwd, 'static/images/fruits/_gen'), { recursive: true })
 
-  const stdout = await spawn(execPath, [scriptFile, 'generate'], { cwd })
-  if (isUpdate)
-    await writeFile(snapshotFile('bare_config_json'), stdout.toString())
-  const snapshot = await readFile(snapshotFile('bare_config_json'))
+  const stdout = await spawn(execPath, [scriptFile, 'generate', '--verbose'], {
+    cwd,
+  })
+  if (isUpdate) await writeFile(snapshotFile('verbose_json'), stdout.toString())
+  const snapshot = await readFile(snapshotFile('verbose_json'))
   assert.snapshot(stdout.toString(), snapshot.toString())
 
   const tree = await getDirTree(cwd)
   if (isUpdate)
-    await writeFile(snapshotFile('bare_config_json_tree'), tree.toString())
-  const snaptree = await readFile(snapshotFile('bare_config_json_tree'))
+    await writeFile(snapshotFile('verbose_json_tree'), tree.toString())
+  const snaptree = await readFile(snapshotFile('verbose_json_tree'))
   assert.snapshot(tree.toString(), snaptree.toString())
 })
 
-test('--config (js)', async ({ cwd }) => {
+test('--verbose --config (js)', async ({ cwd }) => {
   await cp(
     resolve(filesystemDir, '../config/configfile.js'),
     resolve(cwd, 'configfile.js')
@@ -157,21 +199,23 @@ test('--config (js)', async ({ cwd }) => {
   await rm(resolve(cwd, 'static/images/fruits/_gen'), { recursive: true })
 
   const stdout = await spawn(
-    `${execPath} ${scriptFile} generate --config=configfile.js`,
+    `${execPath} ${scriptFile} generate --config=configfile.js --verbose`,
     [],
     { cwd, shell: true }
   )
-  if (isUpdate) await writeFile(snapshotFile('config_js'), stdout.toString())
-  const snapshot = await readFile(snapshotFile('config_js'))
+  if (isUpdate)
+    await writeFile(snapshotFile('verbose_config_js'), stdout.toString())
+  const snapshot = await readFile(snapshotFile('verbose_config_js'))
   assert.snapshot(stdout.toString(), snapshot.toString())
 
   const tree = await getDirTree(cwd)
-  if (isUpdate) await writeFile(snapshotFile('config_js_tree'), tree.toString())
-  const snaptree = await readFile(snapshotFile('config_js_tree'))
+  if (isUpdate)
+    await writeFile(snapshotFile('verbose_config_js_tree'), tree.toString())
+  const snaptree = await readFile(snapshotFile('verbose_config_js_tree'))
   assert.snapshot(tree.toString(), snaptree.toString())
 })
 
-test('--config (json)', async ({ cwd }) => {
+test('--verbose --config (json)', async ({ cwd }) => {
   await cp(
     resolve(filesystemDir, '../config/configfile.json'),
     resolve(cwd, 'configfile.json')
@@ -180,59 +224,20 @@ test('--config (json)', async ({ cwd }) => {
   await rm(resolve(cwd, 'static/images/fruits/_gen'), { recursive: true })
 
   const stdout = await spawn(
-    `${execPath} ${scriptFile} generate --config=configfile.json`,
+    `${execPath} ${scriptFile} generate --config=configfile.json --verbose`,
     [],
     { cwd, shell: true }
   )
-  if (isUpdate) await writeFile(snapshotFile('config_json'), stdout.toString())
-  const snapshot = await readFile(snapshotFile('config_json'))
+  if (isUpdate)
+    await writeFile(snapshotFile('verbose_config_json'), stdout.toString())
+  const snapshot = await readFile(snapshotFile('verbose_config_json'))
   assert.snapshot(stdout.toString(), snapshot.toString())
 
   const tree = await getDirTree(cwd)
   if (isUpdate)
-    await writeFile(snapshotFile('config_json_tree'), tree.toString())
-  const snaptree = await readFile(snapshotFile('config_json_tree'))
+    await writeFile(snapshotFile('verbose_config_json_tree'), tree.toString())
+  const snaptree = await readFile(snapshotFile('verbose_config_json_tree'))
   assert.snapshot(tree.toString(), snaptree.toString())
-})
-
-test('--force', async ({ cwd }) => {
-  const stdout = await spawn(execPath, [scriptFile, 'generate', '--force'], {
-    cwd,
-  })
-  if (isUpdate) await writeFile(snapshotFile('force'), stdout.toString())
-  const snapshot = await readFile(snapshotFile('force'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
-
-  const tree = await getDirTree(cwd)
-  if (isUpdate) await writeFile(snapshotFile('force_tree'), tree.toString())
-  const snaptree = await readFile(snapshotFile('force_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
-})
-
-test('--verbose', async ({ cwd }) => {
-  const stdout = await spawn(execPath, [scriptFile, 'generate', '--verbose'], {
-    cwd,
-  })
-  if (isUpdate) await writeFile(snapshotFile('verbose'), stdout.toString())
-  const snapshot = await readFile(snapshotFile('verbose'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
-
-  const tree = await getDirTree(cwd)
-  if (isUpdate) await writeFile(snapshotFile('verbose_tree'), tree.toString())
-  const snaptree = await readFile(snapshotFile('verbose_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
-})
-
-test('--force --verbose', async ({ cwd }) => {
-  const stdout = await spawn(
-    execPath,
-    [scriptFile, 'generate', '--force', '--verbose'],
-    { cwd }
-  )
-  if (isUpdate)
-    await writeFile(snapshotFile('force_verbose'), stdout.toString())
-  const snapshot = await readFile(snapshotFile('force_verbose'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
 })
 
 test('--only=images', async ({ cwd }) => {

@@ -2,6 +2,7 @@ import type { Config } from '../types/Config'
 import type { Credit } from '../types/Credit'
 import type { ImageSets } from '../types/ImageSet'
 import type { Options } from '../types/Arguments'
+import type { Sharp } from 'sharp'
 
 import { access, mkdir, readdir, readFile, writeFile } from 'fs/promises'
 import { extname, resolve } from 'path'
@@ -50,6 +51,7 @@ export default async (config: Config, options: Options) => {
       const imagePath = resolve(imageDirPath, imageFile)
       const creditPath = imagePath.replace(imageOutputRegExp, '.json')
       const genDirPath = resolve(imageDirPath, config.images.slug)
+      const sharpPromises = []
       let creditExists = true
       manifest[imageSlug] = {
         credit: null,
@@ -72,17 +74,14 @@ export default async (config: Config, options: Options) => {
         manifest[imageSlug].credit = credit
       }
 
-      // low quality image placeholder (lqip) webp
-      const lqip = await sharp(imagePath)
-        .resize({ width: 16 })
-        .webp({
+      // low quality image placeholder (lqip)
+      sharpPromises.push(
+        sharp(imagePath).resize({ width: 16 }).webp({
           alphaQuality: 20,
           quality: 20,
           smartSubsample: true,
         })
-        .toBuffer()
-      const dataURI = `data:image/webp;base64,${lqip.toString('base64')}`
-      manifest[imageSlug].placeholder = dataURI
+      )
 
       // check if image 'generated' dir exists and create if missing
       if (only != 'manifests') {
@@ -106,7 +105,6 @@ export default async (config: Config, options: Options) => {
           const genFile = `${imageSlug}-${size}.${format}`
           const genPath = resolve(genDirPath, genFile)
           let sharpPromise = sharp(imagePath)
-
           let imageExists = true
 
           if (!manifest[imageSlug].formats[format])
@@ -138,7 +136,10 @@ export default async (config: Config, options: Options) => {
           if (format === 'png') sharpPromise = sharpPromise.png()
           if (format === 'webp') sharpPromise = sharpPromise.webp()
 
-          await sharpPromise.resize({ width: size }).toFile(genPath)
+          // queue image generation
+          sharpPromises.push(
+            sharpPromise.resize({ width: size }).toFile(genPath)
+          )
         }
 
         // default image for set
@@ -147,6 +148,14 @@ export default async (config: Config, options: Options) => {
             config.images.default.size
           ]
       }
+
+      // run all queued image generations
+      const sharpResults = await Promise.all(sharpPromises)
+
+      // low quality image placeholder (lqip) for set
+      const lqip = await (sharpResults[0] as Sharp).toBuffer()
+      const dataURI = `data:image/webp;base64,${lqip.toString('base64')}`
+      manifest[imageSlug].placeholder = dataURI
     }
 
     // manifest

@@ -16,11 +16,6 @@ import optimize from './optimize.js'
 import remove from './remove.js'
 import { stdin, stdout } from 'node:process'
 
-// @TODO generate: parallelize?
-// @TODO how much SvelteKit or Vite is this really?
-// code coverage tweaks
-// @TODO README.md
-
 export {
   checkConfig,
   clean,
