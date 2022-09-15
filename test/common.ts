@@ -32,10 +32,10 @@ export const getDirTree = async (path: string) => {
 export const getPaths = (meta: string) => {
   const rootDir = dirname(fileURLToPath(meta))
   return {
-    filesystemDir: resolve(rootDir, '../_fixtures/filesystem'),
+    filesystemDir: resolve(rootDir, 'fixtures/filesystem'),
     getSnapshotFile: (path: string) => (name: string) =>
-      resolve(rootDir, `../_snapshots/cli/${path}`, `${name}.txt`),
-    scriptFile: resolve(rootDir, '../../dist/index.js'),
+      resolve(rootDir, `snapshots/cli/${path}`, `${name}.txt`),
+    scriptFile: resolve(rootDir, '../dist/index.js'),
   }
 }
 
