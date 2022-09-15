@@ -9,7 +9,7 @@
   Manifests will be generated as importable code in the `src/lib` folder.       
   Manifests are created if any new images are generated, by default.            
 
-  [1mUsage:[22m   `sveltekit-imagegen [1mgenerate[22m [options ...]` 
+  [1mUsage:[22m   `web-image-gen [1mgenerate[22m [options ...]` 
 
 [4m[1mGenerate Options[22m[24m
 

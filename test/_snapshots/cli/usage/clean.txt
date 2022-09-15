@@ -3,7 +3,7 @@
 
   Remove all generated images and manifests. 
 
-  [1mUsage:[22m   `sveltekit-imagegen [1mclean[22m [options ...]` 
+  [1mUsage:[22m   `web-image-gen [1mclean[22m [options ...]` 
 
 [4m[1mClean Options[22m[24m
 

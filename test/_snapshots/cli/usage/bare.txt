@@ -1,14 +1,14 @@
 
-[4m[1mSvelteKit-ImageGen[22m[24m
+[4m[1mweb-image-gen[22m[24m
 
-  Modern responsive image generation tooling for SvelteKit.                     
+  Modern responsive web image generation and tooling.                           
                                                                                 
-  Default config file is expected to be `.sveltekit-imagegen.js` or             
-  `.sveltekit-imagegen.json` in the root of your SvelteKit project.             
+  Default config file is expected to be `.web-image-gen.js` or `.web-image-     
+  gen.json` in the root of your project.                                        
                                                                                 
-  https://github.com/brev/sveltekit-imagegen                                    
+  https://github.com/brev/web-image-gen                                         
 
-  [1mUsage:[22m   `sveltekit-imagegen [1m<command>[22m [options ...]` 
+  [1mUsage:[22m   `web-image-gen [1m<command>[22m [options ...]` 
 
 [4m[1mAvailable Commands[22m[24m
 

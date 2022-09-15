@@ -10,7 +10,7 @@ export type Context = {
 
 export const getBeforeEach =
   (filesystemDir: string) => async (context: Context) => {
-    context.cwd = await mkdtemp('./.sveltekit-imagegen-test-')
+    context.cwd = await mkdtemp('./.web-image-gen-test-')
     await cp(filesystemDir, context.cwd, { recursive: true })
   }
 

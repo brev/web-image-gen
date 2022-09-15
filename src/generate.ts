@@ -1,8 +1,8 @@
 import type { Config } from '../types/Config'
 import type { Credit } from '../types/Credit'
+import type { FormatEnum, Sharp } from 'sharp'
 import type { ImageSets } from '../types/ImageSet'
 import type { Options } from '../types/Arguments'
-import type { Sharp } from 'sharp'
 
 import { access, mkdir, readdir, readFile, writeFile } from 'fs/promises'
 import { extname, resolve } from 'path'
@@ -51,6 +51,7 @@ export default async (config: Config, options: Options) => {
       const imagePath = resolve(imageDirPath, imageFile)
       const creditPath = imagePath.replace(imageOutputRegExp, '.json')
       const genDirPath = resolve(imageDirPath, config.images.slug)
+      const sharpFile = sharp(imagePath)
       const sharpPromises = []
       let creditExists = true
       manifest[imageSlug] = {
@@ -76,7 +77,7 @@ export default async (config: Config, options: Options) => {
 
       // low quality image placeholder (lqip)
       sharpPromises.push(
-        sharp(imagePath).resize({ width: 16 }).webp({
+        sharpFile.clone().resize({ width: 16 }).toFormat('webp', {
           alphaQuality: 20,
           quality: 20,
           smartSubsample: true,
@@ -98,13 +99,19 @@ export default async (config: Config, options: Options) => {
 
       // generate sizes
       for (const size of config.images.sizes) {
+        const sharpSize = sharpFile.clone().resize({ width: size })
+
         manifest[imageSlug].sizes[size] = {}
 
         // generate sized formats
         for (const format of config.images.formats) {
           const genFile = `${imageSlug}-${size}.${format}`
           const genPath = resolve(genDirPath, genFile)
-          let sharpPromise = sharp(imagePath)
+          const sharpFormat = sharpSize
+            .clone()
+            .toFormat(format as keyof FormatEnum, {
+              mozjpeg: /jpe?g/.test(format),
+            })
           let imageExists = true
 
           if (!manifest[imageSlug].formats[format])
@@ -124,22 +131,11 @@ export default async (config: Config, options: Options) => {
             if (imageExists) continue
           }
 
-          // generate images
+          // queue image generation
           if (verbose)
             console.log(`Creating generated image file: ${shortPath(genPath)}`)
           manifestWrite = only != 'images'
-
-          if (format === 'avif') sharpPromise = sharpPromise.avif()
-          if (format === 'gif') sharpPromise = sharpPromise.gif()
-          if (format === 'jpg' || format === 'jpeg')
-            sharpPromise = sharpPromise.jpeg({ mozjpeg: true })
-          if (format === 'png') sharpPromise = sharpPromise.png()
-          if (format === 'webp') sharpPromise = sharpPromise.webp()
-
-          // queue image generation
-          sharpPromises.push(
-            sharpPromise.resize({ width: size }).toFile(genPath)
-          )
+          sharpPromises.push(sharpFormat.clone().toFile(genPath))
         }
 
         // default image for set
@@ -149,7 +145,7 @@ export default async (config: Config, options: Options) => {
           ]
       }
 
-      // run all queued image generations
+      // generate images - run all queued
       const sharpResults = await Promise.all(sharpPromises)
 
       // low quality image placeholder (lqip) for set

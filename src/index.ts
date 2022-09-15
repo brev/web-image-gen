@@ -80,8 +80,6 @@ const commands = {
 
 // main
 
-// await new Promise((resolve) => setTimeout(resolve, 1)) // log after node warns
-
 const { command, options } = getCLI()
 
 const config = await getConfig(options)

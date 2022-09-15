@@ -73,6 +73,42 @@ test('BARE', async ({ cwd }) => {
   assert.ok(manifest.france.sizes['800'].jpg)
 })
 
+test('BARE (missing credits)', async ({ cwd }) => {
+  await rm(resolve(cwd, 'static/images/countries/france.json'))
+
+  await spawn(execPath, [scriptFile, 'generate'], { cwd })
+
+  const manifest = JSON.parse(
+    await readFile(
+      resolve(cwd, 'src/lib/assets/images/_gen/countries.json'),
+      'utf8'
+    )
+  )
+  assert.ok(manifest.france)
+  assert.not.ok(manifest.france.credit)
+  assert.ok(manifest.france.default)
+  assert.ok(manifest.france.formats)
+  assert.ok(manifest.france.formats.avif)
+  assert.ok(manifest.france.formats.avif['400'])
+  assert.ok(manifest.france.formats.avif['800'])
+  assert.ok(manifest.france.formats.webp)
+  assert.ok(manifest.france.formats.webp['400'])
+  assert.ok(manifest.france.formats.webp['800'])
+  assert.ok(manifest.france.formats.jpg)
+  assert.ok(manifest.france.formats.jpg['400'])
+  assert.ok(manifest.france.formats.jpg['800'])
+  assert.ok(manifest.france.placeholder)
+  assert.ok(manifest.france.sizes)
+  assert.ok(manifest.france.sizes['400'])
+  assert.ok(manifest.france.sizes['400'].avif)
+  assert.ok(manifest.france.sizes['400'].webp)
+  assert.ok(manifest.france.sizes['400'].jpg)
+  assert.ok(manifest.france.sizes['800'])
+  assert.ok(manifest.france.sizes['800'].avif)
+  assert.ok(manifest.france.sizes['800'].webp)
+  assert.ok(manifest.france.sizes['800'].jpg)
+})
+
 test('--force', async ({ cwd }) => {
   const stdout = await spawn(execPath, [scriptFile, 'generate', '--force'], {
     cwd,
@@ -116,7 +152,7 @@ test('--verbose', async ({ cwd }) => {
 test('--verbose (config js)', async ({ cwd }) => {
   await cp(
     resolve(filesystemDir, '../config/configfile.js'),
-    resolve(cwd, '.sveltekit-imagegen.js')
+    resolve(cwd, '.web-image-gen.js')
   )
   await rm(resolve(cwd, 'src/'), { recursive: true })
   await rm(resolve(cwd, 'static/images/fruits/_gen'), { recursive: true })
@@ -171,7 +207,7 @@ test('--verbose (config js)', async ({ cwd }) => {
 test('--verbose (config json)', async ({ cwd }) => {
   await cp(
     resolve(filesystemDir, '../config/configfile.json'),
-    resolve(cwd, '.sveltekit-imagegen.json')
+    resolve(cwd, '.web-image-gen.json')
   )
   await rm(resolve(cwd, 'src/'), { recursive: true })
   await rm(resolve(cwd, 'static/images/fruits/_gen'), { recursive: true })

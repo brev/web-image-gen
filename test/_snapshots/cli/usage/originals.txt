@@ -3,7 +3,7 @@
 
   Perform helpful operations on original source images. 
 
-  [1mUsage:[22m   `sveltekit-imagegen [1moriginals[22m [options ...]` 
+  [1mUsage:[22m   `web-image-gen [1moriginals[22m [options ...]` 
 
 [4m[1mOriginals Options[22m[24m
 

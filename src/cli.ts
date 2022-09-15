@@ -15,19 +15,19 @@ import usage from 'command-line-usage'
 // meta
 
 const meta = {
-  name: 'SvelteKit-ImageGen',
+  name: 'web-image-gen',
   global: {
     commands: 'Available Commands',
     config:
       'Config file to use instead of the default, in `.js` or `.json` format.',
     description: [
-      'Modern responsive image generation tooling for SvelteKit.',
+      'Modern responsive web image generation and tooling.',
       '',
-      'Default config file is expected to be `.sveltekit-imagegen.js` or `.sveltekit-imagegen.json` in the root of your SvelteKit project.',
+      'Default config file is expected to be `.web-image-gen.js` or `.web-image-gen.json` in the root of your project.',
     ].join('\n'),
     help: 'Show this usage help guide, or help for a specific command.',
     options: 'Global Options',
-    url: 'https://github.com/brev/sveltekit-imagegen',
+    url: 'https://github.com/brev/web-image-gen',
     verbose: 'Display debugging output.',
   },
   generate: {

@@ -1,4 +1,4 @@
-.sveltekit-imagegen.json
+.web-image-gen.json
 src/lib/assets/images/NEG/countries.js
 src/lib/assets/images/NEG/fruits.js
 static/images/countries/GEN/france-480.png

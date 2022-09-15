@@ -2,7 +2,7 @@ import type { Config } from '../types/Config'
 import type { Options } from '../types/Arguments'
 
 import { cwd } from 'node:process'
-import { deepMerge, getVersion } from './common.js'
+import { deepMerge } from './common.js'
 import { extname, resolve } from 'node:path'
 import { imageOutputFormats, manifestOutputFormats } from './common.js'
 import { readFile } from 'node:fs/promises'
@@ -10,25 +10,51 @@ import { readFile } from 'node:fs/promises'
 // default config
 
 export const defaultConfig: Config = {
+  // Images config.
   images: {
-    formats: ['avif', 'webp', 'jpg'], // output. ordered!!  warn if not supported type
-    sizes: [400, 800], // output
+    // Output formats - Ordered!
+    //  First entry should be newest modern format, last entry should
+    //  be most widely supported older fallback format.
+    formats: ['avif', 'webp', 'jpg'],
+
+    // Output width sizes in pixels.
+    sizes: [400, 800],
+
+    // Default generated image to fallback on or use outside imageset.
+    //  Must refer to valid formats and sizes listed above.
     default: {
-      // default generated image to fallback on or use outside imageset
-      // output manifest, ref format and size above
       format: 'jpg',
       size: 800,
     },
-    static: resolve('static'), // sveltekit static folder
-    images: 'images', // image web request root, relative to static dir above
-    slug: '_gen', // subdir to put generated images in (under src)
+
+    // Static assets folder.
+    static: resolve('static'),
+
+    // Images subdir underneath the `static` folder above.
+    //  Root of web-serving path in browser.
+    //  Home of original source image subdirs.
+    //  Where generated images will be created.
+    images: 'images',
+
+    // Subdir to put generated images in (under `static`/`images`/<group>/ above)
+    slug: '_gen',
   },
+
+  // Manifests config
   manifests: {
-    format: 'json', // ts js json @TODO
-    src: resolve('src/lib/assets/images'), // sveltekit src/lib path
-    slug: '_gen', // subdir to put generated manifests in (under src)
+    // Manifest output format. One of 'json', 'js', or 'ts'.
+    format: 'json',
+
+    // Web app source code path for image assets.
+    //  Where manifests will be generated.
+    src: resolve('src/lib/assets/images'),
+
+    // Subdir to put generated manifests in (under `src` above).
+    slug: '_gen',
   },
-  version: await getVersion(), // package.json version, or unix epoch timestamp
+
+  // Version for cache-busting
+  version: Date.now().toString(),
 }
 
 // functions
@@ -92,9 +118,11 @@ export const getConfig = async (options: Options) => {
           [`Cannot import ${configFile}:`, (error as Error).message].join(' ')
         )
       }
+    } else {
+      throw new Error('Config file format must be `js` or `json`')
     }
   } else {
-    const configFilename = `.sveltekit-imagegen`
+    const configFilename = `.web-image-gen`
     try {
       const configFile = `${configFilename}.json`
       const configRaw = await readFile(resolve(cwd(), configFile), 'utf8')

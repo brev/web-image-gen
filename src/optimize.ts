@@ -1,4 +1,5 @@
 import type { Config } from '../types/Config'
+import type { FormatEnum } from 'sharp'
 import type { Options } from '../types/Arguments'
 
 import { extname, resolve } from 'node:path'
@@ -36,22 +37,12 @@ export default async (config: Config, options: Options) => {
       const imageExt = extname(imageFile).replace('.', '')
       const imagePath = resolve(imageDirPath, imageFile)
       const imageOptPath = resolve(imageDirPath, `_OPT_${imageFile}`)
-      let sharpPromise = sharp(imagePath)
 
-      if (imageExt === 'avif') sharpPromise = sharpPromise.avif()
-      if (imageExt === 'gif') sharpPromise = sharpPromise.gif()
-      if (imageExt === 'jpg' || imageExt === 'jpeg')
-        sharpPromise = sharpPromise.jpeg({ mozjpeg: true })
-      if (imageExt === 'png') sharpPromise = sharpPromise.png()
-      if (imageExt === 'tif' || imageExt === 'tiff')
-        sharpPromise = sharpPromise.tiff()
-      if (imageExt === 'webp') sharpPromise = sharpPromise.webp()
-      if (imageExt === 'svg') {
-        console.error('Optimization of SVG images is not yet supported!')
-        continue
-      }
-
-      await sharpPromise.toFile(imageOptPath)
+      await sharp(imagePath)
+        .toFormat(imageExt as keyof FormatEnum, {
+          mozjpeg: /jpe?g/.test(imageExt),
+        })
+        .toFile(imageOptPath)
 
       // only write if at least 5% compression improvement, otherwise skip
       const sizeBefore = (await stat(imagePath)).size

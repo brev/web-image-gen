@@ -8,32 +8,32 @@
       "license": "Pixabay",
       "licenseLink": "https://pixabay.com/service/license/"
     },
-    "default": "/images/fruits/_gen/apple-800.jpg?v=1.0.2",
+    "default": "/images/fruits/_gen/apple-800.jpg?v=1663210262429",
     "formats": {
       "avif": {
-        "400": "/images/fruits/_gen/apple-400.avif?v=1.0.2",
-        "800": "/images/fruits/_gen/apple-800.avif?v=1.0.2"
+        "400": "/images/fruits/_gen/apple-400.avif?v=1663210262429",
+        "800": "/images/fruits/_gen/apple-800.avif?v=1663210262429"
       },
       "webp": {
-        "400": "/images/fruits/_gen/apple-400.webp?v=1.0.2",
-        "800": "/images/fruits/_gen/apple-800.webp?v=1.0.2"
+        "400": "/images/fruits/_gen/apple-400.webp?v=1663210262429",
+        "800": "/images/fruits/_gen/apple-800.webp?v=1663210262429"
       },
       "jpg": {
-        "400": "/images/fruits/_gen/apple-400.jpg?v=1.0.2",
-        "800": "/images/fruits/_gen/apple-800.jpg?v=1.0.2"
+        "400": "/images/fruits/_gen/apple-400.jpg?v=1663210262429",
+        "800": "/images/fruits/_gen/apple-800.jpg?v=1663210262429"
       }
     },
     "placeholder": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACwAQCdASoQAAwABUB8JbACdAClkpsIAPxzJaxXquV/lfknA/Mwq1kY/wTF2dgFS5jsJC5ISkmTEyB8OYJqGStVuTJwDAulK5qaGXrVDx8iVQ0C5t76j1TfMe0bjTDEIAomAAAA",
     "sizes": {
       "400": {
-        "avif": "/images/fruits/_gen/apple-400.avif?v=1.0.2",
-        "webp": "/images/fruits/_gen/apple-400.webp?v=1.0.2",
-        "jpg": "/images/fruits/_gen/apple-400.jpg?v=1.0.2"
+        "avif": "/images/fruits/_gen/apple-400.avif?v=1663210262429",
+        "webp": "/images/fruits/_gen/apple-400.webp?v=1663210262429",
+        "jpg": "/images/fruits/_gen/apple-400.jpg?v=1663210262429"
       },
       "800": {
-        "avif": "/images/fruits/_gen/apple-800.avif?v=1.0.2",
-        "webp": "/images/fruits/_gen/apple-800.webp?v=1.0.2",
-        "jpg": "/images/fruits/_gen/apple-800.jpg?v=1.0.2"
+        "avif": "/images/fruits/_gen/apple-800.avif?v=1663210262429",
+        "webp": "/images/fruits/_gen/apple-800.webp?v=1663210262429",
+        "jpg": "/images/fruits/_gen/apple-800.jpg?v=1663210262429"
       }
     }
   },
@@ -46,32 +46,32 @@
       "license": "Pixabay",
       "licenseLink": "https://pixabay.com/service/license/"
     },
-    "default": "/images/fruits/_gen/pear-800.jpg?v=1.0.2",
+    "default": "/images/fruits/_gen/pear-800.jpg?v=1663210262429",
     "formats": {
       "avif": {
-        "400": "/images/fruits/_gen/pear-400.avif?v=1.0.2",
-        "800": "/images/fruits/_gen/pear-800.avif?v=1.0.2"
+        "400": "/images/fruits/_gen/pear-400.avif?v=1663210262429",
+        "800": "/images/fruits/_gen/pear-800.avif?v=1663210262429"
       },
       "webp": {
-        "400": "/images/fruits/_gen/pear-400.webp?v=1.0.2",
-        "800": "/images/fruits/_gen/pear-800.webp?v=1.0.2"
+        "400": "/images/fruits/_gen/pear-400.webp?v=1663210262429",
+        "800": "/images/fruits/_gen/pear-800.webp?v=1663210262429"
       },
       "jpg": {
-        "400": "/images/fruits/_gen/pear-400.jpg?v=1.0.2",
-        "800": "/images/fruits/_gen/pear-800.jpg?v=1.0.2"
+        "400": "/images/fruits/_gen/pear-400.jpg?v=1663210262429",
+        "800": "/images/fruits/_gen/pear-800.jpg?v=1663210262429"
       }
     },
     "placeholder": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAwAgCdASoQAAsABUB8JbACdAYtfF5Xf7koAAD+YUiIbhpVNI3lMFIBfAJZtDY5PBI5wEVw5eM0HZxHwgoZcgIbbzC9Oy0VrR+Z3lkWUCPOg0OD1RPABBLWcE0LutvxwAEk/VAfnwLowrlqAAA=",
     "sizes": {
       "400": {
-        "avif": "/images/fruits/_gen/pear-400.avif?v=1.0.2",
-        "webp": "/images/fruits/_gen/pear-400.webp?v=1.0.2",
-        "jpg": "/images/fruits/_gen/pear-400.jpg?v=1.0.2"
+        "avif": "/images/fruits/_gen/pear-400.avif?v=1663210262429",
+        "webp": "/images/fruits/_gen/pear-400.webp?v=1663210262429",
+        "jpg": "/images/fruits/_gen/pear-400.jpg?v=1663210262429"
       },
       "800": {
-        "avif": "/images/fruits/_gen/pear-800.avif?v=1.0.2",
-        "webp": "/images/fruits/_gen/pear-800.webp?v=1.0.2",
-        "jpg": "/images/fruits/_gen/pear-800.jpg?v=1.0.2"
+        "avif": "/images/fruits/_gen/pear-800.avif?v=1663210262429",
+        "webp": "/images/fruits/_gen/pear-800.webp?v=1663210262429",
+        "jpg": "/images/fruits/_gen/pear-800.jpg?v=1663210262429"
       }
     }
   }
