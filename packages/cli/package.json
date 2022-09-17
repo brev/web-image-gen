@@ -2,7 +2,7 @@
   "name": "web-image-gen",
   "version": "0.0.1",
   "description": "Modern responsive web image generation and tooling",
-  "homepage": "https://github.com/brev/web-image-gen/tree/main#readme",
+  "homepage": "https://github.com/brev/web-image-gen/tree/main/packages/cli#readme",
   "license": "MIT",
   "main": "./dist/index.js",
   "type": "module",
@@ -60,7 +60,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/brev/web-image-gen.git"
+    "url": "https://github.com/brev/web-image-gen.git",
+    "directory": "packages/cli"
   },
   "scripts": {
     "bin:eslint": "eslint --ignore-path .gitignore .",
