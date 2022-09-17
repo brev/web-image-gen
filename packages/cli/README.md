@@ -267,8 +267,7 @@ Make sure to trigger image generation in your `npm scripts`.
 
 ```sh
 git checkout https://github.com/brev/web-image-gen.git
-cd web-image-gen
-
+cd web-image-gen/packages/cli
 npm install -g pnpm
 pnpm install
 pnpm run clean

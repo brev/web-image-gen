@@ -7,8 +7,6 @@ This is a Monorepo for `web-image-gen` projects.
 Projects are in the [`packages/`][packages] directory:
 
 - [web-image-gen][web-image-gen]
-- [web-image-gen-react][web-image-gen-react]
-- [web-image-gen-svelte][web-image-gen-svelte]
 
 # Dependencies
 
