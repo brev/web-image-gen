@@ -171,8 +171,8 @@ Outputs:
 
 Compatible UI components:
 
-- Svelte LINK
-- React LINK
+- Svelte @TODO
+- React @TODO
 
 ## Config
 
@@ -261,7 +261,7 @@ src/lib/assets/images/_gen/
 static/images/*/_gen/
 ```
 
-Make sure to trigger image generation in your `npm scripts`.
+Make sure to trigger generation in your `npm scripts`.
 
 # Development
 
@@ -276,4 +276,10 @@ pnpm run lint
 pnpm run test
 pnpm run test:cover
 pnpm run build
-```
+`
+
+# License
+
+[MIT][mit-license]
+
+[mit-license]: https://mit-license.org/

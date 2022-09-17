@@ -23,11 +23,11 @@ const meta = {
     description: [
       'Modern responsive web image generation and tooling.',
       '',
-      'Default config file is expected to be `.web-image-gen.js` or `.web-image-gen.json` in the root of your project.',
+      'Default config merged with `.web-image-gen.js` or `.json`.',
     ].join('\n'),
     help: 'Show this usage help guide, or help for a specific command.',
     options: 'Global Options',
-    url: 'https://github.com/brev/web-image-gen',
+    url: 'https://github.com/brev/web-image-gen/tree/main/packages/cli',
     verbose: 'Display debugging output.',
   },
   generate: {
@@ -115,12 +115,6 @@ const generateConfig: ArgumentConfig<GenerateArguments> = {
 }
 
 const originalsConfig: ArgumentConfig<OriginalsArguments> = {
-  force: {
-    alias: 'f',
-    description: meta.originals.force,
-    optional: true,
-    type: Boolean,
-  },
   optimize: {
     alias: 'p',
     description: meta.originals.optimize,
@@ -130,6 +124,12 @@ const originalsConfig: ArgumentConfig<OriginalsArguments> = {
   remove: {
     alias: 'r',
     description: meta.originals.remove,
+    optional: true,
+    type: Boolean,
+  },
+  force: {
+    alias: 'f',
+    description: meta.originals.force,
     optional: true,
     type: Boolean,
   },
@@ -190,7 +190,7 @@ const guides: Record<string, Record<string, Section>> = {
   generate: {
     header: {
       header: 'Generate',
-      content: [meta.generate.description, meta.generate.details],
+      content: [meta.generate.description, meta.generate.details, '', meta.global.url],
     },
     usage: {
       content: [metaUsage('generate')],
@@ -207,7 +207,7 @@ const guides: Record<string, Record<string, Section>> = {
   originals: {
     header: {
       header: 'Originals',
-      content: meta.originals.description,
+      content: [meta.originals.description, '', meta.global.url],
     },
     usage: {
       content: [metaUsage('originals')],
@@ -224,7 +224,7 @@ const guides: Record<string, Record<string, Section>> = {
   clean: {
     header: {
       header: 'Clean',
-      content: meta.clean.description,
+      content: [meta.clean.description, '', meta.global.url],
     },
     usage: {
       content: [metaUsage('clean')],
