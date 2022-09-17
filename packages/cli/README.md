@@ -4,8 +4,8 @@ Modern responsive web image generation and tooling.
 
 ## Functions
 
-- Generates modern optimized responsive web image sets in specified formats and 
-  sizes, based on your high-resolution original source images 
+- Generates modern optimized responsive web image sets in specified formats and
+  sizes, based on your high-resolution original source images
   (both from under your `static` folder).
   - Input formats:
     `avif`, `gif`, `jpg`, `jpeg`, `png`, `svg`, `tif`, `tiff`, `webp`
@@ -60,9 +60,9 @@ Imagine a web app with the following directory structure:
 ```
 
 In `static/images` we have subdirectories for different groups of images
-(`countries`, `fruits`). Under those subdirs we have original high-resolution 
-source images named for each country or fruit (`italy`, `pear`). Alongside each 
-original image, we have optional credit and license information in a `json` 
+(`countries`, `fruits`). Under those subdirs we have original high-resolution
+source images named for each country or fruit (`italy`, `pear`). Alongside each
+original image, we have optional credit and license information in a `json`
 file.
 
 ## Run
@@ -233,14 +233,15 @@ Compatible UI components:
 
 #### Standard File
 
-If either exists, config will be read from the file and merged against 
-  the defaults:
-  - `.web-image-gen.js`
-  - `.web-image-gen.json`
+If either exists, config will be read from the file and merged against
+the defaults:
+
+- `.web-image-gen.js`
+- `.web-image-gen.json`
 
 #### Custom File
 
-A custom configuration file can be used with the `--config` command-line 
+A custom configuration file can be used with the `--config` command-line
 option (`js` or `json`). It will be merged against the default configuration.
 
 ## Help
