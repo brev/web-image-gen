@@ -140,6 +140,25 @@ test('--config (invalids)', async () => {
     assert.match(error.stderr.toString(), /images.*formats/)
   }
 
+  // images.version
+  try {
+    await spawn(
+      [
+        execPath,
+        scriptFile,
+        'generate',
+        [
+          '--config',
+          resolve(filesystemDir, '../config/invalid-images-version.js'),
+        ].join('='),
+      ].join(' '),
+      [],
+      { shell: true }
+    )
+  } catch (error) {
+    assert.match(error.stderr.toString(), /images.*version/)
+  }
+
   // manifest.format
   try {
     await spawn(
@@ -157,25 +176,6 @@ test('--config (invalids)', async () => {
     )
   } catch (error) {
     assert.match(error.stderr.toString(), /manifest.*format/)
-  }
-
-  // version
-  try {
-    await spawn(
-      [
-        execPath,
-        scriptFile,
-        'generate',
-        [
-          '--config',
-          resolve(filesystemDir, '../config/invalid-version.js'),
-        ].join('='),
-      ].join(' '),
-      [],
-      { shell: true }
-    )
-  } catch (error) {
-    assert.match(error.stderr.toString(), /version/)
   }
 })
 

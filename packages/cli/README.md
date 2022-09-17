@@ -61,9 +61,9 @@ Imagine a web app with the following directory structure:
 
 In `static/images` we have subdirectories for different groups of images
 (`countries`, `fruits`). Under those subdirs we have original high-resolution
-source images named for each country or fruit (`italy`, `pear`). Alongside each
-original image, we have optional credit and license information in a `json`
-file.
+source images named for each country or fruit (`italy.jpg`, `pear.jpg`).
+Alongside each original image, we have optional credit and license information
+in a `json` file.
 
 ## Run
 
@@ -191,7 +191,7 @@ Compatible UI components:
     sizes: [400, 800],
 
     // Default single generated image to fallback on or use outside imageset.
-    //  Must refer to valid formats and sizes listed above.
+    //  Must refer to a format and size defined above.
     default: {
       format: 'jpg',
       size: 800,
@@ -208,6 +208,9 @@ Compatible UI components:
 
     // Subdir to generate images in (under `<static>/<images>/subdir/` above).
     slug: '_gen',
+
+    // Version update for browser cache-busting
+    version: Date.now().toString(),
   },
 
   // Manifests config
@@ -222,9 +225,6 @@ Compatible UI components:
     // Subdir to put generated manifests in (under <src> above).
     slug: '_gen',
   },
-
-  // Version for cache-busting
-  version: Date.now().toString(),
 }
 
 ```

@@ -34,6 +34,6 @@ export const getFlags = (options: Options) => ({
 })
 
 export const getServePath = (config: Config) => (path: string) =>
-  path.replace(config.images.static, '').concat(`?v=${config.version}`)
+  path.replace(config.images.static, '').concat(`?v=${config.images.version}`)
 
 export const shortPath = (path: string) => path.replace(`${cwd()}/`, '')

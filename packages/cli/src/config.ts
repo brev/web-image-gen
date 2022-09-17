@@ -7,54 +7,29 @@ import { extname, resolve } from 'node:path'
 import { imageOutputFormats, manifestOutputFormats } from './common.js'
 import { readFile } from 'node:fs/promises'
 
-// default config
+/**
+ * Default Config
+ * @see README.md
+ */
 
 export const defaultConfig: Config = {
-  // Images config.
   images: {
-    // Output formats - Ordered!
-    //  First entry should be newest modern format, last entry should
-    //  be most widely supported older fallback format.
     formats: ['avif', 'webp', 'jpg'],
-
-    // Output width sizes in pixels.
     sizes: [400, 800],
-
-    // Default generated image to fallback on or use outside imageset.
-    //  Must refer to valid formats and sizes listed above.
     default: {
       format: 'jpg',
       size: 800,
     },
-
-    // Static assets folder.
     static: resolve('static'),
-
-    // Images subdir underneath the `static` folder above.
-    //  Root of web-serving path in browser.
-    //  Home of original source image subdirs.
-    //  Where generated images will be created.
     images: 'images',
-
-    // Subdir to put generated images in (under `static`/`images`/<group>/ above)
     slug: '_gen',
+    version: Date.now().toString(),
   },
-
-  // Manifests config
   manifests: {
-    // Manifest output format. One of 'json', 'js', or 'ts'.
     format: 'json',
-
-    // Web app source code path for image assets.
-    //  Where manifests will be generated.
     src: resolve('src/lib/assets/images'),
-
-    // Subdir to put generated manifests in (under `src` above).
     slug: '_gen',
   },
-
-  // Version for cache-busting
-  version: Date.now().toString(),
 }
 
 // functions
@@ -68,23 +43,24 @@ export const checkConfig = (config: Config) => {
   // images.default
   if (!imageOutputFormats.includes(config.images.default.format))
     throw new Error(
-      `Unsupported image format in 'images.default': ${config.images.default.format}!`
+      `Unsupported image format in config 'images.default': ${config.images.default.format}!`
     )
   if (!config.images.formats.includes(config.images.default.format))
     throw new Error(
-      `Image format in 'images.default' ${config.images.default.format} not found in 'formats'!`
+      `Image format in config 'images.default' ${config.images.default.format} not found in 'formats'!`
     )
   if (!config.images.sizes.includes(config.images.default.size))
     throw new Error(
-      `Image size in 'images.default' ${config.images.default.size} not found in 'sizes'!`
+      `Image size in config 'images.default' ${config.images.default.size} not found in 'sizes'!`
     )
+  // images.version
+  if (!config.images.version)
+    throw new Error(`Image version missing from config 'images.version'!`)
   // manifests.format
   if (!manifestOutputFormats.includes(config.manifests.format))
     throw new Error(
-      `Unsupported manifest format in 'manifests.format': ${config.manifests.format}!`
+      `Unsupported manifest format in config 'manifests.format': ${config.manifests.format}!`
     )
-  // version
-  if (!config.version) throw new Error(`Config is missing 'version'!`)
   return config
 }
 
