@@ -11,6 +11,9 @@
     "name": "Brev Patterson",
     "url": "https://github.com/brev"
   },
+  "bin": {
+    "web-image-gen": "./dist/index.js"
+  },
   "bugs": {
     "url": "https://github.com/brev/web-image-gen/issues"
   },
