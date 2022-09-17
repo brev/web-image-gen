@@ -3,10 +3,9 @@
 
   Modern responsive web image generation and tooling.                           
                                                                                 
-  Default config file is expected to be `.web-image-gen.js` or `.web-image-     
-  gen.json` in the root of your project.                                        
+  Default config merged with `.web-image-gen.js` or `.json`.                    
                                                                                 
-  https://github.com/brev/web-image-gen                                         
+  https://github.com/brev/web-image-gen/tree/main/packages/cli                  
 
   [1mUsage:[22m   `web-image-gen [1m<command>[22m [options ...]` 
 

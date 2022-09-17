@@ -190,7 +190,12 @@ const guides: Record<string, Record<string, Section>> = {
   generate: {
     header: {
       header: 'Generate',
-      content: [meta.generate.description, meta.generate.details, '', meta.global.url],
+      content: [
+        meta.generate.description,
+        meta.generate.details,
+        '',
+        meta.global.url,
+      ],
     },
     usage: {
       content: [metaUsage('generate')],

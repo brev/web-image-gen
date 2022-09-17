@@ -1,7 +1,9 @@
 
 [4m[1mClean[22m[24m
 
-  Remove all generated images and manifests. 
+  Remove all generated images and manifests.                   
+                                                               
+  https://github.com/brev/web-image-gen/tree/main/packages/cli 
 
   [1mUsage:[22m   `web-image-gen [1mclean[22m [options ...]` 
 

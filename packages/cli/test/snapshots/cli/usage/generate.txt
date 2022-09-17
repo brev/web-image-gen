@@ -8,6 +8,8 @@
                                                                                 
   Manifests will be generated as importable code in the `src/lib` folder.       
   Manifests are created if any new images are generated, by default.            
+                                                                                
+  https://github.com/brev/web-image-gen/tree/main/packages/cli                  
 
   [1mUsage:[22m   `web-image-gen [1mgenerate[22m [options ...]` 
 
