@@ -276,10 +276,10 @@ pnpm run lint
 pnpm run test
 pnpm run test:cover
 pnpm run build
+```
 
 # License
 
 [MIT][mit-license]
 
 [mit-license]: https://mit-license.org/
-```
