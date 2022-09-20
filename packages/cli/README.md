@@ -23,6 +23,7 @@ Modern responsive web image generation and tooling.
 
 - Dynamic image names.
 - No import glob mess.
+- Keep images in `static/` instead of `src/`.
 - Low-quality image placeholders (LQIP).
 - Cache-busting.
 - Image credit and license metadata (optional).
