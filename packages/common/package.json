@@ -1,11 +1,10 @@
 {
   "name": "web-image-gen-common",
   "version": "0.0.1",
-  "description": "Common code for web-image-gen-*",
+  "description": "Common code for web-image-gen*",
   "homepage": "https://github.com/brev/web-image-gen/tree/main/packages/common",
   "license": "MIT",
   "packageManager": "pnpm@7",
-  "private": true,
   "type": "module",
   "author": {
     "name": "Brev Patterson",
@@ -31,6 +30,10 @@
     "./const": "./dist/const.js",
     "./stub": "./dist/stub.js"
   },
+  "files": [
+    "dist/*",
+    "types/*"
+  ],
   "keywords": [
     "web",
     "image",
