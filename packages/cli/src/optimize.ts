@@ -1,9 +1,9 @@
-import type { Config } from '../types/Config'
+import type { Config, Options } from 'web-image-gen-common'
 import type { FormatEnum } from 'sharp'
-import type { Options } from '../types/Arguments'
 
 import { extname, resolve } from 'node:path'
-import { getFlags, imageInputFormats, shortPath } from './common.js'
+import { getFlags, shortPath } from './common.js'
+import { imageInputFormats } from 'web-image-gen-common/const'
 import { readdir, rename, rm, stat } from 'node:fs/promises'
 import sharp from 'sharp'
 

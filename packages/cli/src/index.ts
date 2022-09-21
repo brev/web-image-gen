@@ -1,5 +1,4 @@
-import type { Config } from '../types/Config'
-import type { Options } from '../types/Arguments'
+import type { Config, Options } from 'web-image-gen-common'
 
 import { checkConfig, defaultConfig, getConfig } from './config.js'
 import clean from './clean.js'
@@ -11,7 +10,7 @@ import {
   imageInputFormats,
   imageOutputFormats,
   manifestOutputFormats,
-} from './common.js'
+} from 'web-image-gen-common/const'
 import optimize from './optimize.js'
 import remove from './remove.js'
 import { stdin, stdout } from 'node:process'

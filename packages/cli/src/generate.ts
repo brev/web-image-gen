@@ -1,17 +1,10 @@
-import type { Config } from '../types/Config'
-import type { Credit } from '../types/Credit'
+import type { Config, Credit, ImageSets, Options } from 'web-image-gen-common'
 import type { FormatEnum, Sharp } from 'sharp'
-import type { ImageSets } from '../types/ImageSet'
-import type { Options } from '../types/Arguments'
 
-import { access, mkdir, readdir, readFile, writeFile } from 'fs/promises'
-import { extname, resolve } from 'path'
-import {
-  getFlags,
-  getServePath,
-  imageOutputFormats,
-  shortPath,
-} from './common.js'
+import { access, mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
+import { extname, resolve } from 'node:path'
+import { getFlags, getServePath, shortPath } from './common.js'
+import { imageOutputFormats } from 'web-image-gen-common/const'
 import prettier from 'prettier'
 import sharp from 'sharp'
 

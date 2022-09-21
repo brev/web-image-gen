@@ -28,7 +28,8 @@
   },
   "exports": {
     "./package.json": "./package.json",
-    "./const": "./dist/const.js"
+    "./const": "./dist/const.js",
+    "./stub": "./dist/stub.js"
   },
   "keywords": [
     "web",
@@ -56,6 +57,9 @@
     "*": {
       "const": [
         "./dist/const.d.ts"
+      ],
+      "stub": [
+        "./dist/stub.d.ts"
       ]
     }
   }

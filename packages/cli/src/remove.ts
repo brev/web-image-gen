@@ -1,9 +1,9 @@
-import type { Config } from '../types/Config'
-import type { Options } from '../types/Arguments'
+import type { Config, Options } from 'web-image-gen-common'
 
-import { extname, resolve } from 'path'
-import { getFlags, imageInputFormats, shortPath } from './common.js'
-import { readdir, rm } from 'fs/promises'
+import { extname, resolve } from 'node:path'
+import { getFlags, shortPath } from './common.js'
+import { imageInputFormats } from 'web-image-gen-common/const'
+import { readdir, rm } from 'node:fs/promises'
 
 /**
  * Remove
