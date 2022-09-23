@@ -36,7 +36,7 @@ Modern responsive web image generation and tooling.
 ## Install
 
 ```sh
-npm install web-image-gen
+npm install --save-dev web-image-gen
 ```
 
 ## Input
