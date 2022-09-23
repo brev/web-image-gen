@@ -2,6 +2,7 @@
   import type { ImageSet } from 'web-image-gen-common'
 
   import { imageContentTypes } from 'web-image-gen-common/const'
+  import 'lazysizes'
 
   export let alt = ''
   export let imgClass = ''
