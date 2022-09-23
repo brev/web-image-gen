@@ -1,21 +1,21 @@
 
-[4m[1mClean[22m[24m
+Clean
 
   Remove all generated images and manifests.                   
                                                                
   https://github.com/brev/web-image-gen/tree/main/packages/cli 
 
-  [1mUsage:[22m   `web-image-gen [1mclean[22m [options ...]` 
+  Usage:   `web-image-gen clean [options ...]` 
 
-[4m[1mClean Options[22m[24m
+Clean Options
 
-  [1m-o[22m, [1m--only[22m [4mstring[24m   Only remove one of `images` or `manifests`, but not both. 
+  -o, --only string   Only remove one of `images` or `manifests`, but not both. 
 
-[4m[1mGlobal Options[22m[24m
+Global Options
 
-  [1m-c[22m, [1m--config[22m [4mstring[24m   Config file to use instead of the default, in `.js` or  
+  -c, --config string   Config file to use instead of the default, in `.js` or  
                         `.json` format.                                         
-  [1m-h[22m, [1m--help[22m            Show this usage help guide, or help for a specific      
+  -h, --help            Show this usage help guide, or help for a specific      
                         command.                                                
-  [1m-v[22m, [1m--verbose[22m         Display debugging output.                               
+  -v, --verbose         Display debugging output.                               
 

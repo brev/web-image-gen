@@ -1,7 +1,12 @@
 export default {
   loaders: [
     'esm-loader-json',
-    'esm-loader-typescript',
+    {
+      loader: 'esm-loader-typescript',
+      options: {
+        config: 'test/tsconfig.json',
+      },
+    },
     {
       loader: 'esm-loader-import-relative-extension',
       options: {

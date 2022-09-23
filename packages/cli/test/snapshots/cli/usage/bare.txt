@@ -1,5 +1,5 @@
 
-[4m[1mweb-image-gen[22m[24m
+web-image-gen
 
   Modern responsive web image generation and tooling.                           
                                                                                 
@@ -7,20 +7,20 @@
                                                                                 
   https://github.com/brev/web-image-gen/tree/main/packages/cli                  
 
-  [1mUsage:[22m   `web-image-gen [1m<command>[22m [options ...]` 
+  Usage:   `web-image-gen <command> [options ...]` 
 
-[4m[1mAvailable Commands[22m[24m
+Available Commands
 
-  [1mgenerate[22m    Generate responsive images and importable code manifests.   
-  [1moriginals[22m   Perform helpful operations on original source images.       
-  [1mclean[22m       Remove all generated images and manifests.                  
-  [1mhelp[22m        Show this usage help guide, or help for a specific command. 
+  generate    Generate responsive images and importable code manifests.   
+  originals   Perform helpful operations on original source images.       
+  clean       Remove all generated images and manifests.                  
+  help        Show this usage help guide, or help for a specific command. 
 
-[4m[1mGlobal Options[22m[24m
+Global Options
 
-  [1m-c[22m, [1m--config[22m [4mstring[24m   Config file to use instead of the default, in `.js` or  
+  -c, --config string   Config file to use instead of the default, in `.js` or  
                         `.json` format.                                         
-  [1m-h[22m, [1m--help[22m            Show this usage help guide, or help for a specific      
+  -h, --help            Show this usage help guide, or help for a specific      
                         command.                                                
-  [1m-v[22m, [1m--verbose[22m         Display debugging output.                               
+  -v, --verbose         Display debugging output.                               
 

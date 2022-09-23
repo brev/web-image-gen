@@ -1,11 +1,13 @@
-import { cp, mkdtemp, rm } from 'node:fs/promises'
+import { cp, mkdtemp, readFile as readFileAsync, rm } from 'node:fs/promises'
 import { cwd } from 'node:process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import rrd from 'recursive-readDir-files'
+import spawnAsync from 'await-spawn'
+import strip from 'strip-ansi'
 
 export type Context = {
-  cwd?: string
+  cwd: string
 }
 
 export const getBeforeEach =
@@ -15,8 +17,10 @@ export const getBeforeEach =
   }
 
 export const getAfterEach = () => async (context: Context) => {
-  await rm(context.cwd, { recursive: true })
-  delete context.cwd
+  if (context.cwd) {
+    await rm(context.cwd, { recursive: true })
+    context.cwd = ''
+  }
 }
 
 export const getDirTree = async (path: string) => {
@@ -26,7 +30,7 @@ export const getDirTree = async (path: string) => {
     .sort()
     .join('\n')
     .replace(new RegExp(`${fullPath}/`, 'g'), '')
-  return { toString: () => tree }
+  return tree
 }
 
 export const getPaths = (meta: string) => {
@@ -40,5 +44,14 @@ export const getPaths = (meta: string) => {
 }
 
 export const isUpdate = !!process.env['SNAPSHOT_UPDATE']
+
+export const readFile = async (path: string) =>
+  (await readFileAsync(path)).toString()
+
+export const spawn = async (
+  command: string,
+  options: Array<string>,
+  config?: Record<string, unknown>
+) => strip((await spawnAsync(command, options, config)).toString())
 
 if (isUpdate) console.warn('*** Updating Snapshots!!! ***')

@@ -1,7 +1,7 @@
 import { Context } from './common.js'
 
 import * as assert from 'uvu/assert'
-import { cp, readFile, rm, writeFile } from 'node:fs/promises'
+import { cp, rm, writeFile } from 'node:fs/promises'
 import { execPath } from 'node:process'
 import {
   getAfterEach,
@@ -9,38 +9,33 @@ import {
   getDirTree,
   getPaths,
   isUpdate,
+  readFile,
+  spawn,
 } from './common.js'
 import { resolve } from 'node:path'
-import spawn from 'await-spawn'
 import { suite } from 'uvu'
 
-const { filesystemDir, getSnapshotFile, scriptFile } = getPaths(
-  // @ts-ignore
-  import.meta.url
-)
+const { filesystemDir, getSnapshotFile, scriptFile } = getPaths(import.meta.url)
 const snapshotFile = getSnapshotFile('generate')
 
-const test = suite<Context>('generate', { cwd: undefined })
+const test = suite<Context>('generate', { cwd: '' })
 
 test.before.each(getBeforeEach(filesystemDir))
 test.after.each(getAfterEach())
 
 test('BARE', async ({ cwd }) => {
   const stdout = await spawn(execPath, [scriptFile, 'generate'], { cwd })
-  if (isUpdate) await writeFile(snapshotFile('bare'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('bare'), stdout)
   const snapshot = await readFile(snapshotFile('bare'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate) await writeFile(snapshotFile('bare_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('bare_tree'), tree)
   const snaptree = await readFile(snapshotFile('bare_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 
   const manifest = JSON.parse(
-    await readFile(
-      resolve(cwd, 'src/lib/assets/images/_gen/countries.json'),
-      'utf8'
-    )
+    await readFile(resolve(cwd, 'src/lib/assets/images/_gen/countries.json'))
   )
   assert.ok(manifest.france)
   assert.ok(manifest.france.credit)
@@ -79,10 +74,7 @@ test('BARE (missing credits)', async ({ cwd }) => {
   await spawn(execPath, [scriptFile, 'generate'], { cwd })
 
   const manifest = JSON.parse(
-    await readFile(
-      resolve(cwd, 'src/lib/assets/images/_gen/countries.json'),
-      'utf8'
-    )
+    await readFile(resolve(cwd, 'src/lib/assets/images/_gen/countries.json'))
   )
   assert.ok(manifest.france)
   assert.not.ok(manifest.france.credit)
@@ -113,14 +105,14 @@ test('--force', async ({ cwd }) => {
   const stdout = await spawn(execPath, [scriptFile, 'generate', '--force'], {
     cwd,
   })
-  if (isUpdate) await writeFile(snapshotFile('force'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('force'), stdout)
   const snapshot = await readFile(snapshotFile('force'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate) await writeFile(snapshotFile('force_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('force_tree'), tree)
   const snaptree = await readFile(snapshotFile('force_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--force --verbose', async ({ cwd }) => {
@@ -129,24 +121,23 @@ test('--force --verbose', async ({ cwd }) => {
     [scriptFile, 'generate', '--force', '--verbose'],
     { cwd }
   )
-  if (isUpdate)
-    await writeFile(snapshotFile('force_verbose'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('force_verbose'), stdout)
   const snapshot = await readFile(snapshotFile('force_verbose'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 })
 
 test('--verbose', async ({ cwd }) => {
   const stdout = await spawn(execPath, [scriptFile, 'generate', '--verbose'], {
     cwd,
   })
-  if (isUpdate) await writeFile(snapshotFile('verbose'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('verbose'), stdout)
   const snapshot = await readFile(snapshotFile('verbose'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate) await writeFile(snapshotFile('verbose_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('verbose_tree'), tree)
   const snaptree = await readFile(snapshotFile('verbose_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--verbose (config js)', async ({ cwd }) => {
@@ -160,15 +151,14 @@ test('--verbose (config js)', async ({ cwd }) => {
   const stdout = await spawn(execPath, [scriptFile, 'generate', '--verbose'], {
     cwd,
   })
-  if (isUpdate) await writeFile(snapshotFile('verbose_js'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('verbose_js'), stdout)
   const snapshot = await readFile(snapshotFile('verbose_js'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate)
-    await writeFile(snapshotFile('verbose_js_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('verbose_js_tree'), tree)
   const snaptree = await readFile(snapshotFile('verbose_js_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 
   const manifest = (
     await import(resolve(cwd, 'src/lib/assets/images/NEG/countries.ts'))
@@ -215,15 +205,14 @@ test('--verbose (config json)', async ({ cwd }) => {
   const stdout = await spawn(execPath, [scriptFile, 'generate', '--verbose'], {
     cwd,
   })
-  if (isUpdate) await writeFile(snapshotFile('verbose_json'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('verbose_json'), stdout)
   const snapshot = await readFile(snapshotFile('verbose_json'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate)
-    await writeFile(snapshotFile('verbose_json_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('verbose_json_tree'), tree)
   const snaptree = await readFile(snapshotFile('verbose_json_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--verbose --config (js)', async ({ cwd }) => {
@@ -239,16 +228,14 @@ test('--verbose --config (js)', async ({ cwd }) => {
     [],
     { cwd, shell: true }
   )
-  if (isUpdate)
-    await writeFile(snapshotFile('verbose_config_js'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('verbose_config_js'), stdout)
   const snapshot = await readFile(snapshotFile('verbose_config_js'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate)
-    await writeFile(snapshotFile('verbose_config_js_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('verbose_config_js_tree'), tree)
   const snaptree = await readFile(snapshotFile('verbose_config_js_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--verbose --config (json)', async ({ cwd }) => {
@@ -264,16 +251,14 @@ test('--verbose --config (json)', async ({ cwd }) => {
     [],
     { cwd, shell: true }
   )
-  if (isUpdate)
-    await writeFile(snapshotFile('verbose_config_json'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('verbose_config_json'), stdout)
   const snapshot = await readFile(snapshotFile('verbose_config_json'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate)
-    await writeFile(snapshotFile('verbose_config_json_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('verbose_config_json_tree'), tree)
   const snaptree = await readFile(snapshotFile('verbose_config_json_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--only=images', async ({ cwd }) => {
@@ -282,15 +267,14 @@ test('--only=images', async ({ cwd }) => {
     [scriptFile, 'generate', '--only=images'],
     { cwd }
   )
-  if (isUpdate) await writeFile(snapshotFile('only_images'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('only_images'), stdout)
   const snapshot = await readFile(snapshotFile('only_images'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate)
-    await writeFile(snapshotFile('only_images_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('only_images_tree'), tree)
   const snaptree = await readFile(snapshotFile('only_images_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--only=images --force', async ({ cwd }) => {
@@ -299,10 +283,9 @@ test('--only=images --force', async ({ cwd }) => {
     [scriptFile, 'generate', '--only=images', '--force'],
     { cwd }
   )
-  if (isUpdate)
-    await writeFile(snapshotFile('only_images_force'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('only_images_force'), stdout)
   const snapshot = await readFile(snapshotFile('only_images_force'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 })
 
 test('--only=images --verbose', async ({ cwd }) => {
@@ -311,16 +294,14 @@ test('--only=images --verbose', async ({ cwd }) => {
     [scriptFile, 'generate', '--only=images', '--verbose'],
     { cwd }
   )
-  if (isUpdate)
-    await writeFile(snapshotFile('only_images_verbose'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('only_images_verbose'), stdout)
   const snapshot = await readFile(snapshotFile('only_images_verbose'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate)
-    await writeFile(snapshotFile('only_images_verbose_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('only_images_verbose_tree'), tree)
   const snaptree = await readFile(snapshotFile('only_images_verbose_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--only=images --force --verbose', async ({ cwd }) => {
@@ -330,12 +311,9 @@ test('--only=images --force --verbose', async ({ cwd }) => {
     { cwd }
   )
   if (isUpdate)
-    await writeFile(
-      snapshotFile('only_images_force_verbose'),
-      stdout.toString()
-    )
+    await writeFile(snapshotFile('only_images_force_verbose'), stdout)
   const snapshot = await readFile(snapshotFile('only_images_force_verbose'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 })
 
 test('--only=manifests', async ({ cwd }) => {
@@ -344,16 +322,14 @@ test('--only=manifests', async ({ cwd }) => {
     [scriptFile, 'generate', '--only=manifests'],
     { cwd }
   )
-  if (isUpdate)
-    await writeFile(snapshotFile('only_manifests'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('only_manifests'), stdout)
   const snapshot = await readFile(snapshotFile('only_manifests'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate)
-    await writeFile(snapshotFile('only_manifests_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('only_manifests_tree'), tree)
   const snaptree = await readFile(snapshotFile('only_manifests_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--only=manifests --force', async ({ cwd }) => {
@@ -362,10 +338,9 @@ test('--only=manifests --force', async ({ cwd }) => {
     [scriptFile, 'generate', '--only=manifests', '--force'],
     { cwd }
   )
-  if (isUpdate)
-    await writeFile(snapshotFile('only_manifests_force'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('only_manifests_force'), stdout)
   const snapshot = await readFile(snapshotFile('only_manifests_force'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 })
 
 test('--only=manifests --verbose', async ({ cwd }) => {
@@ -374,19 +349,15 @@ test('--only=manifests --verbose', async ({ cwd }) => {
     [scriptFile, 'generate', '--only=manifests', '--verbose'],
     { cwd }
   )
-  if (isUpdate)
-    await writeFile(snapshotFile('only_manifests_verbose'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('only_manifests_verbose'), stdout)
   const snapshot = await readFile(snapshotFile('only_manifests_verbose'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
   if (isUpdate)
-    await writeFile(
-      snapshotFile('only_manifests_verbose_tree'),
-      tree.toString()
-    )
+    await writeFile(snapshotFile('only_manifests_verbose_tree'), tree)
   const snaptree = await readFile(snapshotFile('only_manifests_verbose_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--only=manifests --verbose (mkdir)', async ({ cwd }) => {
@@ -398,23 +369,17 @@ test('--only=manifests --verbose (mkdir)', async ({ cwd }) => {
     { cwd }
   )
   if (isUpdate)
-    await writeFile(
-      snapshotFile('only_manifests_verbose_mkdir'),
-      stdout.toString()
-    )
+    await writeFile(snapshotFile('only_manifests_verbose_mkdir'), stdout)
   const snapshot = await readFile(snapshotFile('only_manifests_verbose_mkdir'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
   if (isUpdate)
-    await writeFile(
-      snapshotFile('only_manifests_verbose_mkdir_tree'),
-      tree.toString()
-    )
+    await writeFile(snapshotFile('only_manifests_verbose_mkdir_tree'), tree)
   const snaptree = await readFile(
     snapshotFile('only_manifests_verbose_mkdir_tree')
   )
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--only=manifests --force --verbose', async ({ cwd }) => {
@@ -424,12 +389,9 @@ test('--only=manifests --force --verbose', async ({ cwd }) => {
     { cwd }
   )
   if (isUpdate)
-    await writeFile(
-      snapshotFile('only_manifests_force_verbose'),
-      stdout.toString()
-    )
+    await writeFile(snapshotFile('only_manifests_force_verbose'), stdout)
   const snapshot = await readFile(snapshotFile('only_manifests_force_verbose'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 })
 
 test.run()

@@ -16,8 +16,8 @@ Modern responsive web image generation and tooling.
   - Output formats: `js`, `json`, `ts`
 - Tooling to manage original source images and any generated files.
 - Easily display imagesets with compatible UI components:
-  - Svelte @TODO
-  - React @TODO
+  - [web-image-gen-svelte][web-image-gen-svelte]
+  - web-image-gen-react @TODO
 
 ## Features
 
@@ -120,7 +120,7 @@ We can now import the generated manifest files to load imageset data in our
 web app:
 
 ```js
-import fruitImageSets from 'src/lib/assets/_gen/fruits.json'
+import fruitImageSets from 'src/lib/assets/images/_gen/fruits.json'
 
 console.dir(fruitImageSets['pear'])
 ```
@@ -172,8 +172,8 @@ Outputs:
 
 Compatible UI components:
 
-- Svelte @TODO
-- React @TODO
+- [web-image-gen-svelte][web-image-gen-svelte]
+- web-image-gen-react @TODO
 
 ## Config
 
@@ -274,8 +274,8 @@ pnpm install
 pnpm run clean
 pnpm run format
 pnpm run lint
-pnpm run test
 pnpm run test:cover
+SNAPSHOT_UPDATE=1 pnpm run test
 pnpm run build
 ```
 
@@ -284,3 +284,6 @@ pnpm run build
 [MIT][mit-license]
 
 [mit-license]: https://mit-license.org/
+
+[web-image-gen-react]:
+[web-image-gen-svelte]: https://github.com/brev/web-image-gen/tree/main/packages/svelte#readme

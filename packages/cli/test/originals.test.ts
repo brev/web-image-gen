@@ -8,16 +8,14 @@ import {
   getDirTree,
   getPaths,
   isUpdate,
+  readFile,
+  spawn,
 } from './common.js'
-import { readFile, stat, writeFile } from 'node:fs/promises'
+import { stat, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import spawn from 'await-spawn'
 import { suite } from 'uvu'
 
-const { filesystemDir, getSnapshotFile, scriptFile } = getPaths(
-  // @ts-ignore
-  import.meta.url
-)
+const { filesystemDir, getSnapshotFile, scriptFile } = getPaths(import.meta.url)
 const snapshotFile = getSnapshotFile('originals')
 const originals = [
   'static/images/countries/france.jpg',
@@ -26,7 +24,7 @@ const originals = [
   'static/images/fruits/pear.jpg',
 ]
 
-const test = suite<Context>('originals', { cwd: undefined })
+const test = suite<Context>('originals', { cwd: '' })
 
 test.before.each(getBeforeEach(filesystemDir))
 test.after.each(getAfterEach())
@@ -43,14 +41,14 @@ test('--optimize', async ({ cwd }) => {
     [scriptFile, 'originals', '--optimize'],
     { cwd }
   )
-  if (isUpdate) await writeFile(snapshotFile('optimize'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('optimize'), stdout)
   const snapshot = await readFile(snapshotFile('optimize'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate) await writeFile(snapshotFile('optimize_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('optimize_tree'), tree)
   const snaptree = await readFile(snapshotFile('optimize_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 
   const sizeAfter = (
     await Promise.all(originals.map((original) => stat(resolve(cwd, original))))
@@ -82,31 +80,30 @@ test('--optimize --verbose', async ({ cwd }) => {
     [scriptFile, 'originals', '--optimize', '--verbose'],
     { cwd }
   )
-  if (isUpdate)
-    await writeFile(snapshotFile('optimize_verbose'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('optimize_verbose'), stdout)
   const snapshot = await readFile(snapshotFile('optimize_verbose'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate)
-    await writeFile(snapshotFile('optimize_verbose_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('optimize_verbose_tree'), tree)
   const snaptree = await readFile(snapshotFile('optimize_verbose_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--remove', async ({ cwd }) => {
   const stdout = await spawn(
     `echo 'y' | ${execPath} ${scriptFile} originals --remove`,
+    [],
     { cwd, shell: true }
   )
-  if (isUpdate) await writeFile(snapshotFile('remove'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('remove'), stdout)
   const snapshot = await readFile(snapshotFile('remove'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate) await writeFile(snapshotFile('remove_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('remove_tree'), tree)
   const snaptree = await readFile(snapshotFile('remove_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--remove --force', async ({ cwd }) => {
@@ -115,40 +112,39 @@ test('--remove --force', async ({ cwd }) => {
     [scriptFile, 'originals', '--remove', '--force'],
     { cwd }
   )
-  if (isUpdate) await writeFile(snapshotFile('remove_force'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('remove_force'), stdout)
   const snapshot = await readFile(snapshotFile('remove_force'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate)
-    await writeFile(snapshotFile('remove_force_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('remove_force_tree'), tree)
   const snaptree = await readFile(snapshotFile('remove_force_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test('--remove --verbose', async ({ cwd }) => {
   const stdout = await spawn(
     `echo 'y' | ${execPath} ${scriptFile} originals --remove --verbose`,
+    [],
     { cwd, shell: true }
   )
-  if (isUpdate)
-    await writeFile(snapshotFile('remove_verbose'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('remove_verbose'), stdout)
   const snapshot = await readFile(snapshotFile('remove_verbose'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate)
-    await writeFile(snapshotFile('remove_verbose_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('remove_verbose_tree'), tree)
   const snaptree = await readFile(snapshotFile('remove_verbose_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 
   // answer no to prompt
   const nope = await spawn(
     `echo 'n' | ${execPath} ${scriptFile} originals --remove --verbose`,
+    [],
     { cwd, shell: true }
   )
   assert.equal(
-    nope.toString(),
+    nope,
     'Using default config...\nRemove original source images? Are you sure? [y/N]: '
   )
 })
@@ -159,16 +155,14 @@ test('--remove --force --verbose', async ({ cwd }) => {
     [scriptFile, 'originals', '--remove', '--force', '--verbose'],
     { cwd }
   )
-  if (isUpdate)
-    await writeFile(snapshotFile('remove_force_verbose'), stdout.toString())
+  if (isUpdate) await writeFile(snapshotFile('remove_force_verbose'), stdout)
   const snapshot = await readFile(snapshotFile('remove_force_verbose'))
-  assert.snapshot(stdout.toString(), snapshot.toString())
+  assert.snapshot(stdout, snapshot)
 
   const tree = await getDirTree(cwd)
-  if (isUpdate)
-    await writeFile(snapshotFile('remove_force_verbose_tree'), tree.toString())
+  if (isUpdate) await writeFile(snapshotFile('remove_force_verbose_tree'), tree)
   const snaptree = await readFile(snapshotFile('remove_force_verbose_tree'))
-  assert.snapshot(tree.toString(), snaptree.toString())
+  assert.snapshot(tree, snaptree)
 })
 
 test.run()
