@@ -12,6 +12,10 @@ import type { Section } from 'command-line-usage'
 import { parse } from 'ts-command-line-args'
 import usage from 'command-line-usage'
 
+type CommandArgumentsPlus = CommandArguments & {
+  _unknown: Array<string>
+}
+
 // meta
 
 const meta = {
@@ -182,8 +186,7 @@ const guides: Record<string, Record<string, Section>> = {
       header: 'Global Options',
       optionList: Object.keys(globalConfig).map((name) => ({
         name,
-        // @ts-ignore
-        ...globalConfig[name],
+        ...globalConfig[name as keyof ArgumentConfig<GlobalArguments>],
       })),
     },
   },
@@ -204,8 +207,7 @@ const guides: Record<string, Record<string, Section>> = {
       header: meta.generate.options,
       optionList: Object.keys(generateConfig).map((name) => ({
         name,
-        // @ts-ignore
-        ...generateConfig[name],
+        ...generateConfig[name as keyof ArgumentConfig<GenerateArguments>],
       })),
     },
   },
@@ -221,8 +223,7 @@ const guides: Record<string, Record<string, Section>> = {
       header: meta.originals.options,
       optionList: Object.keys(originalsConfig).map((name) => ({
         name,
-        // @ts-ignore
-        ...originalsConfig[name],
+        ...originalsConfig[name as keyof ArgumentConfig<OriginalsArguments>],
       })),
     },
   },
@@ -238,8 +239,7 @@ const guides: Record<string, Record<string, Section>> = {
       header: meta.clean.options,
       optionList: Object.keys(cleanConfig).map((name) => ({
         name,
-        // @ts-ignore
-        ...cleanConfig[name],
+        ...cleanConfig[name as keyof ArgumentConfig<CleanArguments>],
       })),
     },
   },
@@ -251,12 +251,11 @@ export default () => {
   let help: Array<Section> = []
 
   // commands
-  const getCommands = (commands?: CommandArguments) =>
+  const getCommands = (commands?: CommandArgumentsPlus) =>
     parse<CommandArguments>(commandConfig, {
-      // @ts-ignore
       argv: commands && commands._unknown,
       stopAtFirstUnknown: true,
-    })
+    }) as CommandArgumentsPlus
   let commands = getCommands()
   let command = commands.command
 
@@ -264,9 +263,7 @@ export default () => {
   if (command === 'help') {
     commands = getCommands(commands)
     command = commands.command
-    // @ts-ignore
     if (!commands._unknown) commands._unknown = []
-    // @ts-ignore
     commands._unknown.push('--help')
   }
   if (command === 'generate') {
@@ -284,7 +281,6 @@ export default () => {
 
   // options
   const options = parse<Options>(optionsConfig, {
-    // @ts-ignore
     argv: commands._unknown || [],
   })
 
