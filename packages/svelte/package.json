@@ -16,7 +16,7 @@
   "dependencies": {
     "lazysizes": "^5.3.2",
     "svelte": "^3.50.1",
-    "web-image-gen-common": "^1.0.0"
+    "web-image-gen-common": "workspace:^1.0.1"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
