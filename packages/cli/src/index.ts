@@ -15,6 +15,15 @@ import optimize from './optimize.js'
 import remove from './remove.js'
 import { stdin, stdout } from 'node:process'
 
+export type {
+  Config,
+  Credit,
+  Credits,
+  ImageSet,
+  ImageSets,
+  Options,
+} from 'web-image-gen-common'
+
 export {
   checkConfig,
   clean,
@@ -34,16 +43,12 @@ export {
 
 const commands = {
   generate: async (config: Config, options: Options) => {
-    if (command === 'generate') {
-      if ('verbose' in options) {
-        const entities =
-          'only' in options ? options.only : 'images and manifests'
-        console.log(`Generating ${entities}...`)
-        if ('force' in options)
-          console.log('Overwriting already existing files!')
-      }
-      await generate(config, options)
+    if ('verbose' in options) {
+      const entities = 'only' in options ? options.only : 'images and manifests'
+      console.log(`Generating ${entities}...`)
+      if ('force' in options) console.log('Overwriting already existing files!')
     }
+    await generate(config, options)
   },
 
   originals: async (config: Config, options: Options) => {

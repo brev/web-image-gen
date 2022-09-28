@@ -1,5 +1,6 @@
 import type { Config, Options } from 'web-image-gen-common'
 
+import { access, readFile } from 'node:fs/promises'
 import { cwd } from 'node:process'
 import { deepMerge } from './common.js'
 import { extname, resolve } from 'node:path'
@@ -7,7 +8,6 @@ import {
   imageOutputFormats,
   manifestOutputFormats,
 } from 'web-image-gen-common/const'
-import { readFile } from 'node:fs/promises'
 
 /**
  * Default Config
@@ -69,10 +69,11 @@ export const checkConfig = (config: Config) => {
 export const getConfig = async (options: Options) => {
   const { config: configFile, verbose } = options
   let config: Config = defaultConfig
-
   if (configFile) {
+    // custom config file name
     const ext = extname(configFile)
     if (ext === '.json') {
+      // json
       try {
         const configRaw = await readFile(resolve(cwd(), configFile), 'utf8')
         const configJson = JSON.parse(configRaw)
@@ -87,6 +88,7 @@ export const getConfig = async (options: Options) => {
         )
       }
     } else if (ext === '.js') {
+      // js
       try {
         const { default: configJs } = await import(resolve(cwd(), configFile))
         config = deepMerge(config, configJs)
@@ -100,20 +102,51 @@ export const getConfig = async (options: Options) => {
       throw new Error('Config file format must be `js` or `json`')
     }
   } else {
+    // default config file name
     const configFilename = `.web-image-gen`
+    // json
     try {
       const configFile = `${configFilename}.json`
-      const configRaw = await readFile(resolve(cwd(), configFile), 'utf8')
-      const configJson = JSON.parse(configRaw)
-      config = deepMerge(config, configJson)
-      if (verbose) console.log(`Config file read ${configFile}...`)
-    } catch {}
+      const configPath = resolve(cwd(), configFile)
+      let exists = true
+      try {
+        await access(configPath)
+      } catch {
+        exists = false
+      }
+      if (exists) {
+        const configRaw = await readFile(configPath, 'utf8')
+        const configJson = JSON.parse(configRaw)
+        config = deepMerge(config, configJson)
+        if (verbose) console.log(`Config file read ${configFile}...`)
+      }
+    } catch (error) {
+      throw new Error(
+        [`Cannot read or parse ${configFile}:`, (error as Error).message].join(
+          ' '
+        )
+      )
+    }
+    // js
     try {
       const configFile = `${configFilename}.js`
-      const { default: configJs } = await import(resolve(cwd(), configFile))
-      config = deepMerge(config, configJs)
-      if (verbose) console.log(`Config file import ${configFile}...`)
-    } catch {}
+      const configPath = resolve(cwd(), configFile)
+      let exists = true
+      try {
+        await access(configPath)
+      } catch {
+        exists = false
+      }
+      if (exists) {
+        const { default: configJs } = await import(configPath)
+        config = deepMerge(config, configJs)
+        if (verbose) console.log(`Config file import ${configFile}...`)
+      }
+    } catch (error) {
+      throw new Error(
+        [`Cannot import ${configFile}:`, (error as Error).message].join(' ')
+      )
+    }
   }
 
   if (config === defaultConfig && verbose)

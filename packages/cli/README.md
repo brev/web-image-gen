@@ -180,6 +180,7 @@ Compatible UI components:
 ### Default Config
 
 ```js
+/** @type {import('web-image-gen').Config} */
 {
   // Images config.
   images: {

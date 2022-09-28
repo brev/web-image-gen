@@ -28,11 +28,11 @@
   },
   "devDependencies": {
     "@types/command-line-usage": "^5.0.2",
-    "@types/node": "^18.7.19",
-    "@types/prettier": "^2.7.0",
+    "@types/node": "^18.7.23",
+    "@types/prettier": "^2.7.1",
     "@types/sharp": "^0.31.0",
-    "@typescript-eslint/eslint-plugin": "^5.38.0",
-    "@typescript-eslint/parser": "^5.38.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
     "await-spawn": "^4.0.2",
     "c8": "^7.12.0",
     "eslint": "^8.24.0",
@@ -45,7 +45,7 @@
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "strip-ansi": "^7.0.1",
-    "typescript": "^4.8.3",
+    "typescript": "^4.8.4",
     "uvu": "^0.5.6"
   },
   "files": [
@@ -79,7 +79,7 @@
     "bin:tsc:checktest": "run-s 'bin:tsc --noEmit --project test/tsconfig.json'",
     "bin:uvu": "NODE_OPTIONS='--loader node-esm-loader' uvu test/ .test.ts",
     "build": "run-s bin:tsc",
-    "build:watch": "run-s 'build --watch'",
+    "build:watch": "run-s 'bin:tsc --watch'",
     "clean": "rimraf coverage/ dist/",
     "format": "run-s bin:prettier:write",
     "lint": "run-s bin:prettier:check bin:eslint bin:tsc:check bin:tsc:checktest",
