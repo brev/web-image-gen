@@ -75,7 +75,7 @@
     "dev": "vite dev",
     "format": "run-s 'bin:prettier --write'",
     "lint": "run-s 'bin:prettier --check' bin:eslint",
-    "prepublishOnly": "node bin/prepublish.js",
+    "prepublishOnly": "echo '!!! You want to publish `package/`, not `.` !!!' && exit 1",
     "sync": "svelte-kit sync",
     "test": "run-s sync 'bin:vitest {1}'",
     "test:cover": "run-s sync 'bin:vitest --coverage'"
