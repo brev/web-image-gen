@@ -46,12 +46,12 @@
   "scripts": {
     "bin:eslint": "eslint --ignore-path .gitignore .",
     "bin:prettier": "prettier --ignore-path .gitignore .",
-    "bin:tsc": "tsc --noEmit",
-    "build": "tsc",
-    "build:watch": "run-s 'build --watch'",
+    "bin:tsc": "tsc",
+    "build": "run-s bin:tsc",
+    "build:watch": "run-s 'bin:tsc --watch'",
     "clean": "rimraf coverage/ dist/",
     "format": "run-s 'bin:prettier --write'",
-    "lint": "run-s 'bin:prettier --check' bin:eslint bin:tsc"
+    "lint": "run-s 'bin:prettier --check' bin:eslint 'bin:tsc --noEmit'"
   },
   "types": "./types/index.d.ts",
   "typesVersions": {
