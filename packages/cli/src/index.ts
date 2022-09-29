@@ -3,6 +3,7 @@ import type { Config, Options } from 'web-image-gen-common'
 import { checkConfig, defaultConfig, getConfig } from './config.js'
 import clean from './clean.js'
 import { createInterface } from 'node:readline/promises'
+import { creditStub, imageSetStub } from 'web-image-gen-common/stub'
 import generate from './generate.js'
 import getCLI from './cli.js'
 import {
@@ -25,6 +26,7 @@ export type {
 } from 'web-image-gen-common'
 
 export {
+  creditStub,
   checkConfig,
   clean,
   defaultConfig,
@@ -34,6 +36,7 @@ export {
   imageContentTypes,
   imageInputFormats,
   imageOutputFormats,
+  imageSetStub,
   manifestOutputFormats,
   optimize,
   remove,
