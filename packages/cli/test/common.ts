@@ -39,7 +39,7 @@ export const getPaths = (meta: string) => {
     filesystemDir: resolve(rootDir, 'fixtures/filesystem'),
     getSnapshotFile: (path: string) => (name: string) =>
       resolve(rootDir, `snapshots/cli/${path}`, `${name}.txt`),
-    scriptFile: resolve(rootDir, '../dist/index.js'),
+    scriptFile: resolve(rootDir, `../dist/cli.js`),
   }
 }
 

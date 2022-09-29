@@ -80,7 +80,7 @@ test('getPaths', () => {
   assert.match(snapFile, /namer/)
 
   assert.ok(scriptFile)
-  assert.match(scriptFile, /dist\/index\.js/)
+  assert.match(scriptFile, /dist\/cli\.js/)
 })
 
 test('isUpdate', () => {
