@@ -75,7 +75,7 @@
     "dev": "vite dev",
     "format": "run-s 'bin:prettier --write'",
     "lint": "run-s 'bin:prettier --check' bin:eslint",
-    "prepublishOnly": "echo 'You want to publish `package/`, not `.`!\n' && exit 1",
+    "prepublishOnly": "echo 'Did you mean to publish `./package/`, instead of `./`?\n' && exit 1",
     "sync": "svelte-kit sync",
     "test": "run-s sync 'bin:vitest {1}'",
     "test:cover": "run-s sync 'bin:vitest --coverage'"
