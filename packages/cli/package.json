@@ -1,6 +1,6 @@
 {
   "name": "web-image-gen",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Modern responsive web image generation and tooling",
   "homepage": "https://github.com/brev/web-image-gen/tree/main/packages/cli#readme",
   "license": "MIT",
