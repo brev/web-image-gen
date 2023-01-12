@@ -1,5 +1,5 @@
 import type { Config, Credit, ImageSets, Options } from 'web-image-gen-common'
-import type { FormatEnum, Sharp } from 'sharp'
+import type { FormatEnum } from 'sharp'
 
 import { access, mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { extname, resolve } from 'node:path'
@@ -70,11 +70,15 @@ export default async (config: Config, options: Options) => {
 
       // low quality image placeholder (lqip)
       sharpPromises.push(
-        sharpFile.clone().resize({ width: 16 }).toFormat('webp', {
-          alphaQuality: 20,
-          quality: 20,
-          smartSubsample: true,
-        })
+        sharpFile
+          .clone()
+          .resize({ width: 16 })
+          .toFormat('webp', {
+            alphaQuality: 20,
+            quality: 20,
+            smartSubsample: true,
+          })
+          .toBuffer()
       )
 
       // check if image 'generated' dir exists and create if missing
@@ -139,10 +143,9 @@ export default async (config: Config, options: Options) => {
       }
 
       // generate images - run all queued
-      const sharpResults = await Promise.all(sharpPromises)
+      const [lqip] = await Promise.all(sharpPromises)
 
       // low quality image placeholder (lqip) for set
-      const lqip = await (sharpResults[0] as Sharp).toBuffer()
       const dataURI = `data:image/webp;base64,${lqip.toString('base64')}`
       manifest[imageSlug].placeholder = dataURI
     }
