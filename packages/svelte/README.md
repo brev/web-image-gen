@@ -10,13 +10,13 @@ Modern `picture`/`srcset` functionality is provided, along with low-quality
 image placeholders (LQIP), and optional credit/license metadata. Older browsers
 fallback to default images they can handle.
 
-# Install
+## Install
 
 ```sh
 npm install web-image-gen-svelte
 ```
 
-# Usage
+## Usage
 
 ```svelte
 <script lang="ts">
@@ -49,7 +49,7 @@ npm install web-image-gen-svelte
 </style>
 ```
 
-## Properties
+### Properties
 
 Svelte component properties are:
 
@@ -61,9 +61,9 @@ Svelte component properties are:
 | set          | **Required** [`ImageSet`][imageset] data structure ([example][example]).                            |
 | sizes        | `sizes` attribute for `source` and `image` tags. Defaults to [lazysizes][lazysizes] `auto` setting. |
 
-## Styling
+### Styling
 
-### Component
+#### Component
 
 The markup output of the component takes this general shape:
 
@@ -76,7 +76,7 @@ The markup output of the component takes this general shape:
 </picture>
 ```
 
-### [lazysizes][lazysizes]
+#### [lazysizes][lazysizes]
 
 To provide a nice fade from placeholder to loaded image, we suggest these
 [lazysizes][lazysizes] global styles:
@@ -92,7 +92,7 @@ To provide a nice fade from placeholder to loaded image, we suggest these
 }
 ```
 
-# Development
+## Development
 
 ```sh
 git checkout https://github.com/brev/web-image-gen.git
@@ -108,7 +108,7 @@ pnpm run build
 pnpm publish package/
 ```
 
-# License
+## License
 
 [MIT][mit-license]
 

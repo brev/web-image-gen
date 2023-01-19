@@ -2,7 +2,9 @@
 
 Modern responsive web image generation and tooling.
 
-## Functions
+## About
+
+### Functions
 
 - Generates modern optimized responsive web image sets in specified formats and
   sizes, based on your high-resolution original source images
@@ -19,7 +21,7 @@ Modern responsive web image generation and tooling.
   - [web-image-gen-svelte][web-image-gen-svelte]
   - web-image-gen-react @TODO
 
-## Features
+### Features
 
 - Dynamic image names.
 - No import glob mess.
@@ -31,15 +33,15 @@ Modern responsive web image generation and tooling.
   - Should work with most anything.
   - Author is using alongside SvelteKit and Vite.
 
-# Usage
+## Usage
 
-## Install
+### Install
 
 ```sh
 npm install --save-dev web-image-gen
 ```
 
-## Input
+### Input
 
 Imagine a web app with the following directory structure:
 
@@ -66,7 +68,7 @@ source images named for each country or fruit (`italy.jpg`, `pear.jpg`).
 Alongside each original image, we have optional credit and license information
 in a `json` file.
 
-## Run
+### Run
 
 We'll run the command-line script to generate our images and manifests:
 
@@ -74,7 +76,7 @@ We'll run the command-line script to generate our images and manifests:
 npx web-image-gen generate --verbose
 ```
 
-## Output
+### Output
 
 The directory structure of our web app will now look like this:
 
@@ -114,7 +116,7 @@ The directory structure of our web app will now look like this:
 
 The new `_gen` folders contain our generated images and manifests.
 
-## Import
+### Import
 
 We can now import the generated manifest files to load imageset data in our
 web app:
@@ -168,16 +170,16 @@ Outputs:
 }
 ```
 
-## Display
+### Display
 
 Compatible UI components:
 
 - [web-image-gen-svelte][web-image-gen-svelte]
 - web-image-gen-react @TODO
 
-## Config
+### Config
 
-### Default Config
+#### Default Config
 
 ```js
 /** @type {import('web-image-gen').Config} */
@@ -231,9 +233,9 @@ Compatible UI components:
 
 ```
 
-### Config File
+#### Config File
 
-#### Standard File
+##### Standard File
 
 If either exists, config will be read from the file and merged against
 the defaults:
@@ -241,31 +243,31 @@ the defaults:
 - `.web-image-gen.js`
 - `.web-image-gen.json`
 
-#### Custom File
+##### Custom File
 
 A custom configuration file can be used with the `--config` command-line
 option (`js` or `json`). It will be merged against the default configuration.
 
-## Help
+### Help
 
 ```sh
 npx web-image-gen help            # or --help
 npx web-image-gen help <command>  # or <command> --help
 ```
 
-## Repository
+### Repository
 
 To keep generated files out of your source control repository, add to something
 like a `.gitignore` file (based on our default configuration above):
 
-```
+```bash
 src/lib/assets/images/_gen/
 static/images/*/_gen/
 ```
 
 Make sure to trigger generation in your `npm scripts`.
 
-# Development
+## Development
 
 ```sh
 git checkout https://github.com/brev/web-image-gen.git
@@ -280,11 +282,9 @@ SNAPSHOT_UPDATE=1 pnpm run test
 pnpm run build
 ```
 
-# License
+## License
 
 [MIT][mit-license]
 
 [mit-license]: https://mit-license.org/
-
-[web-image-gen-react]:
 [web-image-gen-svelte]: https://github.com/brev/web-image-gen/tree/main/packages/svelte#readme
