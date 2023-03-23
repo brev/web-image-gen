@@ -32,17 +32,17 @@ npm install web-image-gen-svelte
   const credit: CreditType = set.credit
 </script>
 
-<div>
+<figure>
   <ImageSet alt="Pear" {set} />
-  <div>
+  <figcaption>
     <a href={credit.link} rel="external">{credit.title}</a> by
     <a href={credit.authorLink} rel="external">{credit.author}</a> -
     <a href={credit.licenseLink} rel="external">{credit.license}</a> License
-  </div>
-</div>
+  </figcaption>
+</figure>
 
 <style>
-  div :global(.web-image-gen-img) {
+  figure :global(.web-image-gen-img) {
     max-width: 20rem;
     width: 100%;
   }
