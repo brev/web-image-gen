@@ -20,7 +20,7 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "^1.0.2",
     "@sveltejs/kit": "^1.1.4",
-    "@sveltejs/package": "^1.0.2",
+    "@sveltejs/package": "^2.0.0",
     "@testing-library/svelte": "^3.2.2",
     "@types/node": "^18.11.18",
     "@types/prettier": "^2.7.2",
@@ -70,13 +70,40 @@
     "bin:vitest": "vitest run",
     "build": "run-s sync bin:package",
     "check": "run-s sync bin:check",
-    "clean": "rimraf coverage/ package/",
+    "clean": "rimraf coverage/ dist/",
     "dev": "vite dev",
     "format": "run-s 'bin:prettier --write'",
     "lint": "run-s 'bin:prettier --check' bin:eslint",
-    "prepublishOnly": "echo 'Did you mean to publish `./package/`, instead of `./`?\n' && exit 1",
+    "prepublishOnly": "echo 'Did you mean to publish `./dist/`, instead of `./`?\n' && exit 1",
     "sync": "svelte-kit sync",
     "test": "run-s sync 'bin:vitest {1}'",
     "test:cover": "run-s sync 'bin:vitest --coverage'"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    "./ImageSet.svelte": {
+      "types": "./dist/ImageSet.svelte.d.ts",
+      "svelte": "./dist/ImageSet.svelte",
+      "default": "./dist/ImageSet.svelte"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "svelte": "./dist/index.js",
+  "typesVersions": {
+    ">4.0": {
+      "ImageSet.svelte": [
+        "./dist/ImageSet.svelte.d.ts"
+      ],
+      "index": [
+        "./dist/index.d.ts"
+      ]
+    }
   }
 }
