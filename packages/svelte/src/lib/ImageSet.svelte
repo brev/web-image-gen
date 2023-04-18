@@ -13,7 +13,7 @@
   if (!set) throw new Error('missing prop `set`')
 </script>
 
-<picture class={`web-image-gen-picture ${pictureClass}`}>
+<picture class="web-image-gen-picture {pictureClass}">
   {#each Object.keys(set.formats) as format}
     {@const formatSizes = set.formats[format]}
     {@const srcset = Object.keys(formatSizes)
@@ -28,12 +28,20 @@
     {:else}
       <img
         {alt}
-        class={`web-image-gen-img ${imgClass} lazyload`}
+        class="web-image-gen-img {imgClass} lazyload"
         data-sizes={sizes}
         data-srcset={srcset}
         src={set.default}
         srcset={set.placeholder}
       />
+      <noscript>
+        <style>
+          .web-image-gen-picture .web-image-gen-img.lazyload {
+            display: none;
+          }
+        </style>
+        <img {alt} class="web-image-gen-img {imgClass}" src={set.default} />
+      </noscript>
     {/if}
   {/each}
 </picture>

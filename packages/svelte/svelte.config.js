@@ -6,8 +6,5 @@ export default {
   kit: {
     adapter: adapter(),
   },
-  package: {
-    files: (file) => !file.endsWith('.test.ts'),
-  },
   preprocess: preprocess(),
 }
