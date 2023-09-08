@@ -180,7 +180,7 @@ export default async (config: Config, options: Options) => {
 
       await writeFile(
         manifestFile,
-        prettier.format(manifestSrc, { filepath: manifestFile })
+        await prettier.format(manifestSrc, { filepath: manifestFile })
       )
     }
   }

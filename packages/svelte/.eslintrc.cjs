@@ -6,23 +6,39 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'plugin:svelte/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
   ignorePatterns: ['*.cjs'],
-  overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
+  overrides: [
+    {
+      files: ['*.svelte'],
+      parser: 'svelte-eslint-parser',
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+      },
+    },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',
     ecmaVersion: 2020,
+    extraFileExtensions: ['.svelte'],
   },
-  plugins: ['svelte3', 'testing-library', '@typescript-eslint'],
+  plugins: ['testing-library', '@typescript-eslint'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 'off',
     'no-empty': ['error', { allowEmptyCatch: true }],
   },
   root: true,
   settings: {
-    'svelte3/typescript': () => require('typescript'),
+    svelte: {
+      compileOptions: {
+        postcss: {
+          configFilePath: './postcss.config.js',
+        },
+      },
+    },
   },
 }

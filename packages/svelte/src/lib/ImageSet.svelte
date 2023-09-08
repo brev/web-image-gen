@@ -34,14 +34,14 @@
         src={set.default}
         srcset={set.placeholder}
       />
-      <noscript>
-        <style>
-          .web-image-gen-picture .web-image-gen-img.lazyload {
-            display: none;
-          }
-        </style>
-        <img {alt} class="web-image-gen-img {imgClass}" src={set.default} />
-      </noscript>
     {/if}
   {/each}
 </picture>
+<noscript>
+  <style>
+    .web-image-gen-picture .web-image-gen-img.lazyload {
+      display: none;
+    }
+  </style>
+  <img {alt} class="web-image-gen-img {imgClass}" src={set.default} />
+</noscript>

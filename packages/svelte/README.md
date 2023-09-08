@@ -74,10 +74,10 @@ The markup output of the component takes this general shape:
   <source />
   <source />
   <img class="web-image-gen-img {imgClass} lazyload" />
-  <noscript>
-    <img class="web-image-gen-img {imgClass}" />
-  </noscript>
 </picture>
+<noscript>
+  <img class="web-image-gen-img {imgClass}" />
+</noscript>
 ```
 
 #### [lazysizes][lazysizes]
