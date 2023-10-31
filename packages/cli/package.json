@@ -1,6 +1,6 @@
 {
   "name": "web-image-gen",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Modern responsive web image generation and tooling",
   "homepage": "https://github.com/brev/web-image-gen/tree/main/packages/cli#readme",
   "license": "MIT",
@@ -12,7 +12,7 @@
     "url": "https://github.com/brev"
   },
   "bin": {
-    "web-image-gen": "web-image-gen.js"
+    "web-image-gen": "bin/web-image-gen.js"
   },
   "bugs": {
     "url": "https://github.com/brev/web-image-gen/issues"
@@ -46,8 +46,8 @@
     "uvu": "^0.5.6"
   },
   "files": [
-    "dist/*",
-    "web-image-gen.js"
+    "bin/*",
+    "dist/*"
   ],
   "keywords": [
     "web",
