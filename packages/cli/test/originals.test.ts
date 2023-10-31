@@ -33,7 +33,7 @@ test('--optimize', async ({ cwd }) => {
   const sizeBefore = (
     await Promise.all(originals.map((original) => stat(resolve(cwd, original))))
   )
-    .map((meta) => meta.size)
+    .map((context) => context.size)
     .reduce((prev, curr) => prev + curr, 0)
 
   const stdout = await spawn(
@@ -53,7 +53,7 @@ test('--optimize', async ({ cwd }) => {
   const sizeAfter = (
     await Promise.all(originals.map((original) => stat(resolve(cwd, original))))
   )
-    .map((meta) => meta.size)
+    .map((context) => context.size)
     .reduce((prev, curr) => prev + curr, 0)
   assert.ok(
     sizeAfter < sizeBefore,
@@ -66,7 +66,7 @@ test('--optimize', async ({ cwd }) => {
   const sizeAgain = (
     await Promise.all(originals.map((original) => stat(resolve(cwd, original))))
   )
-    .map((meta) => meta.size)
+    .map((context) => context.size)
     .reduce((prev, curr) => prev + curr, 0)
   assert.ok(
     sizeAgain === sizeAfter,

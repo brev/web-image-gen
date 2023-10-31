@@ -6,10 +6,10 @@ import remove from './remove.js'
 
 export type {
   Config,
-  Credit,
-  Credits,
   ImageSet,
   ImageSets,
+  Meta,
+  Metas,
   Options,
 } from 'web-image-gen-common'
 

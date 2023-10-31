@@ -1,11 +1,11 @@
-import type { Credit } from './Credit'
+import type { Meta } from './Meta'
 
 export type ImageSet = {
-  credit: Credit | null
   default: string
   formats: {
     [key: string]: Record<string, string>
   }
+  meta: Meta | null
   placeholder: string
   sizes: {
     [key: string]: Record<string, string>

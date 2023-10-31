@@ -1,4 +1,4 @@
-export type Credit = {
+export type Meta = {
   author: string
   authorLink: string
   license: string
@@ -7,4 +7,4 @@ export type Credit = {
   title: string
 }
 
-export type Credits = Array<Credit>
+export type Metas = Array<Meta>

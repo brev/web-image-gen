@@ -1,13 +1,5 @@
 {
   "apple": {
-    "credit": {
-      "author": "pasja1000",
-      "authorLink": "https://pixabay.com/users/pasja1000-6355831/",
-      "link": "https://pixabay.com/photos/apples-fruits-food-vitamins-sliced-3580560/",
-      "title": "Apples",
-      "license": "Pixabay",
-      "licenseLink": "https://pixabay.com/service/license/"
-    },
     "default": "/images/fruits/_gen/apple-800.jpg?v=1663210262429",
     "formats": {
       "avif": {
@@ -22,6 +14,14 @@
         "400": "/images/fruits/_gen/apple-400.jpg?v=1663210262429",
         "800": "/images/fruits/_gen/apple-800.jpg?v=1663210262429"
       }
+    },
+    "meta": {
+      "author": "pasja1000",
+      "authorLink": "https://pixabay.com/users/pasja1000-6355831/",
+      "link": "https://pixabay.com/photos/apples-fruits-food-vitamins-sliced-3580560/",
+      "title": "Apples",
+      "license": "Pixabay",
+      "licenseLink": "https://pixabay.com/service/license/"
     },
     "placeholder": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACwAQCdASoQAAwABUB8JbACdAClkpsIAPxzJaxXquV/lfknA/Mwq1kY/wTF2dgFS5jsJC5ISkmTEyB8OYJqGStVuTJwDAulK5qaGXrVDx8iVQ0C5t76j1TfMe0bjTDEIAomAAAA",
     "sizes": {
@@ -38,14 +38,6 @@
     }
   },
   "pear": {
-    "credit": {
-      "author": "PIRO4D",
-      "authorLink": "https://pixabay.com/users/PIRO4D-2707530/",
-      "link": "https://pixabay.com/photos/fruit-pear-pear-basket-sweet-bio-1534494/",
-      "title": "Pear Basket",
-      "license": "Pixabay",
-      "licenseLink": "https://pixabay.com/service/license/"
-    },
     "default": "/images/fruits/_gen/pear-800.jpg?v=1663210262429",
     "formats": {
       "avif": {
@@ -60,6 +52,14 @@
         "400": "/images/fruits/_gen/pear-400.jpg?v=1663210262429",
         "800": "/images/fruits/_gen/pear-800.jpg?v=1663210262429"
       }
+    },
+    "meta": {
+      "author": "PIRO4D",
+      "authorLink": "https://pixabay.com/users/PIRO4D-2707530/",
+      "link": "https://pixabay.com/photos/fruit-pear-pear-basket-sweet-bio-1534494/",
+      "title": "Pear Basket",
+      "license": "Pixabay",
+      "licenseLink": "https://pixabay.com/service/license/"
     },
     "placeholder": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAwAgCdASoQAAsABUB8JbACdAYtfF5Xf7koAAD+YUiIbhpVNI3lMFIBfAJZtDY5PBI5wEVw5eM0HZxHwgoZcgIbbzC9Oy0VrR+Z3lkWUCPOg0OD1RPABBLWcE0LutvxwAEk/VAfnwLowrlqAAA=",
     "sizes": {

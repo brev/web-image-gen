@@ -16,9 +16,9 @@ type CommandArgumentsPlus = CommandArguments & {
   _unknown: Array<string>
 }
 
-// meta
+// context
 
-const meta = {
+const context = {
   name: 'web-image-gen',
   global: {
     commands: 'Available Commands',
@@ -67,9 +67,9 @@ const meta = {
     options: 'Clean Options',
   },
 }
-const metaUsage = (command = '<command>') => ({
+const contextUsage = (command = '<command>') => ({
   one: `{bold Usage:}`,
-  two: `\`${meta.name.toLowerCase()} {bold ${command}} [options ...]\``,
+  two: `\`${context.name.toLowerCase()} {bold ${command}} [options ...]\``,
 })
 
 // config - aliases=cfhoprv
@@ -85,19 +85,19 @@ const commandConfig: ArgumentConfig<CommandArguments> = {
 const globalConfig: ArgumentConfig<GlobalArguments> = {
   config: {
     alias: 'c',
-    description: meta.global.config,
+    description: context.global.config,
     optional: true,
     type: String,
   },
   help: {
     alias: 'h',
-    description: meta.global.help,
+    description: context.global.help,
     optional: true,
     type: Boolean,
   },
   verbose: {
     alias: 'v',
-    description: meta.global.verbose,
+    description: context.global.verbose,
     optional: true,
     type: Boolean,
   },
@@ -106,13 +106,13 @@ const globalConfig: ArgumentConfig<GlobalArguments> = {
 const generateConfig: ArgumentConfig<GenerateArguments> = {
   force: {
     alias: 'f',
-    description: meta.generate.force,
+    description: context.generate.force,
     optional: true,
     type: Boolean,
   },
   only: {
     alias: 'o',
-    description: meta.generate.only,
+    description: context.generate.only,
     optional: true,
     type: String,
   },
@@ -121,19 +121,19 @@ const generateConfig: ArgumentConfig<GenerateArguments> = {
 const originalsConfig: ArgumentConfig<OriginalsArguments> = {
   optimize: {
     alias: 'p',
-    description: meta.originals.optimize,
+    description: context.originals.optimize,
     optional: true,
     type: Boolean,
   },
   remove: {
     alias: 'r',
-    description: meta.originals.remove,
+    description: context.originals.remove,
     optional: true,
     type: Boolean,
   },
   force: {
     alias: 'f',
-    description: meta.originals.force,
+    description: context.originals.force,
     optional: true,
     type: Boolean,
   },
@@ -142,7 +142,7 @@ const originalsConfig: ArgumentConfig<OriginalsArguments> = {
 const cleanConfig: ArgumentConfig<CleanArguments> = {
   only: {
     alias: 'o',
-    description: meta.clean.only,
+    description: context.clean.only,
     optional: true,
     type: String,
   },
@@ -155,26 +155,26 @@ const optionsConfig = { ...globalConfig } as ArgumentConfig<Options>
 const guides: Record<string, Record<string, Section>> = {
   global: {
     header: {
-      header: meta.name,
-      content: [meta.global.description, '', meta.global.url],
+      header: context.name,
+      content: [context.global.description, '', context.global.url],
     },
     usage: {
-      content: [metaUsage()],
+      content: [contextUsage()],
     },
     commands: {
-      header: meta.global.commands,
+      header: context.global.commands,
       content: [
         {
           one: `{bold generate}`,
-          two: meta.generate.description,
+          two: context.generate.description,
         },
         {
           one: `{bold originals}`,
-          two: meta.originals.description,
+          two: context.originals.description,
         },
         {
           one: `{bold clean}`,
-          two: meta.clean.description,
+          two: context.clean.description,
         },
         {
           one: `{bold help}`,
@@ -194,17 +194,17 @@ const guides: Record<string, Record<string, Section>> = {
     header: {
       header: 'Generate',
       content: [
-        meta.generate.description,
-        meta.generate.details,
+        context.generate.description,
+        context.generate.details,
         '',
-        meta.global.url,
+        context.global.url,
       ],
     },
     usage: {
-      content: [metaUsage('generate')],
+      content: [contextUsage('generate')],
     },
     options: {
-      header: meta.generate.options,
+      header: context.generate.options,
       optionList: Object.keys(generateConfig).map((name) => ({
         name,
         ...generateConfig[name as keyof ArgumentConfig<GenerateArguments>],
@@ -214,13 +214,13 @@ const guides: Record<string, Record<string, Section>> = {
   originals: {
     header: {
       header: 'Originals',
-      content: [meta.originals.description, '', meta.global.url],
+      content: [context.originals.description, '', context.global.url],
     },
     usage: {
-      content: [metaUsage('originals')],
+      content: [contextUsage('originals')],
     },
     options: {
-      header: meta.originals.options,
+      header: context.originals.options,
       optionList: Object.keys(originalsConfig).map((name) => ({
         name,
         ...originalsConfig[name as keyof ArgumentConfig<OriginalsArguments>],
@@ -230,13 +230,13 @@ const guides: Record<string, Record<string, Section>> = {
   clean: {
     header: {
       header: 'Clean',
-      content: [meta.clean.description, '', meta.global.url],
+      content: [context.clean.description, '', context.global.url],
     },
     usage: {
-      content: [metaUsage('clean')],
+      content: [contextUsage('clean')],
     },
     options: {
-      header: meta.clean.options,
+      header: context.clean.options,
       optionList: Object.keys(cleanConfig).map((name) => ({
         name,
         ...cleanConfig[name as keyof ArgumentConfig<CleanArguments>],

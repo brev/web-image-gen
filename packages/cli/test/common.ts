@@ -33,8 +33,8 @@ export const getDirTree = async (path: string) => {
   return tree
 }
 
-export const getPaths = (meta: string) => {
-  const rootDir = dirname(fileURLToPath(meta))
+export const getPaths = (context: string) => {
+  const rootDir = dirname(fileURLToPath(context))
   return {
     filesystemDir: resolve(rootDir, 'fixtures/filesystem'),
     getSnapshotFile: (path: string) => (name: string) =>
