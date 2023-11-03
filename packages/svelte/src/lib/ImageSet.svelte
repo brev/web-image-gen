@@ -1,13 +1,13 @@
 <script lang="ts">
-  import type { ImageSet } from 'web-image-gen-common'
+  import type { ImageSet as ImageSetType } from './ImageSet'
 
-  import { imageContentTypes } from 'web-image-gen-common/const'
+  import mime from 'mime/lite'
   import 'lazysizes'
 
   export let alt = ''
   export let imgClass = ''
   export let pictureClass = ''
-  export let set: ImageSet
+  export let set: ImageSetType
   export let sizes = 'auto'
 
   if (!set) throw new Error('missing prop `set`')
@@ -23,7 +23,7 @@
       <source
         data-sizes={sizes}
         data-srcset={srcset}
-        type={imageContentTypes[format]}
+        type={mime.getType(format)}
       />
     {:else}
       <img

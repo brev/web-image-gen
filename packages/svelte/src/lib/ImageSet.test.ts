@@ -1,6 +1,8 @@
 import ImageSet from './ImageSet.svelte'
-import { imageSetStub as set } from 'web-image-gen-common/stub'
 import { render } from '@testing-library/svelte'
+import set from '../../test/imageSetStub.json'
+
+type Formats = Record<string, Record<string, string>>
 
 test('with props', () => {
   const { container, getByAltText } = render(ImageSet, {
@@ -25,12 +27,11 @@ test('with props', () => {
       tag = 'source'
       assert.ok(container.querySelector(`${tag}[type*="${format}"]`))
     }
-    Object.keys(set.formats[format]).forEach((size) => {
+    const sizes = (set.formats as Formats)[format]
+    Object.keys(sizes).forEach((size) => {
       assert.ok(container.querySelector(`${tag}[data-sizes="auto"]`))
       assert.ok(
-        container.querySelector(
-          `${tag}[data-srcset*="${set.formats[format][size]}"]`
-        )
+        container.querySelector(`${tag}[data-srcset*="${sizes[size]}"]`)
       )
       assert.ok(container.querySelector(`${tag}[data-srcset*="${size}w"]`))
     })
@@ -46,12 +47,11 @@ test('with props: sizes', () => {
 
   Object.keys(set.formats).forEach((format) => {
     const tag = format === 'jpg' ? 'img' : 'source'
-    Object.keys(set.formats[format]).forEach((size) => {
+    const sizes = (set.formats as Formats)[format]
+    Object.keys(sizes).forEach((size) => {
       assert.ok(container.querySelector(`${tag}[data-sizes="sizes"]`))
       assert.ok(
-        container.querySelector(
-          `${tag}[data-srcset*="${set.formats[format][size]}"]`
-        )
+        container.querySelector(`${tag}[data-srcset*="${sizes[size]}"]`)
       )
       assert.ok(container.querySelector(`${tag}[data-srcset*="${size}w"]`))
     })

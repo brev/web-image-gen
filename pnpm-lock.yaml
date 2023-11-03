@@ -26,16 +26,13 @@ importers:
       ts-command-line-args:
         specifier: ^2.5.1
         version: 2.5.1
-      web-image-gen-common:
-        specifier: workspace:^
-        version: link:../common
     devDependencies:
       '@types/command-line-usage':
         specifier: ^5.0.3
         version: 5.0.3
       '@types/node':
-        specifier: ^20.8.9
-        version: 20.8.9
+        specifier: ^20.8.10
+        version: 20.8.10
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.9.1
         version: 6.9.1(@typescript-eslint/parser@6.9.1)(eslint@8.52.0)(typescript@5.2.2)
@@ -55,14 +52,14 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0(eslint@8.52.0)
       esm-loader-import-relative-extension:
-        specifier: ^1.0.10
-        version: 1.0.10
+        specifier: ^1.0.11
+        version: 1.0.11
       esm-loader-json:
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.0.6
+        version: 1.0.6
       esm-loader-typescript:
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.0.6
+        version: 1.0.6
       node-esm-loader:
         specifier: ^0.2.5
         version: 0.2.5
@@ -102,9 +99,6 @@ importers:
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
-      rimraf:
-        specifier: ^5.0.5
-        version: 5.0.5
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -114,12 +108,12 @@ importers:
       lazysizes:
         specifier: ^5.3.2
         version: 5.3.2
+      mime:
+        specifier: ^3.0.0
+        version: 3.0.0
       svelte:
         specifier: ^4.2.2
         version: 4.2.2
-      web-image-gen-common:
-        specifier: workspace:^
-        version: link:../common
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^2.1.0
@@ -134,8 +128,8 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4(svelte@4.2.2)
       '@types/node':
-        specifier: ^20.8.9
-        version: 20.8.9
+        specifier: ^20.8.10
+        version: 20.8.10
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.9.1
         version: 6.9.1(@typescript-eslint/parser@6.9.1)(eslint@8.52.0)(typescript@5.2.2)
@@ -180,7 +174,7 @@ importers:
         version: 5.2.2
       vite:
         specifier: ^4.5.0
-        version: 4.5.0(@types/node@20.8.9)
+        version: 4.5.0(@types/node@20.8.10)
       vitest:
         specifier: ^0.34.6
         version: 0.34.6(jsdom@22.1.0)
@@ -617,7 +611,7 @@ packages:
       svelte: 4.2.2
       tiny-glob: 0.2.9
       undici: 5.26.5
-      vite: 4.5.0(@types/node@20.8.9)
+      vite: 4.5.0(@types/node@20.8.10)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -650,7 +644,7 @@ packages:
       '@sveltejs/vite-plugin-svelte': 2.4.6(svelte@4.2.2)(vite@4.5.0)
       debug: 4.3.4
       svelte: 4.2.2
-      vite: 4.5.0(@types/node@20.8.9)
+      vite: 4.5.0(@types/node@20.8.10)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -669,7 +663,7 @@ packages:
       magic-string: 0.30.5
       svelte: 4.2.2
       svelte-hmr: 0.15.3(svelte@4.2.2)
-      vite: 4.5.0(@types/node@20.8.9)
+      vite: 4.5.0(@types/node@20.8.10)
       vitefu: 0.2.5(vite@4.5.0)
     transitivePeerDependencies:
       - supports-color
@@ -737,8 +731,8 @@ packages:
     resolution: {integrity: sha512-U3PUjAudAdJBeC2pgN8uTIKgxrb4nlDF3SF0++EldXQvQBGkpFZMSnwQiIoDU77tv45VgNkl/L4ouD+rEomujw==}
     dev: true
 
-  /@types/node@20.8.9:
-    resolution: {integrity: sha512-UzykFsT3FhHb1h7yD4CA4YhBHq545JC0YnEz41xkipN88eKQtL6rSgocL5tbAP6Ola9Izm/Aw4Ora8He4x0BHg==}
+  /@types/node@20.8.10:
+    resolution: {integrity: sha512-TlgT8JntpcbmKUFzjhsyhGfP2fsiz1Mv56im6enJ905xG1DAYesxJaeSbGqQmAw8OWPdhyJGhGSQGKRNJ45u9w==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -1885,26 +1879,26 @@ packages:
     resolution: {integrity: sha512-Cf6VksWPsTuW01vU9Mk/3vRue91Zevka5SjyNf3nEpokFRuqt/KjUQoGAwq9qMmhpLTHmXzSIrFRw8zxWzmFBA==}
     dev: true
 
-  /esm-loader-import-relative-extension@1.0.10:
-    resolution: {integrity: sha512-Kq0gqikk+UnMwUrlCtSpvgOGsiZ8xpvrlB9YIfir36ZyOid6b9wQniw2/2Gxbv5xlG/N/hSmgglqxSHOqwwcjA==}
+  /esm-loader-import-relative-extension@1.0.11:
+    resolution: {integrity: sha512-OCeOG25j2j4ygIX+fhnmyWTkyMyH4lxV7m1WdXsDc1X4Q5sjUzVl9PeNSKVkkMV4PPZ/VYsCxcDtqGjSJ6gubg==}
     dependencies:
       astring: 1.8.6
       create-esm-loader: 0.2.5
       esquery: 1.5.0
-      meriyah: 4.3.7
+      meriyah: 4.3.8
       npm-run-all: 4.1.5
     dev: true
 
-  /esm-loader-json@1.0.5:
-    resolution: {integrity: sha512-Lu84S+PtKvDEPwS87tRr0bS9xavd1VBK8Fl08YlwmFljjrf67LyN01PugGnMjq2IUrWUgdlXpTXzj/dY419+bA==}
+  /esm-loader-json@1.0.6:
+    resolution: {integrity: sha512-P0nxczHe2qrSykZH2bJcIt49hyn6p1HqN9d9aUTwu65iUfLEHfikIS1oYnOzttsEtxR/HsdLEQL4NJUVJGeWoQ==}
     dependencies:
       create-esm-loader: 0.2.5
       npm-run-all: 4.1.5
       semver: 7.5.4
     dev: true
 
-  /esm-loader-typescript@1.0.5:
-    resolution: {integrity: sha512-BeHp2TrYbRL9fUttlyzPQJPTvLDBXXUli09UNoAr87WKi8jedcULlMteNZgl7DtFZ3ZE1Mmv74SwRgwJDWyc0A==}
+  /esm-loader-typescript@1.0.6:
+    resolution: {integrity: sha512-t+NqYYMAiZa+Ys/QDGzCv0vnKFPYZ8N6JIdqJNeWpNItEYFwZB6itVYzf3SzDMgqPxX5ZmPoOU9vv2CZg2JccA==}
     dependencies:
       create-esm-loader: 0.2.5
       npm-run-all: 4.1.5
@@ -2757,8 +2751,8 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /meriyah@4.3.7:
-    resolution: {integrity: sha512-JAlSOUqFU/rmLy2CEdZO5hN5E5dyUj1f4AlRR4GCQMjfobvd5lcm9JLkrqq0MgVaLQ/Zur590A+0RyUZhj0b5A==}
+  /meriyah@4.3.8:
+    resolution: {integrity: sha512-b1bddpQZK3FVr/x6KISsfNQdS9jVNgVuFDRi7I9AJbYVggdcA6ij9idboD0aW5ZYELsDMOubi58SDfsW81VakA==}
     engines: {node: '>=10.4.0'}
     dev: true
 
@@ -2781,6 +2775,12 @@ packages:
     dependencies:
       mime-db: 1.52.0
     dev: true
+
+  /mime@3.0.0:
+    resolution: {integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+    dev: false
 
   /mimic-response@3.1.0:
     resolution: {integrity: sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==}
@@ -4186,7 +4186,7 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vite-node@0.34.6(@types/node@20.8.9):
+  /vite-node@0.34.6(@types/node@20.8.10):
     resolution: {integrity: sha512-nlBMJ9x6n7/Amaz6F3zJ97EBwR2FkzhBRxF5e+jE6LA3yi6Wtc2lyTij1OnDMIr34v5g/tVQtsVAzhT0jc5ygA==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -4196,7 +4196,7 @@ packages:
       mlly: 1.4.2
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.5.0(@types/node@20.8.9)
+      vite: 4.5.0(@types/node@20.8.10)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -4208,7 +4208,7 @@ packages:
       - terser
     dev: true
 
-  /vite@4.5.0(@types/node@20.8.9):
+  /vite@4.5.0(@types/node@20.8.10):
     resolution: {integrity: sha512-ulr8rNLA6rkyFAlVWw2q5YJ91v098AFQ2R0PRFwPzREXOUJQPtFUG0t+/ZikhaOCDqFoDhN6/v8Sq0o4araFAw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -4236,7 +4236,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.8.9
+      '@types/node': 20.8.10
       esbuild: 0.18.20
       postcss: 8.4.31
       rollup: 3.29.4
@@ -4252,7 +4252,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 4.5.0(@types/node@20.8.9)
+      vite: 4.5.0(@types/node@20.8.10)
     dev: true
 
   /vitest@0.34.6(jsdom@22.1.0):
@@ -4288,7 +4288,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.9
       '@types/chai-subset': 1.3.4
-      '@types/node': 20.8.9
+      '@types/node': 20.8.10
       '@vitest/expect': 0.34.6
       '@vitest/runner': 0.34.6
       '@vitest/snapshot': 0.34.6
@@ -4308,8 +4308,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.7.0
-      vite: 4.5.0(@types/node@20.8.9)
-      vite-node: 0.34.6(@types/node@20.8.9)
+      vite: 4.5.0(@types/node@20.8.10)
+      vite-node: 0.34.6(@types/node@20.8.10)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less

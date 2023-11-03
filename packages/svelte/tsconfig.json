@@ -4,11 +4,16 @@
     "checkJs": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "$lib": ["./src/lib"],
+      "$lib/*": ["./src/lib/*"]
+    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "types": ["vitest/globals"]
   },
+  "exclude": ["**/*.test.*"],
   "extends": "./.svelte-kit/tsconfig.json"
 }

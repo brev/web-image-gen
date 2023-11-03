@@ -21,20 +21,17 @@ npm install web-image-gen-svelte
 
 ```svelte
 <script lang="ts">
-  import type {
-    ImageSet as ImageSetType,
-    Meta as MetaType,
-  } from 'web-image-gen-svelte'
+  import type { ImageSet as ImageSetType } from 'web-image-gen-svelte'
 
   import fruitImageSets from 'src/lib/assets/images/_gen/fruits.json'
   import ImageSet from 'web-image-gen-svelte'
 
   const set: ImageSetType = fruitImageSets['pear']
-  const meta: MetaType = set.meta
+  const { meta } = set
 </script>
 
 <figure>
-  <ImageSet alt="Pear" {set} />
+  <ImageSet alt={meta.description} {set} />
   <figcaption>
     <a href={meta.link} rel="external">{meta.title}</a> by
     <a href={meta.authorLink} rel="external">{meta.author}</a> -
