@@ -4,14 +4,7 @@ import generate from './generate.js'
 import optimize from './optimize.js'
 import remove from './remove.js'
 
-export type {
-  Config,
-  ImageSet,
-  ImageSets,
-  Meta,
-  Metas,
-  Options,
-} from 'web-image-gen-common'
+export type * from '../types'
 
 export {
   checkConfig,

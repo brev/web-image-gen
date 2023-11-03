@@ -6,7 +6,7 @@ import type {
   OriginalsArguments,
   CleanArguments,
   Options,
-} from 'web-image-gen-common'
+} from '../types'
 import type { Section } from 'command-line-usage'
 
 import { parse } from 'ts-command-line-args'

@@ -1,4 +1,4 @@
-import { Context } from './common.js'
+import type { Context } from './testing.ts'
 
 import * as assert from 'uvu/assert'
 import { cp, rm, writeFile } from 'node:fs/promises'
@@ -11,7 +11,7 @@ import {
   isUpdate,
   readFile,
   spawn,
-} from './common.js'
+} from './testing.js'
 import { resolve } from 'node:path'
 import { suite } from 'uvu'
 

@@ -1,10 +1,14 @@
-import type { Config, ImageSets, Meta, Options } from 'web-image-gen-common'
+import type { Config, ImageSets, Options } from '../types'
 import type { FormatEnum } from 'sharp'
 
 import { access, mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { extname, resolve } from 'node:path'
-import { getFlags, getServePath, shortPath } from './common.js'
-import { imageOutputFormats } from 'web-image-gen-common/const'
+import {
+  getFlags,
+  getServePath,
+  imageOutputFormats,
+  shortPath,
+} from './common.js'
 import prettier from 'prettier'
 import sharp from 'sharp'
 
@@ -62,7 +66,7 @@ export default async (config: Config, options: Options) => {
         metaExists = false
       }
       if (metaExists) {
-        const meta: Meta = JSON.parse((await readFile(metaPath)).toString())
+        const meta = JSON.parse((await readFile(metaPath)).toString())
         manifest[imageSlug].meta = meta
       }
 

@@ -1,4 +1,4 @@
-import type { Config, Options } from 'web-image-gen-common'
+import type { Config, Options } from '../types'
 
 import { getFlags, shortPath } from './common.js'
 import { readdir, rm } from 'node:fs/promises'

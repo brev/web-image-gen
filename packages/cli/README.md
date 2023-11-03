@@ -148,6 +148,7 @@ Outputs:
   meta: {
     author: 'PhotographerPerson',
     authorLink: 'https://pixabay.com/users/PhotographerPerson/',
+    description: 'Sliced apples and other fruits.',
     link: 'https://pixabay.com/photos/fruit-pear-pear/',
     title: 'Pear Basket',
     license: 'Pixabay',

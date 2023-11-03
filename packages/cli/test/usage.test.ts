@@ -1,6 +1,6 @@
 import * as assert from 'uvu/assert'
 import { execPath } from 'node:process'
-import { getPaths, isUpdate, readFile, spawn } from './common.js'
+import { getPaths, isUpdate, readFile, spawn } from './testing.js'
 import { writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { suite } from 'uvu'
