@@ -41,6 +41,7 @@ test('BARE', async ({ cwd }) => {
   assert.ok(manifest.france.meta)
   assert.ok(manifest.france.meta.author)
   assert.ok(manifest.france.meta.authorLink)
+  assert.ok(manifest.france.meta.description)
   assert.ok(manifest.france.meta.license)
   assert.ok(manifest.france.meta.licenseLink)
   assert.ok(manifest.france.meta.link)
