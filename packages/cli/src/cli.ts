@@ -1,4 +1,4 @@
-import type { Config, Options } from 'web-image-gen-common'
+import type { Config, Options } from '../types'
 
 import clean from './clean.js'
 import { createInterface } from 'node:readline/promises'

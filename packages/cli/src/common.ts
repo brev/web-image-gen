@@ -1,7 +1,29 @@
-import type { Config, Options } from 'web-image-gen-common'
+import type { Config, Options } from '../types'
 
 import { cwd } from 'node:process'
 import { deepmergeCustom } from 'deepmerge-ts'
+
+// const
+
+export const imageInputFormats: Array<string> = [
+  'avif',
+  'gif',
+  'jpg',
+  'jpeg',
+  'png',
+  'svg',
+  'tif',
+  'tiff',
+  'webp',
+]
+
+export const imageOutputFormats: Array<string> = imageInputFormats.filter(
+  (format) => !['svg', 'tif', 'tiff'].includes(format)
+)
+
+export const manifestOutputFormats: Array<string> = ['json', 'js', 'ts']
+
+// functions
 
 export const deepMerge = deepmergeCustom({ mergeArrays: false })
 

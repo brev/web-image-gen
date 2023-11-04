@@ -1,10 +1,14 @@
-import type { Config, Credit, ImageSets, Options } from 'web-image-gen-common'
+import type { Config, ImageSets, Options } from '../types'
 import type { FormatEnum } from 'sharp'
 
 import { access, mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { extname, resolve } from 'node:path'
-import { getFlags, getServePath, shortPath } from './common.js'
-import { imageOutputFormats } from 'web-image-gen-common/const'
+import {
+  getFlags,
+  getServePath,
+  imageOutputFormats,
+  shortPath,
+} from './common.js'
 import prettier from 'prettier'
 import sharp from 'sharp'
 
@@ -42,30 +46,28 @@ export default async (config: Config, options: Options) => {
     for (const imageFile of imageFiles) {
       const imageSlug = imageFile.replace(imageOutputRegExp, '')
       const imagePath = resolve(imageDirPath, imageFile)
-      const creditPath = imagePath.replace(imageOutputRegExp, '.json')
+      const metaPath = imagePath.replace(imageOutputRegExp, '.json')
       const genDirPath = resolve(imageDirPath, config.images.slug)
       const sharpFile = sharp(imagePath)
       const sharpPromises = []
-      let creditExists = true
+      let metaExists = true
       manifest[imageSlug] = {
-        credit: null,
         default: '',
         formats: {},
+        meta: null,
         placeholder: '',
         sizes: {},
       }
 
-      // load credit if exists
+      // load metadata if exists
       try {
-        await access(creditPath)
+        await access(metaPath)
       } catch {
-        creditExists = false
+        metaExists = false
       }
-      if (creditExists) {
-        const credit: Credit = JSON.parse(
-          (await readFile(creditPath)).toString()
-        )
-        manifest[imageSlug].credit = credit
+      if (metaExists) {
+        const meta = JSON.parse((await readFile(metaPath)).toString())
+        manifest[imageSlug].meta = meta
       }
 
       // low quality image placeholder (lqip)

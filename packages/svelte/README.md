@@ -8,8 +8,8 @@ their ["modern transparent `srcset`"][pattern-srcset] and
 ["noscript"][pattern-noscript] patterns.
 
 Modern `picture`/`srcset` functionality is provided, along with low-quality
-image placeholders (LQIP), and optional credit/license metadata. Older browsers
-fallback to default images they can handle.
+image placeholders (LQIP), and optional metadata. Older browsers fallback to
+default images they can handle.
 
 ## Install
 
@@ -21,24 +21,21 @@ npm install web-image-gen-svelte
 
 ```svelte
 <script lang="ts">
-  import type {
-    Credit as CreditType,
-    ImageSet as ImageSetType,
-  } from 'web-image-gen-svelte'
+  import type { ImageSet as ImageSetType } from 'web-image-gen-svelte'
 
   import fruitImageSets from 'src/lib/assets/images/_gen/fruits.json'
   import ImageSet from 'web-image-gen-svelte'
 
   const set: ImageSetType = fruitImageSets['pear']
-  const credit: CreditType = set.credit
+  const { meta } = set
 </script>
 
 <figure>
-  <ImageSet alt="Pear" {set} />
+  <ImageSet alt={meta.description} {set} />
   <figcaption>
-    <a href={credit.link} rel="external">{credit.title}</a> by
-    <a href={credit.authorLink} rel="external">{credit.author}</a> -
-    <a href={credit.licenseLink} rel="external">{credit.license}</a> License
+    <a href={meta.link} rel="external">{meta.title}</a> by
+    <a href={meta.authorLink} rel="external">{meta.author}</a> -
+    <a href={meta.licenseLink} rel="external">{meta.license}</a> License
   </figcaption>
 </figure>
 

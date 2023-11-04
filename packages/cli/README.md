@@ -28,7 +28,7 @@ Modern responsive web image generation and tooling.
 - Keep images in `static/` instead of `src/`.
 - Low-quality image placeholders (LQIP).
 - Cache-busting.
-- Image credit and license metadata (optional).
+- Image metadata (optional) for non-visual descriptions, credits, licenses, etc.
 - Web framework support:
   - Should work with most anything.
   - Author is using alongside SvelteKit and Vite.
@@ -65,8 +65,7 @@ Imagine a web app with the following directory structure:
 In `static/images` we have subdirectories for different groups of images
 (`countries`, `fruits`). Under those subdirs we have original high-resolution
 source images named for each country or fruit (`italy.jpg`, `pear.jpg`).
-Alongside each original image, we have optional credit and license information
-in a `json` file.
+Alongside each original image, we have optional extra metadata in a `json` file.
 
 ### Run
 
@@ -131,14 +130,6 @@ Outputs:
 
 ```js
 {
-  credit: {
-    author: 'PhotographerPerson',
-    authorLink: 'https://pixabay.com/users/PhotographerPerson/',
-    link: 'https://pixabay.com/photos/fruit-pear-pear/',
-    title: 'Pear Basket',
-    license: 'Pixabay',
-    licenseLink: 'https://pixabay.com/service/license/'
-  },
   default: '/images/fruits/_gen/pear-800.jpg?v=54321',
   formats: {
     avif: {
@@ -153,6 +144,15 @@ Outputs:
       400: '/images/fruits/_gen/pear-400.jpg?v=54321',
       800: '/images/fruits/_gen/pear-800.jpg?v=54321'
     }
+  },
+  meta: {
+    author: 'PhotographerPerson',
+    authorLink: 'https://pixabay.com/users/PhotographerPerson/',
+    description: 'Sliced apples and other fruits.',
+    link: 'https://pixabay.com/photos/fruit-pear-pear/',
+    title: 'Pear Basket',
+    license: 'Pixabay',
+    licenseLink: 'https://pixabay.com/service/license/'
   },
   placeholder: 'data:image/webp;base64,UklGASDFRngA...LowrlqAAA=',
   sizes: {

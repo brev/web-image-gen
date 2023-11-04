@@ -1,4 +1,4 @@
-import { Context } from './common.js'
+import type { Context } from './testing.ts'
 
 import * as assert from 'uvu/assert'
 import { cp, rm, writeFile } from 'node:fs/promises'
@@ -11,7 +11,7 @@ import {
   isUpdate,
   readFile,
   spawn,
-} from './common.js'
+} from './testing.js'
 import { resolve } from 'node:path'
 import { suite } from 'uvu'
 
@@ -38,13 +38,14 @@ test('BARE', async ({ cwd }) => {
     await readFile(resolve(cwd, 'src/lib/assets/images/_gen/countries.json'))
   )
   assert.ok(manifest.france)
-  assert.ok(manifest.france.credit)
-  assert.ok(manifest.france.credit.author)
-  assert.ok(manifest.france.credit.authorLink)
-  assert.ok(manifest.france.credit.license)
-  assert.ok(manifest.france.credit.licenseLink)
-  assert.ok(manifest.france.credit.link)
-  assert.ok(manifest.france.credit.title)
+  assert.ok(manifest.france.meta)
+  assert.ok(manifest.france.meta.author)
+  assert.ok(manifest.france.meta.authorLink)
+  assert.ok(manifest.france.meta.description)
+  assert.ok(manifest.france.meta.license)
+  assert.ok(manifest.france.meta.licenseLink)
+  assert.ok(manifest.france.meta.link)
+  assert.ok(manifest.france.meta.title)
   assert.ok(manifest.france.default)
   assert.ok(manifest.france.formats)
   assert.ok(manifest.france.formats.avif)
@@ -68,7 +69,7 @@ test('BARE', async ({ cwd }) => {
   assert.ok(manifest.france.sizes['800'].jpg)
 })
 
-test('BARE (missing credits)', async ({ cwd }) => {
+test('BARE (no metadata)', async ({ cwd }) => {
   await rm(resolve(cwd, 'static/images/countries/france.json'))
 
   await spawn(execPath, [scriptFile, 'generate'], { cwd })
@@ -77,7 +78,7 @@ test('BARE (missing credits)', async ({ cwd }) => {
     await readFile(resolve(cwd, 'src/lib/assets/images/_gen/countries.json'))
   )
   assert.ok(manifest.france)
-  assert.not.ok(manifest.france.credit)
+  assert.not.ok(manifest.france.meta)
   assert.ok(manifest.france.default)
   assert.ok(manifest.france.formats)
   assert.ok(manifest.france.formats.avif)
@@ -164,13 +165,6 @@ test('--verbose (config js)', async ({ cwd }) => {
     await import(resolve(cwd, 'src/lib/assets/images/NEG/countries.ts'))
   ).default
   assert.ok(manifest.france)
-  assert.ok(manifest.france.credit)
-  assert.ok(manifest.france.credit.author)
-  assert.ok(manifest.france.credit.authorLink)
-  assert.ok(manifest.france.credit.license)
-  assert.ok(manifest.france.credit.licenseLink)
-  assert.ok(manifest.france.credit.link)
-  assert.ok(manifest.france.credit.title)
   assert.ok(manifest.france.default)
   assert.ok(manifest.france.formats)
   assert.ok(manifest.france.formats.webp)
@@ -181,6 +175,13 @@ test('--verbose (config js)', async ({ cwd }) => {
   assert.ok(manifest.france.formats.png['480'])
   assert.ok(manifest.france.formats.png['640'])
   assert.ok(manifest.france.formats.png['720'])
+  assert.ok(manifest.france.meta)
+  assert.ok(manifest.france.meta.author)
+  assert.ok(manifest.france.meta.authorLink)
+  assert.ok(manifest.france.meta.license)
+  assert.ok(manifest.france.meta.licenseLink)
+  assert.ok(manifest.france.meta.link)
+  assert.ok(manifest.france.meta.title)
   assert.ok(manifest.france.placeholder)
   assert.ok(manifest.france.sizes)
   assert.ok(manifest.france.sizes['480'])

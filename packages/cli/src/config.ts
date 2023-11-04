@@ -1,13 +1,13 @@
-import type { Config, Options } from 'web-image-gen-common'
+import type { Config, Options } from '../types'
 
 import { access, readFile } from 'node:fs/promises'
 import { cwd } from 'node:process'
-import { deepMerge } from './common.js'
-import { extname, resolve } from 'node:path'
 import {
+  deepMerge,
   imageOutputFormats,
   manifestOutputFormats,
-} from 'web-image-gen-common/const'
+} from './common.js'
+import { extname, resolve } from 'node:path'
 
 /**
  * Default Config

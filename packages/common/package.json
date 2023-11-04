@@ -1,10 +1,12 @@
 {
   "name": "web-image-gen-common",
-  "version": "1.0.5",
-  "description": "Common code for web-image-gen*",
+  "version": "0.0.0",
+  "description": "Common code for web-image-gen*, shared via symlinks.",
   "homepage": "https://github.com/brev/web-image-gen/tree/main/packages/common",
   "license": "MIT",
+  "private": true,
   "type": "module",
+  "types": "./types/index.d.ts",
   "author": {
     "name": "Brev Patterson",
     "url": "https://github.com/brev"
@@ -13,22 +15,18 @@
     "url": "https://github.com/brev/web-image-gen/issues"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.7.0",
-    "@typescript-eslint/parser": "^6.7.0",
-    "eslint": "^8.49.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.0.3",
-    "rimraf": "^5.0.1",
     "typescript": "^5.2.2"
   },
   "exports": {
-    "./package.json": "./package.json",
-    "./const": "./dist/const.js",
-    "./stub": "./dist/stub.js"
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist/*",
     "types/*"
   ],
   "keywords": [
@@ -45,22 +43,7 @@
   "scripts": {
     "bin:eslint": "eslint --ignore-path .gitignore .",
     "bin:prettier": "prettier --ignore-path .gitignore .",
-    "bin:tsc": "tsc",
-    "build": "run-s bin:tsc",
-    "build:watch": "run-s 'bin:tsc --watch'",
-    "clean": "rimraf coverage/ dist/",
     "format": "run-s 'bin:prettier --write --list-different'",
-    "lint": "run-s 'bin:prettier --check' bin:eslint 'bin:tsc --noEmit'"
-  },
-  "types": "./types/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "const": [
-        "./dist/const.d.ts"
-      ],
-      "stub": [
-        "./dist/stub.d.ts"
-      ]
-    }
+    "lint": "run-s 'bin:prettier --check' bin:eslint"
   }
 }

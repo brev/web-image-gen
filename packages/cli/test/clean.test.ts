@@ -1,4 +1,4 @@
-import { Context } from './common.js'
+import type { Context } from './testing.ts'
 
 import * as assert from 'uvu/assert'
 import { execPath } from 'node:process'
@@ -10,7 +10,7 @@ import {
   isUpdate,
   readFile,
   spawn,
-} from './common.js'
+} from './testing.js'
 import { writeFile } from 'node:fs/promises'
 import { suite } from 'uvu'
 
