@@ -1,6 +1,5 @@
 {
   "name": "web-image-gen-common",
-  "version": "0.0.0",
   "description": "Common code for web-image-gen*, shared via symlinks.",
   "homepage": "https://github.com/brev/web-image-gen/tree/main/packages/common",
   "license": "MIT",
@@ -15,12 +14,12 @@
     "url": "https://github.com/brev/web-image-gen/issues"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.9.1",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
     "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.0.3",
+    "prettier": "^3.1.0",
     "typescript": "^5.2.2"
   },
   "exports": {

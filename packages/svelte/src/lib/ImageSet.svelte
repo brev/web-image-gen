@@ -31,8 +31,8 @@
         class="web-image-gen-img {imgClass} lazyload"
         data-sizes={sizes}
         data-srcset={srcset}
-        src={set.default}
         srcset={set.placeholder}
+        src={set.default}
       />
     {/if}
   {/each}
