@@ -30,6 +30,7 @@ test('with props', () => {
     const sizes = (set.formats as Formats)[format]
     Object.keys(sizes).forEach((size) => {
       assert.ok(container.querySelector(`${tag}[data-sizes="auto"]`))
+      assert.notOk(container.querySelector(`${tag}[sizes]`))
       assert.ok(
         container.querySelector(`${tag}[data-srcset*="${sizes[size]}"]`)
       )
@@ -49,7 +50,8 @@ test('with props: sizes', () => {
     const tag = format === 'jpg' ? 'img' : 'source'
     const sizes = (set.formats as Formats)[format]
     Object.keys(sizes).forEach((size) => {
-      assert.ok(container.querySelector(`${tag}[data-sizes="sizes"]`))
+      assert.notOk(container.querySelector(`${tag}[data-sizes]`))
+      assert.ok(container.querySelector(`${tag}[sizes="sizes"]`))
       assert.ok(
         container.querySelector(`${tag}[data-srcset*="${sizes[size]}"]`)
       )

@@ -21,16 +21,18 @@
       .join(', ')}
     {#if format != Object.keys(set.formats).at(-1)}
       <source
-        data-sizes={sizes}
+        data-sizes={sizes === 'auto' ? sizes : undefined}
         data-srcset={srcset}
+        sizes={sizes !== 'auto' ? sizes : undefined}
         type={mime.getType(format)}
       />
     {:else}
       <img
         {alt}
         class="web-image-gen-img {imgClass} lazyload"
-        data-sizes={sizes}
+        data-sizes={sizes === 'auto' ? sizes : undefined}
         data-srcset={srcset}
+        sizes={sizes !== 'auto' ? sizes : undefined}
         srcset={set.placeholder}
         src={set.default}
       />

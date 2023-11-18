@@ -51,13 +51,13 @@ npm install web-image-gen-svelte
 
 Svelte component properties are:
 
-| Property     | Description                                                                                         |
-| ------------ | --------------------------------------------------------------------------------------------------- |
-| alt          | Alt text for the image.                                                                             |
-| imgClass     | Class name (global) to add to inner `img` tag.                                                      |
-| pictureClass | Class name (global) to add to outer `picture` tag.                                                  |
-| set          | **Required** [`ImageSet`][imageset] data structure ([example][example]).                            |
-| sizes        | `sizes` attribute for `source` and `image` tags. Defaults to [lazysizes][lazysizes] `auto` setting. |
+| Property     | Description                                                                                                                                                                                                     |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| alt          | Alt text for the image.                                                                                                                                                                                         |
+| imgClass     | Class name (global) to add to inner `img` tag.                                                                                                                                                                  |
+| pictureClass | Class name (global) to add to outer `picture` tag.                                                                                                                                                              |
+| set          | **Required** [`ImageSet`][imageset] data structure ([example][example]).                                                                                                                                        |
+| sizes        | `sizes` attribute for `source` and `image` tags. Defaults to [lazysizes][lazysizes] `auto` setting. **Warning!** The `auto` setting is not very reliable, it may be better to provide a value here if possible. |
 
 ### Styling
 
