@@ -9,6 +9,8 @@
   export let pictureClass = ''
   export let set: ImageSetType
   export let sizes = 'auto'
+  export let width: number | undefined = undefined
+  export let height: number | undefined = undefined
 
   if (!set) throw new Error('missing prop `set`')
 </script>
@@ -35,6 +37,8 @@
         sizes={sizes !== 'auto' ? sizes : undefined}
         srcset={set.placeholder}
         src={set.default}
+        {width}
+        {height}
       />
     {/if}
   {/each}
@@ -45,5 +49,11 @@
       display: none;
     }
   </style>
-  <img {alt} class="web-image-gen-img {imgClass}" src={set.default} />
+  <img
+    {alt}
+    class="web-image-gen-img {imgClass}"
+    src={set.default}
+    {width}
+    {height}
+  />
 </noscript>
