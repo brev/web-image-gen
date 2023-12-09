@@ -87,6 +87,7 @@ To provide a nice fade from placeholder to loaded image, we suggest these
 .lazyloading {
   filter: blur(5px);
   transition: filter 0.5s;
+  will-change: filter;
 }
 .lazyloaded {
   filter: blur(0);
